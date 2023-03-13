@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from './api/axios';
 function Categories() {
+
   const [categories, setCategories] = useState([])
   
   useEffect(() => {
@@ -11,15 +12,14 @@ function Categories() {
     }
     getCategories()
   }, [])
-  console.log(categories)
+ 
   return (
     <div className='container'>
       <header></header>
       <h2>Programming Tests</h2>
       <ul className='categories'>
         {categories.map(category => (
-          <li className='category'>
-
+          <li key={category._id} className='category'>
             <Link
               to={`/tests/${category.title.toLowerCase()}`}
               state={{ categoryId: category._id }}>
