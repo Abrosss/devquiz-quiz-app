@@ -3,10 +3,12 @@ import { Link, useParams, useLocation } from 'react-router-dom'
 import './App.css'
 import Question from './components/Question.jsx'
 import Answers from './components/Answers'
+import Header from './components/Header'
 import axios from './api/axios';
 function Test() {
   const location = useLocation();
-  const categoryId = location.state?.categoryId;
+  const category = location.state?.category
+  const categoryId = location.state?.category._id;
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answered, setAnswered] = useState(false)
   console.log(location)
@@ -84,6 +86,7 @@ function Test() {
     getQuestions()
   }, [])
   function nextQuestion() {
+    setAnswered(false)
     if (currentQuestion === questions.length - 1) {
       // if currentQuestion is the last question in the array, do not update it
       return;
@@ -93,19 +96,39 @@ function Test() {
   console.log(questions)
   return (
     <div>
-      <header></header>
-      <button className='finish'>Finish the test</button>
-      <Link to ='/categories'>Categories</Link><span>/Paradigms</span>
+      <Header/>
+    <section className='container'>
+      <section className='headingNav'>
+        <div><Link className='blue' to ='/categories'>All Tests</Link><span> / {category.title}</span></div>
+      
+    <section className='progress'>
+    {questions.map((question, index) => (
+      <div className={currentQuestion === index ? 'cell active' : 'cell'}>{index+1}</div>
+    ))}
+
+    </section>
+      </section>
+  
+    
       {questions.length > 0 &&
        <section className='quiz'>
-        <Question question={questions[currentQuestion]} answered={setAnswered}/>
+         <section className='question'>
+        <span>Question {currentQuestion+1} / {questions.length}</span>
+        <h2>{questions[currentQuestion].title}</h2>
+    <div>
+    <img className='question-image' src={questions[currentQuestion].image}></img>
+    </div>
+         
+       
+        </section>
+        <Question number={currentQuestion} question={questions[currentQuestion]} answered={answered} setAnswered={setAnswered}  nextQuestion={nextQuestion}/>
     
        </section>
      
       }
-      {answered &&
-      <button onClick={nextQuestion}>Next Question</button>
-      }
+      
+      
+    </section>
       
     </div>
   )
