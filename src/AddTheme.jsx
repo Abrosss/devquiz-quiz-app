@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Header from './components/Header';
 import Add from './assets/add.svg'
 function AddTheme() {
-  const [questions, setQuestions] = useState([{title:'', options: [{title:""}, {title:""}]}])
+  const [questions, setQuestions] = useState([{title:'', image: "", options: [{title:""}, {title:""}]}])
 
   const addOption = (questionIndex) => {
     const updated = [...questions]
     updated[questionIndex].options.push({title:"feef"})
+    setQuestions(updated)
+  };
+  const handleImageUpload = (event, questionIndex) => {
+    const uploadedImage = event.target.files[0];
+    const updated = [...questions]
+    updated[questionIndex].image=URL.createObjectURL(uploadedImage)
     setQuestions(updated)
   };
  
@@ -42,10 +48,13 @@ function AddTheme() {
               <span>?</span>
             </div>
             <section className='image-section'>
-              <img src='https://courses.cs.washington.edu/courses/cse341/03au/slides/Paradigms/img004.GIF'></img>
+              {question.image &&
+                         <img src={question.image}></img>
+              }
+   
              </section>
             <div class="upload">
- <input class="upload-input" id="file" type="file" onChange={(e) => console.log(e.target.files[0].size)}/>
+ <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)}/>
    <div class="upload-list"></div>
 </div>
             </section>

@@ -229,9 +229,11 @@ border-bottom: 1px #489FB5 solid;;
   display: flex;
   justify-content: center;
   width: 30rem;
+  max-height: 20rem;
 }
 .image-section img {
   width: 80%;
+
   object-fit: contain;
 }
 .input.option {
