@@ -4,6 +4,7 @@ import './App.css'
 import Question from './components/Question.jsx'
 import Answers from './components/Answers'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import axios from './api/axios';
 function Test() {
   const location = useLocation();
@@ -129,7 +130,7 @@ function Test() {
       
       
     </section>
-      
+      <Footer/>
     </div>
   )
 }

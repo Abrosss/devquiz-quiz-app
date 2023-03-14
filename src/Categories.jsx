@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from './api/axios';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Dots from './assets/dots.svg'
 function Categories() {
 
@@ -45,7 +46,7 @@ function Categories() {
         ))}
       </ul>
       </section>
-      
+      <Footer position={"fixed"}/>
    </>
   )
 }
