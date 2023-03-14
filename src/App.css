@@ -200,6 +200,14 @@ button {
   background-color: #489FB5;
   color: white;
 }
+.container-header input {
+  border: 1px white solid;
+  background-color: #489FB5;
+  color: white;
+}
+.container-header input::placeholder{
+  color: white;
+}
 .input {
   padding: 1rem 1.5rem;
   border-radius: 15px;
@@ -207,7 +215,10 @@ button {
   font-weight: bold;
 }
 .input.question {
-min-width: 20rem
+min-width: 30rem;
+border: none;
+border-radius: unset;
+border-bottom: 1px #489FB5 solid;;
 }
 .sections {
   display: flex;
@@ -217,7 +228,7 @@ min-width: 20rem
 .image-section {
   display: flex;
   justify-content: center;
-  width: 500px;
+  width: 30rem;
 }
 .image-section img {
   width: 80%;
@@ -225,9 +236,10 @@ min-width: 20rem
 }
 .input.option {
   border: none;
-  border-radius: 0px;
-  border-bottom: 1px #489FB5 solid;
-  min-width: 20rem
+  border-radius: 15px;
+  border: 1px #489FB5 solid;
+  min-width: 25rem;
+  resize: none;
   }
 .option {
   min-width: 20rem;
@@ -243,6 +255,8 @@ min-width: 20rem
   font-size: .8rem;
   color: #489FB5;
   cursor: pointer;
+  margin-left: 2.5rem;
+  text-decoration: underline;
 }
 .radio-item-container {
 	display: flex;
@@ -250,14 +264,13 @@ min-width: 20rem
 	flex-direction: column;
 	border-top: 0;
 	background: #fff;
-
-	padding: 10px 0;
+  gap: 1rem;
   min-width: 15rem
 }
 .radio-item {
 	display: flex;
 	position: relative;
-  padding: 1rem;
+
 
 }
 label {
@@ -307,4 +320,8 @@ align-items: center;
 .sections {
   /* border-bottom: 1px #489FB5 solid; */
   padding-bottom: 1rem;
+  gap: 5rem;
+}
+.upload-input {
+  margin-left: 3rem;
 }

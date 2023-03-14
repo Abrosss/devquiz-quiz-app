@@ -41,8 +41,34 @@ function AddTheme() {
               <input className='input question' type="text" placeholder="Type here"></input>
               <span>?</span>
             </div>
+            <section className='image-section'>
+              <img src='https://courses.cs.washington.edu/courses/cse341/03au/slides/Paradigms/img004.GIF'></img>
+             </section>
+            <div class="upload">
+ <input class="upload-input" id="file" type="file" onChange={(e) => console.log(e.target.files[0].size)}/>
+   <div class="upload-list"></div>
+</div>
             </section>
+            <div className='form-input options'>
+          
+             <div class="radio-item-container">
+            {question.options.map(answer => (
+               	<div class="radio-item">
+                 <label for="vanilla">
+                   <input type="radio" id="vanilla" name="flavor" value="vanilla"/>
+                   <textarea className='input option' type="text" placeholder="Type here"></textarea>
+                 </label>
+               </div>
+))}
+	<span onClick={() => addOption(index)} className='addButton'>Add another option</span>
 
+		
+	</div>
+            
+              
+           
+              
+            </div>
               </section>
              
             ))
@@ -60,35 +86,8 @@ function AddTheme() {
 
 export default AddTheme
 
-// <div class="upload">
-//   <label class="upload-label" for="file"><span>Upload a picture</span></label>
-//   <input class="upload-input" id="file" type="file" onChange={(e) => console.log(e.target.files[0].size)}/>
-//   <div class="upload-list"></div>
-// </div>
-//             <div className='form-input options'>
-//               <span>
-//                 Options
-//               </span>
-//               <div class="radio-item-container">
-//               {question.options.map(answer => (
-//                	<div class="radio-item">
-//                  <label for="vanilla">
-//                    <input type="radio" id="vanilla" name="flavor" value="vanilla"/>
-//                    <input className='input option' type="text" placeholder="Type here"></input>
-//                  </label>
-//                </div>
-// ))}
-// 	<span onClick={() => addOption(index)} className='addButton'>Add another option</span>
-
-		
-// 	</div>
-            
-              
-           
-              
-//             </div>
+// 
+//           
            
           
-//             <section className='image-section'>
-//               <img src='https://courses.cs.washington.edu/courses/cse341/03au/slides/Paradigms/img004.GIF'></img>
-//             </section>
+//             
