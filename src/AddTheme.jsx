@@ -5,6 +5,7 @@ import Add from './assets/add.svg'
 import axios from './api/axios';
 
 import Delete from './assets/delete.svg'
+import { Link } from 'react-router-dom';
 
 function AddTheme() {
   const question = {
@@ -21,7 +22,8 @@ function AddTheme() {
   const [saved, setSaved] = useState(false)
   const [questions, setQuestions] = useState([question])
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
-  console.log(questionsExpanded)
+  const [questionAdded, setQuestionAdded] = useState(false)
+  console.log(questionAdded)
   const addOption = (questionIndex) => {
    
     const updated = [...questions]
@@ -123,7 +125,24 @@ async function deleteImage(index, id) {
 
 
 }
+async function addQuestions(e) {
+  e.preventDefault()
+  try {
+      const response = await axios.post('/questions', {
+          questions: questions
+      });
+      if (response.status === 200) {
+        setQuestionAdded(true)
+      }
 
+
+  } catch (err) {
+
+      console.error(err);
+  }
+
+
+}
   console.log(questions)
   return (
     <>
@@ -140,7 +159,7 @@ async function deleteImage(index, id) {
           </div>
 
         </section>
-        {saved &&
+        {saved && !questionAdded &&
           <section className='container-content'>
           <h3>Add Questions</h3>
           {
@@ -215,12 +234,17 @@ async function deleteImage(index, id) {
            
             ))
           }
-          <button>SUBMIT</button>
+          <button onClick={addQuestions}>SUBMIT</button>
          
 
         </section>
         }
-      
+        {questionAdded && 
+        <section className='container-content'>
+          <h2>Test Added!</h2>
+          <Link className='button' to="/categories">BACK TO TESTS</Link>
+        </section>
+        }
       </section>
         <Footer position={saved ? '' : 'fixed'}/>
     </>
