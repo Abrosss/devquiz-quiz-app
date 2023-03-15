@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link, useParams, useLocation } from 'react-router-dom'
 import './App.css'
 import Question from './components/Question.jsx'
-import Answers from './components/Answers'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import axios from './api/axios';

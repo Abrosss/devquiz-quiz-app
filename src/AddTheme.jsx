@@ -3,13 +3,13 @@ import Header from './components/Header';
 import Footer from './components/Footer'
 import Add from './assets/add.svg'
 function AddTheme() {
-  const [questions, setQuestions] = useState([{title:'', image: "", options: [{title:""}, {title:""}]}])
+  const [questions, setQuestions] = useState([{title:'', image: "", options: [{title:"", correct: false}, {title:"", correct: false}]}])
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
   console.log(questionsExpanded)
   const addOption = (questionIndex) => {
    
     const updated = [...questions]
-    updated[questionIndex].options.push({title:"feef"})
+    updated[questionIndex].options.push({title:""})
     setQuestions(updated)
   };
   const handleImageUpload = (event, questionIndex) => {
@@ -27,6 +27,34 @@ function AddTheme() {
     }
     setQuestionsExpanded([...updated, index+1])
   }
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...questions];
+    list[index][name] = value;
+    setQuestions(list); 
+    console.log(questions)
+  };
+  const handleOptionChange = (e, index, questionIndex) => {
+    const { name, value } = e.target;
+    const list = [...questions];
+    list[questionIndex].options[index][name] = value;
+    setQuestions(list); 
+    console.log(questions)
+  };
+  const handleCorrectOption = (e, index, questionIndex) => {
+    const { name } = e.target;
+    const list = [...questions];
+    if(e.target.checked) {
+      list[questionIndex].options[index][name] = true
+      list[questionIndex].options.forEach((option, optionIndex) => {
+        if (optionIndex !== index) {
+          option[name] = false;
+        }})
+    }
+    setQuestions(list); 
+  
+  }
+  console.log(questions)
   return (
     <>
       <Header />
@@ -64,7 +92,7 @@ function AddTheme() {
             } }>
                {index+1}.
               </span>
-              <input className='input question' type="text" placeholder="Type a question here"></input>
+              <input onChange={(e) => handleInputChange(e, index)} className='input question' value={question.title} type="text" name='title' placeholder="Type a question here"></input>
               <span>?</span>
             </div>
             {  questionsExpanded.includes(index) &&
@@ -88,11 +116,11 @@ function AddTheme() {
             <div className='form-input options'>
           
              <div class="radio-item-container">
-            {question.options.map(answer => (
+            {question.options.map((answer, optIndex) => (
                	<div class="radio-item">
                  <label for="vanilla">
-                   <input type="radio" id="vanilla" name="flavor" value="vanilla"/>
-                   <textarea className='input option' type="text" placeholder="Type an option here"></textarea>
+                   <input  checked={answer.correct}   onChange={(e) => handleCorrectOption(e, optIndex, index)} type="radio" id="vanilla" name="correct" value="vanilla"/>
+                   <textarea name='title' onChange={(e) => handleOptionChange(e,optIndex, index)} className='input option' value={answer.title} type="text" placeholder="Type an option here"></textarea>
                  </label>
                </div>
 ))}
