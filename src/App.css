@@ -228,6 +228,7 @@ border-bottom: 1px #489FB5 solid;;
 .image-section {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 30rem;
   max-height: 20rem;
 }
@@ -329,6 +330,10 @@ padding-top: 2rem;
   /* border-bottom: 1px #489FB5 solid; */
   padding-bottom: 1rem;
   gap: 5rem;
+}
+.save {
+  background-color: white;
+  color: #489FB5;
 }
 .upload-input {
   margin-left: 3rem;

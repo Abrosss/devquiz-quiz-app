@@ -2,8 +2,24 @@ import React, { useEffect, useState } from 'react'
 import Header from './components/Header';
 import Footer from './components/Footer'
 import Add from './assets/add.svg'
+import axios from './api/axios';
+
+import Delete from './assets/delete.svg'
+
 function AddTheme() {
-  const [questions, setQuestions] = useState([{title:'', image: "", options: [{title:"", correct: false}, {title:"", correct: false}]}])
+  const question = {
+    title:'', 
+    category: "", 
+    image: "", 
+    cloudinaryId: "",
+    options: 
+    [
+      {title:"", correct: false}, 
+      {title:"", correct: false}
+    ]}
+  const [category, setCategory] = useState(null)
+  const [saved, setSaved] = useState(false)
+  const [questions, setQuestions] = useState([question])
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
   console.log(questionsExpanded)
   const addOption = (questionIndex) => {
@@ -12,12 +28,45 @@ function AddTheme() {
     updated[questionIndex].options.push({title:""})
     setQuestions(updated)
   };
-  const handleImageUpload = (event, questionIndex) => {
-    const uploadedImage = event.target.files[0];
+  const handleImageUpload = (e, index) =>{
+    const file = e.target.files[0];
+    setFileToBase(file, index);
+    console.log(file);
+}
+
+ function setFileToBase (file, questionIndex){
+    const reader = new FileReader();
     const updated = [...questions]
-    updated[questionIndex].image=URL.createObjectURL(uploadedImage)
-    setQuestions(updated)
-  };
+    reader.readAsDataURL(file);
+    reader.onloadend = async () =>{
+      console.log(reader.result)
+      const response = await axios.post('/addImage', {"image" : reader.result} )
+      updated[questionIndex].image=response.data.url
+      updated[questionIndex].cloudinaryId=response.data.id
+      setQuestions(updated)
+     
+    }
+
+}
+async function deleteImage(index, id) {
+  const updated = [...questions]
+  try {
+    const response = await axios.post('/deleteImage', {
+        id: id
+    });
+    if (response.status === 200) {
+      updated[index].image=""
+      updated[index].cloudinaryId=""
+      setQuestions(updated)
+    }
+
+
+} catch (err) {
+
+    console.error(err);
+}
+}
+  
   function addQuestion(index) {
     setQuestions([...questions, {title:'', options: [{title:""}, {title:""}]}])
     console.log(index)
@@ -31,6 +80,7 @@ function AddTheme() {
     const { name, value } = e.target;
     const list = [...questions];
     list[index][name] = value;
+    list[index]["category"] = category;
     setQuestions(list); 
     console.log(questions)
   };
@@ -54,6 +104,26 @@ function AddTheme() {
     setQuestions(list); 
   
   }
+  async function addCategory(e) {
+    e.preventDefault()
+    try {
+        const response = await axios.post('/addCategory', {
+            category: category
+        });
+        if (response.status === 200) {
+           setSaved(true)
+          setCategory(response.data) //id
+        }
+
+
+    } catch (err) {
+
+        console.error(err);
+    }
+
+
+}
+
   console.log(questions)
   return (
     <>
@@ -65,11 +135,13 @@ function AddTheme() {
             <span>
               Category
             </span>
-            <input className='input' type="text" placeholder="Add Category"></input>
+            <input onChange={(e) => setCategory(e.target.value)} className='input' type="text" placeholder="Add Category"></input>
+            <button onClick={(e) => addCategory(e)} className='save'>Save</button>
           </div>
 
         </section>
-        <section className='container-content'>
+        {saved &&
+          <section className='container-content'>
           <h3>Add Questions</h3>
           {
             questions.map((question, index) => (
@@ -97,12 +169,17 @@ function AddTheme() {
             </div>
             {  questionsExpanded.includes(index) &&
             <>
+            {question.image &&
              <section className='image-section'>
-             {question.image &&
+             
                         <img src={question.image}></img>
-             }
+                        <img className='icon' onClick={() => deleteImage(index, question.cloudinaryId)} src={Delete}></img>
+             
+             
+   
   
             </section>
+            }
              <div class="upload">
              <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)}/>
                <div class="upload-list"></div>
@@ -142,8 +219,10 @@ function AddTheme() {
          
 
         </section>
+        }
+      
       </section>
-        <Footer/>
+        <Footer position={saved ? '' : 'fixed'}/>
     </>
   )
 
