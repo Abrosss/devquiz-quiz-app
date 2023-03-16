@@ -24,6 +24,7 @@ function AddTheme() {
   const [questions, setQuestions] = useState([question])
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
   const [questionAdded, setQuestionAdded] = useState(false)
+  const [error, setError] = useState(null)
   console.log(questionAdded)
   const addOption = (questionIndex) => {
    
@@ -71,13 +72,25 @@ async function deleteImage(index, id) {
 }
   
   function addQuestion(index) {
-    setQuestions([...questions, {title:'', options: [{title:""}, {title:""}]}])
-    console.log(index)
-    const updated = [...questionsExpanded]
-    if (updated.length > 0) {
-      updated.pop()
+    let err = checkValidation(questions[index])
+console.log(err)
+    if(Object.keys(err).length === 0) {
+      setQuestions([...questions, {title:'', options: [{title:""}, {title:""}]}])
+    
+      const updated = [...questionsExpanded]
+      if (updated.length > 0) {
+        updated.pop()
+      }
+      setQuestionsExpanded([...updated, index+1])
+    
     }
-    setQuestionsExpanded([...updated, index+1])
+    else {
+      setError(err)
+    }
+   
+     
+    
+   
   }
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -144,6 +157,18 @@ async function addQuestions(e) {
 
 
 }
+function checkValidation(question) {
+  let errors = {}
+  let options = question.options.filter(answer => answer.correct === false);
+  if(question.options.length === options.length) {
+   errors.optionError= 'set a correct answer'
+  }
+  if(question.title === "") {
+    errors.questionError= 'what is the question?'
+   }
+   return errors
+}
+
   console.log(questions)
   return (
     <>
@@ -187,6 +212,9 @@ async function addQuestions(e) {
               <input onChange={(e) => handleInputChange(e, index)} className='input question' value={question.title} type="text" name='title' placeholder="Type a question here"></input>
               <span>?</span>
             </div>
+            {error && 
+  <span className='error'>{error.questionError}</span>
+}
             {  questionsExpanded.includes(index) &&
             <>
             {question.image &&
@@ -222,6 +250,9 @@ async function addQuestions(e) {
                  </label>
                </div>
 ))}
+{error && 
+  <span className='error'>{error.optionError}</span>
+}
 	<span onClick={() => addOption(index)} className='addButton'>Add another option</span>
 
 		

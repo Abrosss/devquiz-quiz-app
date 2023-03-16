@@ -11,70 +11,8 @@ function Test() {
   const categoryId = location.state?.category._id;
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answered, setAnswered] = useState(false)
-  console.log(location)
-  // const questions = [
-  //   {
-  //     category: "Paradigm",
-  //     questions: [
-  //       {
-  //         id:0,
-  //         title: "What is a functional paradigm",
-  //         image: "https://courses.cs.washington.edu/courses/cse341/03au/slides/Paradigms/img004.GIF",
-  //         answers: [
-  //           {
-  //             id:0,
-  //             letter: "A",
-  //             title: 'Answer 1',
-  //             correct: true
-  //           },
-  //           {
-  //             id:0,
-  //             letter: "B",
-  //             title: 'Answer 1',
-  //             correct: false
-  //           },
-  //           {
-  //             id:0,
-  //             letter: "C",
-  //             title: 'Answer 1',
-  //             correct: false
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     category: "Inheritance",
-  //     questions: [
-  //       {
-  //         id:0,
-  //         title: "What is a functional paradigm",
-  //         image: "https://courses.cs.washington.edu/courses/cse341/03au/slides/Paradigms/img004.GIF",
-  //         answers: [
-  //           {
-  //             id:0,
-  //             letter: "A",
-  //             title: 'Answer 1',
-  //             correct: true
-  //           },
-  //           {
-  //             id:0,
-  //             letter: "B",
-  //             title: 'Answer 1',
-  //             correct: false
-  //           },
-  //           {
-  //             id:0,
-  //             letter: "C",
-  //             title: 'Answer 1',
-  //             correct: false
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   },
-   
-  // ]
+
+
   const { testCategory } = useParams();
   const [questions, setQuestions] = useState([])
   const [question, setQuestion] = useState(questions.filter(question => question.category.toLowerCase() === testCategory)[0])
@@ -115,7 +53,7 @@ function Test() {
          <section className='question'>
         <span>Question {currentQuestion+1} / {questions.length}</span>
         <h2>{questions[currentQuestion].title}</h2>
-    <div>
+    <div className='flex'>
     <img className='question-image' src={questions[currentQuestion].image}></img>
     </div>
          

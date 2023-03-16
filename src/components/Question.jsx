@@ -4,6 +4,7 @@ function Question({ question, number, nextQuestion, answered, setAnswered }) {
   const [answerIsCorrect, setAnswerIsCorrect] = useState(null)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [filteredAnswers, setFilteredAnswers] = useState(question.answers)
+  const [optionLetters, setOptionLetters] = useState(["A", "B", "C", "D", "E"])
  console.log(question)
   useEffect(() => {
     setFilteredAnswers(question.answers)
@@ -31,16 +32,16 @@ function Question({ question, number, nextQuestion, answered, setAnswered }) {
     <>
 
       <section className='answers'>
-        {filteredAnswers.map(answer => (
+        {filteredAnswers.map((answer, index) => (
 
           <div onClick={() => checkAnswer(answer)} className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
-            <span>{answer.letter}</span>
+            <span>{optionLetters[index]}</span>
             <span>{answer.title}</span>
           </div>
 
         ))}
         {selectedAnswer && question.explanation &&
-          <section className='explanation'>
+          <section className='explanation test'>
             <h4>Explanation</h4>
             <p>{question.explanation}</p>
             

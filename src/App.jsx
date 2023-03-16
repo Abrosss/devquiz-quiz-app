@@ -10,7 +10,7 @@ function App() {
 <Routes>
 <Route path='/addTest' element={<AddTheme />}/>
 <Route path='/tests/:testCategory' element={<Test />}/>
-<Route path='/categories' element={<Categories />}/>
+<Route path='/' element={<Categories />}/>
 
 
 </Routes>
