@@ -13,6 +13,7 @@ function AddTheme() {
     category: "", 
     image: "", 
     cloudinaryId: "",
+    explanation: "",
     options: 
     [
       {title:"", correct: false}, 
@@ -203,6 +204,7 @@ async function addQuestions(e) {
              <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)}/>
                <div class="upload-list"></div>
             </div>
+        
             </>
             }
            
@@ -224,8 +226,11 @@ async function addQuestions(e) {
 
 		
 	</div>
-            
-              
+  <section className='explanation'>
+              <h5>Explanation</h5>
+              <textarea name='explanation' onChange={(e) => handleInputChange(e, index)}></textarea>
+            </section>
+
            
               
             </div>
@@ -234,7 +239,7 @@ async function addQuestions(e) {
            
             ))
           }
-          <button onClick={addQuestions}>SUBMIT</button>
+          <button className='submit' onClick={addQuestions}>SUBMIT</button>
          
 
         </section>

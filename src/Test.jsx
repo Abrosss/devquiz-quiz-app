@@ -129,7 +129,7 @@ function Test() {
       
       
     </section>
-      <Footer/>
+      <Footer position="fixed"/>
     </div>
   )
 }
