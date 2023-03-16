@@ -1,16 +1,14 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
-import Test from './Test'
-import Categories from './Categories'
-import AddTheme from "./AddTheme";
+import Quiz from './pages/Quiz'
 function App() {
   return (
 <Router>
 <Routes>
-<Route path='/addTest' element={<AddTheme />}/>
-<Route path='/tests/:testCategory' element={<Test />}/>
-<Route path='/' element={<Categories />}/>
+
+<Route path='/tests/:testCategory' element={<Quiz />}/>
+
 
 
 </Routes>
