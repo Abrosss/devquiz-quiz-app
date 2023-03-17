@@ -1,14 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-function ProgressBar({questions, currentQuestion}) {
+function ProgressBar({ progressBarArray, currentQuestionIndex }) {
   return (
     <section className='progress'>
-    {questions.map((question, index) => (
-      <div className={currentQuestion === index ? 'cell active' : 'cell'}>{index+1}</div>
-    ))}
-
+      {progressBarArray.map((point, index) => (
+        <div className={currentQuestionIndex === index ? 'cell active' : (point.isCorrect ? "cell correctCell" : (point.isCorrect === null ? "cell" : "cell incorrectCell"))}>{index+1}</div>
+      ))}
     </section>
-  )
+  );
 }
 
-export default ProgressBar
+export default ProgressBar;

@@ -73,4 +73,8 @@ button:hover, .button:hover {
 
 .correctCell {
   background-color: green;
+}
+
+.incorrectCell {
+  background-color: red;
 }/*# sourceMappingURL=styles.css.map */

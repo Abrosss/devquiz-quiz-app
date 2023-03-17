@@ -16,15 +16,19 @@ function Quiz() {
 
   //QUESTIONS
   const [questions, setQuestions] = useState([])
-
+  const [progressBarArray, setProgressBarArray] = useState([]);
   useEffect(() => {
     async function getQuestions() {
       const response = await axios.get(`/questions/${categoryId}`)
       setQuestions(response.data)
       setAnswers(response.data[currentQuestionIndex].answers)
+      setProgressBarArray(Array.from({ length: response.data.length }, () => Object.assign({}, defaultObject)));
     }
     getQuestions()
   }, [])
+
+  const arrayLength = questions.length;
+  const defaultObject = { isCorrect: null };
 
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
@@ -33,14 +37,14 @@ function Quiz() {
   const [result, setResult] = useState([])
   const [count, setCount] = useState(0)
   const [answers, setAnswers] = useState([])
-
+  
 
   const amountOfQuestions = questions.length
   const currentQuestion = questions[currentQuestionIndex]
   const optionLetters = ["A", "B", "C", "D", "E"]
 
 //FUNCTIONS
-console.log(result)
+console.log(progressBarArray)
 function nextQuestion() {
   if (currentQuestionIndex === questions.length - 1) {
     setQuizIsFinished(true)
@@ -57,7 +61,7 @@ async function checkAnswer(answer) {
     if (answer.correct) {
       setCount(prevState => prevState + 1)
     }
-  
+    handleAnswer(answer, currentQuestionIndex)
     const currentResultStat = recordStat(currentQuestion, answer)
     setResult([...result, currentResultStat])
   }
@@ -65,6 +69,15 @@ async function checkAnswer(answer) {
 }
 
 //HELP FUNCTIONS
+const handleAnswer = (answer, index) => {
+  console.log(answer)
+  if(answer) {
+    const updatedArray = [...progressBarArray]; // create a copy of the array
+    console.log(updatedArray)
+    updatedArray[index].isCorrect = answer?.correct; // update the isCorrect property of the object at the specified index
+    setProgressBarArray(updatedArray); // update the state with the updated array
+  }
+}
 function filterAnswers(selectedAnswer, allAnswers) {
   return allAnswers.filter(answer => answer === selectedAnswer || answer.correct);
 }
@@ -81,6 +94,7 @@ function recordStat (question, selectedAnswer) {
 
     setSelectedAnswer(null)
     setAnswers(questions[currentQuestionIndex]?.answers)
+    
   }, [currentQuestion])
 
 
@@ -99,7 +113,7 @@ function recordStat (question, selectedAnswer) {
             <span> / {category.title}</span>
           </nav>
 
-          <ProgressBar questions={questions} currentQuestion={currentQuestionIndex} />
+          <ProgressBar progressBarArray={progressBarArray} currentQuestionIndex={currentQuestionIndex} />
 
 
 
