@@ -11,6 +11,7 @@ header {
 
 .container {
     padding: 0 10rem;
+    padding-bottom: 8rem;
 }
 
 .highlighted {
@@ -52,7 +53,7 @@ nav {
         width: 50%;
     }
 }
-button {
+button, .button {
     border-radius: 8px;
   
     padding: 0.6em 2em;

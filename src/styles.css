@@ -10,6 +10,7 @@ header a {
 
 .container {
   padding: 0 10rem;
+  padding-bottom: 8rem;
 }
 
 .highlighted {
@@ -49,7 +50,7 @@ nav {
   width: 50%;
 }
 
-button {
+button, .button {
   border-radius: 8px;
   padding: 0.6em 2em;
   font-size: 1em;
@@ -58,7 +59,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+button:hover, .button:hover {
   border-color: #646cff;
 }
 

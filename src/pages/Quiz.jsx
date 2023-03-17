@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams, useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import axios from '../api/axios';
 import '../App.css'
 import '../styles.css'
-import Question from '../components/Question.jsx'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ProgressBar from '../components/ProgressBar'
@@ -11,150 +10,163 @@ function Quiz() {
 
   const location = useLocation();
 
+  //CATEGORY DATA
   const category = location.state?.category
   const categoryId = location.state?.category._id;
-const resultPoint = {
-  question: "",
-  selectedAnswer: "",
-  correctAnswer: "",
-  explanation: "0"
-}
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-  const [selectedAnswer, setSelectedAnswer] = useState(null)
-  const [result, setResult] = useState([])
-  const [answered, setAnswered] = useState(false)
+
+  //QUESTIONS
   const [questions, setQuestions] = useState([])
-  const [count, setCount] = useState(0)
-  const amountOfQuestions = questions.length
-  const currentQuestion = questions[currentQuestionIndex]
 
-console.log(count)
-  const [filteredAnswers, setFilteredAnswers] = useState([])
-  const [optionLetters, setOptionLetters] = useState(["A", "B", "C", "D", "E"])
-  useEffect(() => {
-
-    setSelectedAnswer(null)
-    if(currentQuestion ===0) setFilteredAnswers([]) 
-    else setFilteredAnswers(questions[currentQuestionIndex]?.answers)
-  }, [currentQuestion])
   useEffect(() => {
     async function getQuestions() {
       const response = await axios.get(`/questions/${categoryId}`)
       setQuestions(response.data)
-      setFilteredAnswers(response.data[currentQuestionIndex].answers)
+      setAnswers(response.data[currentQuestionIndex].answers)
     }
     getQuestions()
   }, [])
-  function nextQuestion() {
-    setAnswered(false)
-    console.log(selectedAnswer)
-    if (currentQuestionIndex === questions.length - 1) {
-      // if currentQuestion is the last question in the array, do not update it
-      return;
-    }
-    setCurrentQuestionIndex(prev => prev + 1);
-  
-  }
- 
-console.log(count)
-  function checkAnswer(answer) {
-    setSelectedAnswer(answer)
-    if(answer.correct) {
-      console.log('wdwf')
-      setCount(prev => prev+1)
-    }
-    let correctAnswer = currentQuestion.answers.find(answer => answer.correct)
-    setResult([...result, {question:currentQuestion, selectedAnswer: answer, correctAnswer:correctAnswer}])
 
-    if (answer.correct) {
-      setFilteredAnswers(filteredAnswers.filter((ans) => ans.correct));
- 
-    }
-    else {
-      setFilteredAnswers(filteredAnswers.filter((ans) => {
-        return ans.correct || answer === ans
-      }));
-    }
+
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [selectedAnswer, setSelectedAnswer] = useState(null)
+  const [quizIsFinished, setQuizIsFinished] = useState(false)
+  const [result, setResult] = useState([])
+  const [count, setCount] = useState(0)
+  const [answers, setAnswers] = useState([])
+
+
+  const amountOfQuestions = questions.length
+  const currentQuestion = questions[currentQuestionIndex]
+  const optionLetters = ["A", "B", "C", "D", "E"]
+
+//FUNCTIONS
+console.log(result)
+function nextQuestion() {
+  if (currentQuestionIndex === questions.length - 1) {
+    setQuizIsFinished(true)
   }
+  else {
+    setCurrentQuestionIndex(prev => prev + 1);
+  }
+}
+async function checkAnswer(answer) {
+  if(!selectedAnswer) {
+    setSelectedAnswer(answer)
+    const answersToDisplay = await filterAnswers(answer, currentQuestion.answers)
+    setAnswers(answersToDisplay)
+    if (answer.correct) {
+      setCount(prevState => prevState + 1)
+    }
+  
+    const currentResultStat = recordStat(currentQuestion, answer)
+    setResult([...result, currentResultStat])
+  }
+  
+}
+
+//HELP FUNCTIONS
+function filterAnswers(selectedAnswer, allAnswers) {
+  return allAnswers.filter(answer => answer === selectedAnswer || answer.correct);
+}
+function recordStat (question, selectedAnswer) {
+  let correctAnswer = question.answers.find(answer => answer.correct)
+  return {
+    question:question, selectedAnswer: selectedAnswer, correctAnswer: correctAnswer
+  }
+}
+
+//RESET ANSWERS WHEN A QUESTION IS CHANGED
+
+  useEffect(() => {
+
+    setSelectedAnswer(null)
+    setAnswers(questions[currentQuestionIndex]?.answers)
+  }, [currentQuestion])
+
+
+
+ 
   return (
     <>
       <Header />
-      {
-        result.length !== questions.length ?
-<section className='container'>
+      {!quizIsFinished ?
+        <section className='container'>
 
-<nav>
-  <Link
-    className='highlighted'
-    to='/'>All Tests</Link>
-  <span> / {category.title}</span>
-</nav>
+          <nav>
+            <Link
+              className='highlighted'
+              to='/'>All Tests</Link>
+            <span> / {category.title}</span>
+          </nav>
 
-<ProgressBar questions={questions} currentQuestion={currentQuestionIndex} />
-
+          <ProgressBar questions={questions} currentQuestion={currentQuestionIndex} />
 
 
-{questions.length > 0 &&
-  <section className='quiz'>
-    <section className='question'>
 
-      <span>Question {currentQuestionIndex + 1} / {amountOfQuestions}</span>
+          {questions.length > 0 &&
+            <section className='quiz'>
+              <section className='question'>
 
-      <h2>{currentQuestion.title}</h2>
+                <span>Question {currentQuestionIndex + 1} / {amountOfQuestions}</span>
 
-      <div className='question-image-container'>
-        <img className='question-image' src={currentQuestion.image}></img>
-      </div>
+                <h2>{currentQuestion.title}</h2>
 
-
-    </section>
-    <section className='answers'>
-
-{filteredAnswers.map((answer, index) => (
-
-  <div onClick={() => checkAnswer(answer)} className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
-    <span>{optionLetters[index]}</span>
-    <span>{answer.title}</span>
-  </div>
-
-))}
-{selectedAnswer && currentQuestion.explanation &&
-  <section className='explanation test'>
-    <h4>Explanation</h4>
-    <p>{currentQuestion.explanation}</p>
-    
-  </section>
-}
-{selectedAnswer &&
-      <button onClick={nextQuestion}>Next Question</button>
-    }
+                <div className='question-image-container'>
+                  <img className='question-image' src={currentQuestion.image}></img>
+                </div>
 
 
-      </section>
-  
+              </section>
+              <section className='answers'>
 
-  </section>
+                {answers.map((answer, index) => (
 
-}
+                  <div onClick={() => checkAnswer(answer)} className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
+                    <span>{optionLetters[index]}</span>
+                    <span>{answer.title}</span>
+                  </div>
+
+                ))}
+                {selectedAnswer && currentQuestion.explanation &&
+                  <section className='explanation test'>
+                    <h4>Explanation</h4>
+                    <p>{currentQuestion.explanation}</p>
+
+                  </section>
+                }
+                {selectedAnswer &&
+                  <button onClick={nextQuestion}>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
+                }
 
 
-</section> :
-<section className='container-content'>
+              </section>
 
-<h2>You're finished!</h2>
-<p>Result: {count}/{amountOfQuestions}</p>
-<Link to="/" className='button'>Back To Tests</Link>
-<span className='highlighted'>Restart</span>
 
+            </section>
+
+          }
+
+
+        </section> :
+        <section className='container-content'>
+
+          <h2>You're finished!</h2>
+          <p>Result: {count}/{amountOfQuestions}</p>
+          <Link to="/" className='button'>Back To Tests</Link>
+          <span className='highlighted'>Restart</span>
 
 
 
 
-</section>
 
+        </section>
       }
-      
-      <Footer position="fixed" />
+
+
+
+
+
+      <Footer position={quizIsFinished ? "fixed" : ""} />
     </>
   )
 }
