@@ -6,9 +6,11 @@ import '../styles.css'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ProgressBar from '../components/ProgressBar'
+import Loading from '../assets/pulse.gif'
 function Quiz() {
 
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true)
 
   //CATEGORY DATA
   const category = location.state?.category
@@ -19,10 +21,12 @@ function Quiz() {
   const [progressBarArray, setProgressBarArray] = useState([]);
   useEffect(() => {
     async function getQuestions() {
+      setIsLoading(true)
       const response = await axios.get(`/questions/${categoryId}`)
       setQuestions(response.data)
       setAnswers(response.data[currentQuestionIndex].answers)
       setProgressBarArray(Array.from({ length: response.data.length }, () => Object.assign({}, defaultObject)));
+      setIsLoading(false)
     }
     getQuestions()
   }, [])
@@ -103,84 +107,92 @@ function recordStat (question, selectedAnswer) {
   return (
     <>
       <Header />
-      {!quizIsFinished ?
-        <section className='container'>
+      {isLoading ? 
+      <section className='container-content'>
+ <img className='icon' src={Loading}  ></img>
+      </section>
+   
+    :
+    !quizIsFinished ?
+      <section className='container'>
 
-          <nav>
-            <Link
-              className='highlighted'
-              to='/'>All Tests</Link>
-            <span> / {category.title}</span>
-          </nav>
+        <nav>
+          <Link
+            className='highlighted'
+            to='/'>All Tests</Link>
+          <span> / {category.title}</span>
+        </nav>
 
-          <ProgressBar progressBarArray={progressBarArray} currentQuestionIndex={currentQuestionIndex} />
+        <ProgressBar progressBarArray={progressBarArray} currentQuestionIndex={currentQuestionIndex} />
 
 
 
-          {questions.length > 0 &&
-            <section className='quiz'>
-              <section className='question'>
+        {questions.length > 0 &&
+          <section className='quiz'>
+            <section className='question'>
 
-                <span>Question {currentQuestionIndex + 1} / {amountOfQuestions}</span>
+              <span>Question {currentQuestionIndex + 1} / {amountOfQuestions}</span>
 
-                <h2>{currentQuestion.title}</h2>
+              <h2>{currentQuestion.title}</h2>
 
-                <div className='question-image-container'>
-                  <img className='question-image' src={currentQuestion.image}></img>
+              <div className='question-image-container'>
+                <img className='question-image' src={currentQuestion.image}></img>
+              </div>
+
+
+            </section>
+            <section className='answers'>
+
+              {answers.map((answer, index) => (
+
+                <div onClick={() => checkAnswer(answer)} className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
+                  <span>{optionLetters[index]}</span>
+                  <span>{answer.title}</span>
                 </div>
 
+              ))}
+              {selectedAnswer && currentQuestion.explanation &&
+                <section className='explanation test'>
+                  <h4>Explanation</h4>
+                  <p>{currentQuestion.explanation}</p>
 
-              </section>
-              <section className='answers'>
-
-                {answers.map((answer, index) => (
-
-                  <div onClick={() => checkAnswer(answer)} className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
-                    <span>{optionLetters[index]}</span>
-                    <span>{answer.title}</span>
-                  </div>
-
-                ))}
-                {selectedAnswer && currentQuestion.explanation &&
-                  <section className='explanation test'>
-                    <h4>Explanation</h4>
-                    <p>{currentQuestion.explanation}</p>
-
-                  </section>
-                }
-                {selectedAnswer &&
-                  <button onClick={nextQuestion}>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
-                }
-
-
-              </section>
+                </section>
+              }
+              {selectedAnswer &&
+                <button onClick={nextQuestion}>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
+              }
 
 
             </section>
 
-          }
+
+          </section>
+
+        }
 
 
-        </section> :
-        <section className='container-content'>
+      </section> :
+      <section className='container-content'>
 
-          <h2>You're finished!</h2>
-          <p>Result: {count}/{amountOfQuestions}</p>
-          <Link to="/" className='button'>Back To Tests</Link>
-          <span className='highlighted'>Restart</span>
-
-
-
-
-
-        </section>
-      }
+        <h2>You're finished!</h2>
+        <p>Result: {count}/{amountOfQuestions}</p>
+        <Link to="/" className='button'>Back To Tests</Link>
+        <span className='highlighted'>Restart</span>
 
 
 
 
 
-      <Footer position={quizIsFinished ? "fixed" : ""} />
+      </section>
+    }
+    
+     
+
+
+
+
+
+      <Footer position={quizIsFinished || isLoading ? "fixed" : ""} />
     </>
   )
 }
