@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-function Question({ question, nextQuestion, answered, setAnswered, selectedAnswer, setSelectedAnswer, setResult, result }) {
-
-
-  console.log(result)
+function Question(props) {
+  const {currentIndex, currentQuestion, amountOfQuestions} = props
   return (
-    <>
+    <section className='question'>
 
-      
-    </>
+    <span>Question {currentIndex + 1} / {amountOfQuestions}</span>
+
+    <h2>{currentQuestion.title}</h2>
+
+    <div className='question__image-container'>
+      <img src={currentQuestion.image}></img>
+    </div>
+
+
+  </section>
   )
 }
 

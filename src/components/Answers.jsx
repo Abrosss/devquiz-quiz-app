@@ -1,46 +1,21 @@
 import React from 'react'
-import { useState } from 'react'
-function Answers({question}) {
-    const [answerIsCorrect, setAnswerIsCorrect] = useState(null)
-    const [selectedAnswer, setSelectedAnswer] = useState(null)
-    const [filteredAnswers, setFilteredAnswers] = useState(question.answers)
-  
-    console.log(filteredAnswers)
-     function checkAnswer(answer) {
-      setSelectedAnswer(answer.letter)
-
-      if(answer.correct) {
-        setAnswerIsCorrect(true)
-        setFilteredAnswers(filteredAnswers.filter((ans) => ans.correct));
-      }
-      else {
-        setAnswerIsCorrect(false)
-        setFilteredAnswers(filteredAnswers.filter((ans) => {
-          return ans.correct || answer.letter === ans.letter
-        }));
-      }
-     }
-  
-    console.log(selectedAnswer, answerIsCorrect)
+function Answers({ answers, checkAnswer, selectedAnswer }) {
+    const optionLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     return (
-        <section className='answers'>
-            {filteredAnswers.map(answer => (
+        <>
+            {answers.map((answer, index) => (
 
-                <div onClick={() => checkAnswer(answer)} className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
-                    <span>{answer.letter}</span>
+                <div
+                    key={index}
+                    onClick={() =>
+                        checkAnswer(answer)}
+                    className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
+                    <span>{optionLetters[index]}</span>
                     <span>{answer.title}</span>
                 </div>
 
             ))}
-            {selectedAnswer &&
-                <section className='explanation'>
-                    <h4>Explanation</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem laborum soluta libero? Id dolorum aspernatur itaque possimus iusto, nobis magnam quos in cum aliquid corporis, excepturi est enim, a et?</p>
-
-                </section>
-            }
-
-        </section>
+        </>
     )
 }
 

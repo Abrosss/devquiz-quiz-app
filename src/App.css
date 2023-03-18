@@ -1,10 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-body{
+*{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+body{
+ 
+ 
   font-family: 'Righteous', cursive;
   overflow-x: hidden;
+  max-width: 1440px;
 }
 
 
@@ -76,36 +82,11 @@ transition: all 0.5s ease-in-out;
 .finish {
   margin-left: auto;
 }
-.explanation {
-  width: 100%;
-  margin-left: 2.5rem;
-  width: 28rem;
 
-}
-.explanation.test {
- margin: 0;
- padding: 1rem 0;
- width: 100%;
- display: flex;
-align-items: center;
- flex-direction: column;
-
-}
-.explanation textarea{
-  width: 100%;
-  height: 5rem;
-  border-radius: 15px;
-  border: 3px #489FB5 solid;
-  resize: none;
-  padding: 1rem;
-}
-.explanation textarea:focus-visible {
-  outline: none;
-}
 h4,p {
   margin: 0;
 }
-button {
+button, .button {
  
   word-break: unset;
   white-space: nowrap;
@@ -158,11 +139,7 @@ button {
   text-decoration: none;
 }
 
-.icon {
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
+
 .settings {
   position: absolute;
   right: 1rem;
@@ -301,16 +278,7 @@ ul {
   padding: 0;
   margin: 0;
 }
-.container-content {
-display: flex;
 
-flex-direction: column;
-align-items: center;
-padding: 4rem 0;
-padding-top: 2rem;
-
-
-}
 .submit {
   margin-top: 5rem;
 }
