@@ -13,7 +13,7 @@ import Result from '../../components/Result';
 import Loading from '../../components/Loading';
 import Navigation from '../../components/Navigation';
 import Question from '../../components/Question';
-
+import { filterAnswers } from '../../functions/filterAnswers';
 function QuizPage() {
 
   const location = useLocation();
@@ -72,7 +72,7 @@ function QuizPage() {
     else {
       setQuizState(prevState => ({
         ...prevState,
-        currentQuestionIndex: prevState.correctAnswerCount + 1
+        currentQuestionIndex: prevState.currentQuestionIndex + 1
       }));
     }
   }
@@ -99,7 +99,7 @@ function QuizPage() {
     }
 
   }
-
+console.log(selectedAnswer, currentQuestion.answers)
   //HELP FUNCTIONS
   const updateProgressBar = (answer, index) => {
     if (answer) {
@@ -112,9 +112,7 @@ function QuizPage() {
 
     }
   }
-  function filterAnswers(selectedAnswer, allAnswers) {
-    return allAnswers.filter(answer => answer === selectedAnswer || answer.correct);
-  }
+
   function recordStat(question, selectedAnswer) {
     let correctAnswer = question.answers.find(answer => answer.correct)
     return {
@@ -150,7 +148,7 @@ function QuizPage() {
     <>
       <Header />
       {isLoading ?
-        <section className='container-content'>
+        <section data-testid="container" className='container-content'>
           <Loading />
         </section>
 
@@ -188,7 +186,7 @@ function QuizPage() {
                     </section>
                   }
                   {selectedAnswer &&
-                    <button onClick={nextQuestion}>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
+                    <button data-testid='next-question-button' onClick={nextQuestion}>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
                   }
 
 
