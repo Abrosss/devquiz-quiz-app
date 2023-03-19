@@ -118,7 +118,8 @@ button, .button {
 }
 .category {
   list-style-type: none;
-
+  display: flex;
+  align-items: center;
   border: 1px #489FB5 solid;
   border-radius: 10px;
   cursor: pointer;
@@ -126,7 +127,7 @@ button, .button {
   position: relative;
  
 }
-.category:hover {
+.category a:hover {
   background-color: rgba(72, 159, 181,.5);
  
 }

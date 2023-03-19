@@ -27,6 +27,7 @@ function Login() {
         });
         if (response.status === 200) {
           const user = response.data
+          console.log(user)
           Cookies.set('auth_token', user.token)
           setLoggedIn(true);
           navigate('/');

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function Header() {
   return (
     <header>
-        <Link to="/">DEVQUIZ</Link>
+        <Link to="/">prepped<span className='highlighted'>.dev</span></Link>
     </header>
   )
 }

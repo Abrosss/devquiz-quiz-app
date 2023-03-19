@@ -33,6 +33,7 @@ function AddTheme() {
 
     useEffect(() => {
       const authToken = Cookies.get('auth_token');
+      console.log(authToken)
       if (authToken) {
         setLoggedIn(true)
      

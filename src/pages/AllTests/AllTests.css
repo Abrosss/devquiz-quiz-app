@@ -1,0 +1,26 @@
+.settings {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+.settings:hover {
+  background-color: aquamarine;
+}
+
+.settingsPopup {
+  position: absolute;
+  border: 1px black solid;
+  right: -9rem;
+  bottom: -1rem;
+  width: 8rem;
+}
+.settingsPopup li {
+  height: 100%;
+  padding: 1rem;
+}
+.settingsPopup li a {
+  padding: 0;
+}
+.settingsPopup li:hover {
+  background-color: cadetblue;
+}/*# sourceMappingURL=AllTests.css.map */
