@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
 
-import filterAnswers from '../filterAnswers';
+import {filterAnswers} from '../functions';
 describe('filterAnswers', () => {
     const allAnswers = [
         { title: 'Answer 1', correct: false },

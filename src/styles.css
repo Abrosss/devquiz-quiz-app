@@ -15,6 +15,10 @@ header a {
   width: 28rem;
 }
 
+.explanation.test {
+  margin-left: 0;
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -29,6 +33,12 @@ header a {
 
 nav {
   margin-bottom: 1.5rem;
+}
+
+.container.tests {
+  padding-top: 5rem;
+  align-items: center;
+  gap: 2rem;
 }
 
 button,
@@ -59,10 +69,6 @@ button:hover,
 
 .correct {
   color: green;
-}
-
-.incorrect {
-  color: red;
 }
 
 .correctCell {

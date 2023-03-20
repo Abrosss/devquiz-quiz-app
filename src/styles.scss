@@ -14,6 +14,9 @@ header {
     width: 28rem;
   
   }
+  .explanation.test {
+    margin-left: 0;
+  }
 .container {
     width: 100%;
     display: flex;
@@ -31,7 +34,11 @@ nav {
 }
 
 
-
+.container.tests {
+    padding-top: 5rem;
+    align-items: center;
+    gap: 2rem;
+}
 
 
 button,
@@ -66,9 +73,7 @@ button,
     color: green;
 }
 
-.incorrect {
-    color: red;
-}
+
 
 .correctCell {
     background-color: green;

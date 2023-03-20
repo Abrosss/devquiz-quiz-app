@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import axios from '../api/axios';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Dots from '../assets/dots.svg'
-function Categories() {
+import { useNavigate  } from 'react-router-dom';
+import axios from '../../api/axios';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
+import Cookies from 'js-cookie';
+function AllTests() {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([])
-  const [showMenu, setShowMenu] = useState(false);
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
+
   useEffect(() => {
     async function getCategories() {
       const response = await axios.get('/categories')
@@ -23,7 +22,7 @@ function Categories() {
   return (
    <>
       <Header/>
-      <section className='content'>
+      <section className='container tests'>
       <h2>Tests</h2>
       <ul className='categories'>
         {categories.map(category => (
@@ -34,13 +33,8 @@ function Categories() {
               state={{ category: category}}>
              {category.title} 
             </Link>
-            <img onClick={toggleMenu} className='icon settings' src={Dots}></img> 
-            {showMenu &&
-            <ul className='settingsMenu'>
-            <li>Edit</li>
-            <li>Delete</li>
-          </ul>
-            }
+          
+            
             
             </li> 
         ))}
@@ -51,4 +45,4 @@ function Categories() {
   )
 }
 
-export default Categories
+export default AllTests

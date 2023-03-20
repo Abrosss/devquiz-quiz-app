@@ -13,7 +13,7 @@ import Result from '../../components/Result';
 import Loading from '../../components/Loading';
 import Navigation from '../../components/Navigation';
 import Question from '../../components/Question';
-import { filterAnswers } from '../../functions/filterAnswers';
+import { filterAnswers } from '../../functions/functions';
 function QuizPage() {
 
   const location = useLocation();
@@ -99,7 +99,7 @@ function QuizPage() {
     }
 
   }
-console.log(selectedAnswer, currentQuestion.answers)
+
   //HELP FUNCTIONS
   const updateProgressBar = (answer, index) => {
     if (answer) {
@@ -126,7 +126,7 @@ console.log(selectedAnswer, currentQuestion.answers)
       currentQuestionIndex: 0,
       correctAnswerCount: 0,
       quizResults: [],
-      progressBarArray: []
+      progressBarArray: Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null }))
 
     }));
 
@@ -179,7 +179,7 @@ console.log(selectedAnswer, currentQuestion.answers)
                 <section className='answers'>
                   <Answers answers={answers} checkAnswer={recordAnswer} selectedAnswer={selectedAnswer} />
                   {selectedAnswer && currentQuestion.explanation &&
-                    <section className='explanation'>
+                    <section className='explanation test'>
                       <h4>Explanation</h4>
                       <p>{currentQuestion.explanation}</p>
 
