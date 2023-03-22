@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
+
 import Quiz from './pages/Quiz/QuizPage'
 import AllTests from './pages/AllTests/AllTests'
 import Login from "./pages/Login/Login";
