@@ -10,7 +10,7 @@ function Answers({ answers, checkAnswer, selectedAnswer }) {
                     onClick={() =>
                         checkAnswer(answer)}
                     className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}>
-                    <span>{answer.letter && answer.letter}</span>
+                    <span className='letter'>{answer.letter && answer.letter}</span>
                     <span>{answer.title}</span>
                 </div>
 

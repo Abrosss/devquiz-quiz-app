@@ -70,11 +70,15 @@ transition: all 0.5s ease-in-out;
 .answer:hover {
   transform: scale(1.05);
 }
+.letter {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
 .answer span {
   padding: 1rem 1.5rem;
   border-radius: 15px 0 0 15px;
-  word-break: unset;
-  white-space: nowrap
+
 }
 .answer span:first-child {
   background-color: aquamarine;
