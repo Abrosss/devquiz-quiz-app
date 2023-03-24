@@ -327,7 +327,7 @@ function EditTest() {
       </div>
       <section className='explanation'>
                   <h5>Explanation</h5>
-                  <textarea name='explanation' onChange={(e) => handleInputChange(e, index)}></textarea>
+                  <textarea value={question.explanation} name='explanation' onChange={(e) => handleInputChange(e, index)}></textarea>
                 </section>
     
                

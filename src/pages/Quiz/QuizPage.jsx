@@ -142,7 +142,9 @@ function QuizPage() {
   }, [currentQuestion])
 
 
-
+function wrapString(string) {
+  return string.split(';')
+}
 
   return (
     <>
@@ -181,7 +183,9 @@ function QuizPage() {
                   {selectedAnswer && currentQuestion.explanation &&
                     <section className='explanation test'>
                       <h4>Explanation</h4>
-                      <p>{currentQuestion.explanation}</p>
+                      <div className='explanation-text'>{wrapString(currentQuestion.explanation).map(sentence => (
+                        <p>{sentence}</p>
+                      ))}</div>
 
                     </section>
                   }

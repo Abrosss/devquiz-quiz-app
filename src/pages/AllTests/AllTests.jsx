@@ -20,6 +20,7 @@ function AllTests() {
     console.log(token)
     if (token) {
       const decodedToken = jwtDecode(token);
+      console.log(decodedToken)
       setIsAdmin(decodedToken.isAdmin);
     }
   }, []);

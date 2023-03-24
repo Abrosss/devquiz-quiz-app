@@ -53,4 +53,9 @@
 }
 .explanation textarea:focus-visible {
   outline: none;
+}
+.explanation .explanation-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }/*# sourceMappingURL=QuizPage.css.map */
