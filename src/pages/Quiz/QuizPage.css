@@ -58,4 +58,20 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  header {
+    padding: 1rem 0;
+    justify-content: center;
+  }
+  .container {
+    padding: 1rem;
+  }
+  .quiz {
+    flex-direction: column;
+  }
+  .quiz .question {
+    width: 100%;
+  }
 }/*# sourceMappingURL=QuizPage.css.map */
