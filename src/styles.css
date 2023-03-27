@@ -92,19 +92,10 @@ button:hover,
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }/*# sourceMappingURL=styles.css.map */
-
-
-@media only screen and (max-width: 600px) {
-  header {
-
-    padding: 1rem 0;
-
-   justify-content: center;
-}
-.container {
-  padding: 1rem;
- 
-}
-
-}

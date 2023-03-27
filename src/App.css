@@ -331,3 +331,6 @@ footer {
 footer.fixed {
   position: fixed;
 }
+@media only screen and (max-width: 600px) {
+
+}

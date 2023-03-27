@@ -35,6 +35,27 @@
         justify-content: center;
     }
 }
+nav {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+.tips {
+  padding: 1rem 2rem;
+  position: absolute;
+  right: 0;
+  border: 1px #489FB5 solid;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  color: #489FB5;
+  &:hover {
+    cursor: pointer;
+    box-shadow: rgba(72, 159, 181,.5) 0px 5px 29px 0px; ;
+
+  }
+}
 .explanation {
     width: 100%;
     margin: 0;
@@ -78,8 +99,10 @@
     .question {
  
         width: 100%;
-      
+     
     }
-
+    .answers {
+        width: 100%;
+      }
 }
   }

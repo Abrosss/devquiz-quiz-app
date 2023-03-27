@@ -97,5 +97,11 @@ button,
 .icon {
     width: 24px;
     height: 24px;
+
     cursor: pointer;
+}
+.icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
