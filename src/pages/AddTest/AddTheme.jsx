@@ -3,10 +3,12 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer'
 import Add from '../../assets/add.svg'
 import axios from '../../api/axios';
+import Axios from 'axios';
 import Cookies from 'js-cookie';
 import Delete from '../../assets/delete.svg'
 import { Link } from 'react-router-dom';
 import { useNavigate  } from 'react-router-dom';
+import { Editor } from '@tinymce/tinymce-react';
 import './AddTheme.css'
 function AddTheme() {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ function AddTheme() {
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
   const [questionAdded, setQuestionAdded] = useState(false)
   const [error, setError] = useState(null)
+  const [tips, setTips] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -42,7 +45,7 @@ function AddTheme() {
         navigate('/login');
       }
     }, []);
-  console.log(questionAdded)
+  console.log(tips)
   const addOption = (questionIndex) => {
    
     const updated = [...questions]
@@ -161,24 +164,35 @@ async function deleteImage(index, id) {
 
 
 }
+console.log(questionAdded)
+const handleEditorChange = (content, editor) => {
+  // update state with new content
+  setTips(content);
+};
 async function addQuestions(e) {
   e.preventDefault()
-  try {
-      const response = await axios.post('/questions', {
-          questions: questions
-      });
-      if (response.status === 200) {
-        setQuestionAdded(true)
-      }
 
+  try {
+    const [response1, response2] = await Axios.all([
+      Axios.post(`http://localhost:5000/api/questions`, {
+        questions: questions
+      }), 
+      Axios.put(`http://localhost:5000/api/categories/${category}`, {
+        tips: tips
+      })
+    ]);
+
+    console.log(response1, response2);
+
+    if (response1.status === 200 && response2.status === 200) {
+      setQuestionAdded(true);
+    }
 
   } catch (err) {
-
-      console.error(err);
+    console.error(err);
   }
-
-
 }
+
 function checkValidation(question) {
   let errors = {}
   let options = question.options.filter(answer => answer.correct === false);
@@ -208,7 +222,36 @@ function checkValidation(question) {
 
         </section>
         {saved && !questionAdded &&
-          <section className='container-content'>
+        <>
+        <section className='container-content container-tips'>
+          <h3>Add Tips</h3>
+          <p>If there are tips or hints you want to add, please go ahead</p>
+          <Editor
+  apiKey=""
+  initialValue="<p></p>"
+  init={{
+    height: 300,
+    width:'100%',
+    menubar: false,
+    plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table paste code help wordcount'
+    ],
+    toolbar:
+      'undo redo | formatselect | bold italic | fontsize | \
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent '
+  }}
+  onChange={(content, editor) => {
+   setTips(content.level.content)
+  }}
+/>
+
+         
+
+        </section>
+        <section className='container-content'>
           <h3>Add Questions</h3>
           {
             questions.map((question, index) => (
@@ -296,6 +339,8 @@ function checkValidation(question) {
          
 
         </section>
+        </>
+          
         }
         {questionAdded && 
         <section className='container-content'>
