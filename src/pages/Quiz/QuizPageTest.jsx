@@ -14,7 +14,6 @@ import Loading from '../../components/Loading';
 import Navigation from '../../components/Navigation';
 import Quiz from '../../components/Quiz';
 
-import { filterAnswers } from '../../functions/functions';
 function QuizPage() {
 
   const location = useLocation();  //will delete later will delete later will delete later will delete later 
@@ -34,6 +33,7 @@ function QuizPage() {
     correctAnswerCount: 0
   });
   const { quizIsFinished, currentQuestionIndex, correctAnswerCount } = quizState
+
   useEffect(() => {
     async function init() {
       setIsLoading(true)
@@ -44,30 +44,19 @@ function QuizPage() {
     }
     init()
   }, [])
-
-  function recordAnswer(answer) {
-    const answerSelected = selectedAnswer !== null;
-    if (!answerSelected) {
-      setSelectedAnswer(answer)
-      const answersToDisplay = filterAnswers(answer, currentQuestion.answers)
-      setAnswers(answersToDisplay)
-      if (answer.correct) {
-        setQuizState(prevState => ({
-          ...prevState,
-          correctAnswerCount: prevState.correctAnswerCount + 1
-        }));
-
-      }
-      updateProgressBar(answer, currentQuestionIndex)
-      const currentResultStat = recordStat(currentQuestion, answer)
-      setQuizState(prevState => ({
-        ...prevState,
-        quizResults: [...prevState.quizResults, currentResultStat]
-      }));
-
-    }
+  function handleRestartQuiz() {
+    setQuizState(prevState => ({
+      ...prevState,
+      quizIsFinished: false,
+      currentQuestionIndex: 0,
+      correctAnswerCount: 0,
+    }));
+    setUserResults(Array.from({ length: questions.length }, () => 
+    Object.assign({}, 
+      { question: null, correctAnswer: null, selectedAnswer: null })))
 
   }
+console.log(userResults, correctAnswerCount)
   return (
     <>
       <Header />
@@ -77,28 +66,38 @@ function QuizPage() {
         </section>
 
         :
-        <section className='container'>
-          <Navigation
-            currentPage={category.title}
-            linkToText="All Tests"
-            linkTo='/'
-          />
-          <ProgressBar
-            questionsTracking={userResults}
-            currentQuestionIndex={currentQuestionIndex}
-          />
-          {questions.length > 0 &&
-          <Quiz
-          questions={questions}
-          currentQuestionIndex={currentQuestionIndex}
-          setUserResults={setUserResults}
-          userResults={userResults}
-          />
-             
+        !quizIsFinished ?
+          <section className='container'>
+            <Navigation
+              currentPage={category.title}
+              linkToText="All Tests"
+              linkTo='/'
+            />
+            <ProgressBar
+              questionsTracking={userResults}
+              currentQuestionIndex={currentQuestionIndex}
+            />
+            {questions.length > 0 &&
+              <Quiz
+                questions={questions}
+                currentQuestionIndex={currentQuestionIndex}
+                setUserResults={setUserResults}
+                userResults={userResults}
+                setQuizState={setQuizState}
+              />
+
 
             }
-        </section>
+          </section>
+          :
+          <Result
+            correctAnswerCount={correctAnswerCount}
+            amountOfQuestions={questions.length}
+            handleRestartQuiz={handleRestartQuiz}
+          />
       }
+
+
     </>
   )
 
