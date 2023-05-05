@@ -227,7 +227,7 @@ function checkValidation(question) {
           <h3>Add Tips</h3>
           <p>If there are tips or hints you want to add, please go ahead</p>
           <Editor
-  apiKey="gwo6vsw26tgn13trxj6oxfliztjkwrmehe6o1h9wbb44tq65"
+  apiKey=""
   initialValue="<p></p>"
   init={{
     height: 300,
