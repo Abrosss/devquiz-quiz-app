@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import Question from './Question';
 import Answer from './Answer';
-function Quiz({ questions, currentQuestionIndex, userResults, setUserResults, setQuizState }) {
+function Quiz({ questions, currentQuestionIndex, userResults, setUserResults, setQuizState, updateProgressBar }) {
     const [visibleAnswers, setVisibleAnswers] = useState(questions[currentQuestionIndex].answers)
     //RESET ANSWERS WHEN A QUESTION IS CHANGED
 
@@ -28,11 +28,13 @@ function Quiz({ questions, currentQuestionIndex, userResults, setUserResults, se
             return newResults;
         });
     }
+    
     function checkAnswer(answer) {
         const answerSelected = userResults[currentQuestionIndex].selectedAnswer !== null;
         if (!answerSelected) {
             let correctAnswer = questions[currentQuestionIndex].answers.find(answer => answer.correct)
             saveUserResults(questions[currentQuestionIndex], correctAnswer, answer)
+            updateProgressBar(answer, currentQuestionIndex)
             const answersToDisplay = filterAnswers(answer, questions[currentQuestionIndex].answers)
             setVisibleAnswers(answersToDisplay)
             if (answer.correct) {
