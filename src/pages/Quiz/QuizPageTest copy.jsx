@@ -28,7 +28,12 @@ function QuizPage() {
   const [questions, setQuestions] = useState([])
   const [userResults, setUserResults] = useState([])
   const [progressTracking, setProgressTracking] = useState([])
-
+  const [quizState, setQuizState] = useState({
+    quizIsFinished: false,
+    currentQuestionIndex: 0,
+    correctAnswerCount: 0
+  });
+  const { quizIsFinished, currentQuestionIndex, correctAnswerCount } = quizState
 
   useEffect(() => {
     async function init() {
@@ -71,16 +76,36 @@ function QuizPage() {
         </section>
 
         :
-   
+        !quizIsFinished ?
           <section className='container'>
             <Navigation
               currentPage={category.title}
               linkToText="All Tests"
               linkTo='/'
             />
-           <Quizzer questions={questions}/>
+            <ProgressBar
+              questionsTracking={progressTracking}
+              currentQuestionIndex={currentQuestionIndex}
+            />
+            {questions.length > 0 &&
+              <Quiz
+                questions={questions}
+                currentQuestionIndex={currentQuestionIndex}
+                setUserResults={setUserResults}
+                userResults={userResults}
+                setQuizState={setQuizState}
+                updateProgressBar={updateProgressBar}
+              />
+
+
+            }
           </section>
-        
+          :
+          <Result
+            correctAnswerCount={correctAnswerCount}
+            amountOfQuestions={questions.length}
+            handleRestartQuiz={handleRestartQuiz}
+          />
       }
 
 

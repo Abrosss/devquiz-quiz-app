@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import Question from './Question';
+import Question from './QuestionScreen';
 import Answer from './Answer';
 function Quiz({ questions, currentQuestionIndex, userResults, setUserResults, setQuizState, updateProgressBar }) {
     const [visibleAnswers, setVisibleAnswers] = useState(questions[currentQuestionIndex].answers)

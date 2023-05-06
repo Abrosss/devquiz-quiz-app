@@ -1,10 +1,10 @@
 import React from 'react';
 
-function ProgressBar({ questionsTracking, currentQuestionIndex }) {
-  
+function ProgressBar({ progressTracking, currentQuestionIndex }) {
+  console.log(progressTracking)
   return (
     <section className='progress'>
-      {questionsTracking.map((cell, index) => (
+      {progressTracking.map((cell, index) => (
         <div key={index} 
         className={currentQuestionIndex === index ? 'cell active' : 
         (cell.isCorrect ? "cell correctCell" : 
