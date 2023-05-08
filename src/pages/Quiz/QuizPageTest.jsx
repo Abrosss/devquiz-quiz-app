@@ -7,7 +7,7 @@ import '../../styles.css'
 import './QuizPage.css'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import ProgressBar from '../../components/ProgressBar'
+
 import Quizzer from '../../components/Quizzer';
 import Result from '../../components/Result';
 import Loading from '../../components/Loading';

@@ -1,5 +1,5 @@
 import React from 'react'
-import ProgressBar from './ProgressBar'
+import {ProgressBar} from './ProgressBar'
 import QuestionScreen from './QuestionScreen';
 import { useState } from 'react';
 function Quizzer({ questions }) {
