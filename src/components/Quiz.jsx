@@ -20,14 +20,7 @@ function Quiz({ questions, currentQuestionIndex, userResults, setUserResults, se
             return allAnswers.filter(answer => answer.title === selectedAnswer.title || answer.correct);
         }
     }
-    function saveUserResults(question, correctAnswer, selectedAnswer) {
-     
-        setUserResults(prevResults => {
-            const newResults = [...prevResults];
-            newResults[currentQuestionIndex] = { ...newResults[currentQuestionIndex], question: question, correctAnswer: correctAnswer, selectedAnswer: selectedAnswer };
-            return newResults;
-        });
-    }
+  
     
     function checkAnswer(answer) {
         const answerSelected = userResults[currentQuestionIndex].selectedAnswer !== null;

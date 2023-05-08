@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
+function colorButton(answer, selectedAnswer) {
+    if (selectedAnswer === null) {
+      return "answer";
+    } else if (answer === true) {
+      return "answer correct";
+    } else if (answer === false) {
+      return "answer incorrect";
+    } 
+  }
 function Answer({ answers, checkAnswer, selectedAnswer }) {
-
+    
 
     return (
         <>
@@ -8,7 +17,7 @@ function Answer({ answers, checkAnswer, selectedAnswer }) {
 
                 <div
                     key={index}
-                    className={selectedAnswer === null ? 'answer' : (answer.correct ? 'answer correct' : 'answer incorrect')}
+                    className={colorButton(answer.correct, selectedAnswer)}
                     onClick={() => checkAnswer (answer)}
                     
     >       

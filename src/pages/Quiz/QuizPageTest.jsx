@@ -26,7 +26,6 @@ function QuizPage() {
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
   const [questions, setQuestions] = useState([])
-  const [userResults, setUserResults] = useState([])
   const [progressTracking, setProgressTracking] = useState([])
 
 
@@ -35,7 +34,6 @@ function QuizPage() {
       setIsLoading(true)
       const response = await axios.get(`/questions/${categoryId}`) //change to url hash search later
       setQuestions(response.data)
-      setUserResults(Array.from({ length: response.data.length }, () => Object.assign({}, { question: null, correctAnswer: null, selectedAnswer: null })))
       setProgressTracking(Array.from({ length: response.data.length }, () => Object.assign({}, { isCorrect: null })))
       setIsLoading(false)
     }
@@ -54,14 +52,7 @@ function QuizPage() {
     setProgressTracking(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
 
   }
-  const updateProgressBar = (answer, index) => {
-    if (answer) {
-      const updatedArray = [...progressTracking];
-      updatedArray[index].isCorrect = answer?.correct;
-      setProgressTracking(updatedArray)
-
-    }
-  }
+ 
   return (
     <>
       <Header />
