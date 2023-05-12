@@ -4,10 +4,9 @@ import QuestionScreen from './QuestionScreen';
 import Answers from './Answers';
 import Result from './Result'
 import { useState, useEffect } from 'react';
+import Explanation from './Explanation';
 
-function wrapString(string) {
-  return string.split(';')
-}
+
 
 function filterAnswers(selectedAnswer, allAnswers) {
   if (selectedAnswer.correct) {
@@ -145,13 +144,7 @@ function Quiz({ questions }) {
               />
 
               {getSelectedAnswer() && getCurrentQuestion().explanation &&
-                <section className='explanation test'>
-                  <h4>Explanation</h4>
-                  <div className='explanation-text'>{wrapString(getCurrentQuestion().explanation).map(sentence => (
-                    <p>{sentence}</p>
-                  ))}</div>
-
-                </section>
+               <Explanation explanation={getCurrentQuestion().explanation}/>
               }
 
               {getSelectedAnswer() &&
