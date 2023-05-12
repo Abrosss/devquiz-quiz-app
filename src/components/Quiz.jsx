@@ -5,7 +5,7 @@ import Answers from './Answers';
 import Result from './Result'
 import { useState, useEffect } from 'react';
 import Explanation from './Explanation';
-
+import Button from './Button'
 
 
 function filterAnswers(selectedAnswer, allAnswers) {
@@ -18,7 +18,7 @@ function filterAnswers(selectedAnswer, allAnswers) {
 }
 
 function Quiz({ questions }) {
-  
+
   const [quizState, setQuizState] = useState({
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
@@ -114,7 +114,7 @@ function Quiz({ questions }) {
 
 
   return (
-  
+
     <>
       {quizIsFinished ?
         <Result
@@ -144,14 +144,15 @@ function Quiz({ questions }) {
               />
 
               {getSelectedAnswer() && getCurrentQuestion().explanation &&
-               <Explanation explanation={getCurrentQuestion().explanation}/>
+                <Explanation
+                  explanation={getCurrentQuestion().explanation} />
               }
 
               {getSelectedAnswer() &&
-                <button
-                  data-testid='next-question-button'
-                  onClick={nextQuestion}>
-                  {currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
+                <Button
+                  func={nextQuestion}
+                  name={currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}
+                />
               }
 
             </section>
@@ -165,4 +166,4 @@ function Quiz({ questions }) {
   )
 }
 
-export {filterAnswers, Quiz}
+export { filterAnswers, Quiz }
