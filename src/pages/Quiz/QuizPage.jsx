@@ -4,7 +4,7 @@ import axios from '../../api/axios';
 
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
-import Quiz from '../../components/Quiz';
+import {Quiz} from '../../components/Quiz';
 import Loading from '../../components/Loading';
 
 import '../../App.css';
@@ -53,7 +53,14 @@ function QuizPage() {
             linkToText="All Tests"
             linkTo='/'
           />
+          {questions.length === 0 ?
+
+          <div>No questions added yet!</div> :
+          
           <Quiz questions={questions} />
+        
+        }
+          
         </section>
 
       }

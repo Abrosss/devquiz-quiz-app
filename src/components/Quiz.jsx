@@ -1,7 +1,7 @@
 import React from 'react'
 import { ProgressBar } from './ProgressBar'
 import QuestionScreen from './QuestionScreen';
-import Answer from './Answer';
+import Answers from './Answers';
 import Result from './Result'
 import { useState, useEffect } from 'react';
 
@@ -112,7 +112,10 @@ function Quiz({ questions }) {
     setProgressTracking(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
 
   }
+
+
   return (
+  
     <>
       {quizIsFinished ?
         <Result
@@ -135,7 +138,7 @@ function Quiz({ questions }) {
 
             <section className='answers'>
 
-              <Answer
+              <Answers
                 answers={visibleAnswers}
                 checkAnswer={checkAnswer}
                 selectedAnswer={getSelectedAnswer()}
@@ -169,4 +172,4 @@ function Quiz({ questions }) {
   )
 }
 
-export default Quiz
+export {filterAnswers, Quiz}

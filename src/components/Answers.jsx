@@ -8,7 +8,7 @@ function colorButton(answer, selectedAnswer) {
       return "answer incorrect";
     } 
   }
-function Answer({ answers, checkAnswer, selectedAnswer }) {
+function Answers({ answers, checkAnswer, selectedAnswer }) {
     
 
     return (
@@ -31,4 +31,4 @@ function Answer({ answers, checkAnswer, selectedAnswer }) {
     )
 }
 
-export default Answer
+export default Answers

@@ -36,7 +36,7 @@ function AddTheme() {
 
     useEffect(() => {
       const authToken = Cookies.get('auth_token');
-      console.log(authToken)
+  
       if (authToken) {
         setLoggedIn(true)
      
@@ -45,7 +45,7 @@ function AddTheme() {
         navigate('/login');
       }
     }, []);
-  console.log(tips)
+
   const addOption = (questionIndex) => {
    
     const updated = [...questions]
@@ -55,7 +55,7 @@ function AddTheme() {
   const handleImageUpload = (e, index) =>{
     const file = e.target.files[0];
     setFileToBase(file, index);
-    console.log(file);
+
 }
 
  function setFileToBase (file, questionIndex){
@@ -63,7 +63,7 @@ function AddTheme() {
     const updated = [...questions]
     reader.readAsDataURL(file);
     reader.onloadend = async () =>{
-      console.log(reader.result)
+
       const response = await axios.post('/addImage', {"image" : reader.result} )
       updated[questionIndex].image=response.data.url
       updated[questionIndex].cloudinaryId=response.data.id
@@ -128,7 +128,7 @@ async function deleteImage(index, id) {
     list[questionIndex].options[index][name] = value;
     list[questionIndex].options[index]["letter"] = optionLetters[index];
     setQuestions(list); 
-    console.log(questions)
+
   };
   const handleCorrectOption = (e, index, questionIndex) => {
     let { name } = e.target;
@@ -144,7 +144,7 @@ async function deleteImage(index, id) {
     setQuestions(list); 
   
   }
-  console.log(questions)
+
   async function addCategory(e) {
     e.preventDefault()
     try {
@@ -164,7 +164,7 @@ async function deleteImage(index, id) {
 
 
 }
-console.log(questionAdded)
+
 const handleEditorChange = (content, editor) => {
   // update state with new content
   setTips(content);
@@ -182,7 +182,7 @@ async function addQuestions(e) {
       })
     ]);
 
-    console.log(response1, response2);
+    
 
     if (response1.status === 200 && response2.status === 200) {
       setQuestionAdded(true);
@@ -205,7 +205,7 @@ function checkValidation(question) {
    return errors
 }
 
-  console.log(questions)
+
   return (
     <>
       <Header />
@@ -223,7 +223,7 @@ function checkValidation(question) {
         </section>
         {saved && !questionAdded &&
         <>
-        <section className='container-content container-tips'>
+        {/* <section className='container-content container-tips'>
           <h3>Add Tips</h3>
           <p>If there are tips or hints you want to add, please go ahead</p>
           <Editor
@@ -250,7 +250,7 @@ function checkValidation(question) {
 
          
 
-        </section>
+        </section> */}
         <section className='container-content'>
           <h3>Add Questions</h3>
           {
