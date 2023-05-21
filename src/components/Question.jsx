@@ -1,9 +1,9 @@
 import React from 'react'
 
-function QuestionScreen(props) {
+function Question(props) {
   const { questionNumber, currentQuestion, amountOfQuestions } = props
   return (
-    <section className='question'>
+    <>
 
       <span>Question {questionNumber} / {amountOfQuestions}</span>
 
@@ -16,8 +16,8 @@ function QuestionScreen(props) {
 
 
 
-    </section>
+    </>
   )
 }
 
-export default QuestionScreen
+export default Question

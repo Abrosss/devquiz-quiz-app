@@ -10,10 +10,10 @@ function colorCell(isCorrect, index, currentQuestionIndex) {
     return "cell";
   }
 }
-function ProgressBar({ progressTracking, currentQuestionIndex }) {
+function ProgressBar({ questions, currentQuestionIndex }) {
   return (
     <section className='progress' >
-      {progressTracking.map((cell, index) => (
+      {questions.map((cell, index) => (
         <div key={index} data-testid='progress-bar-cell'
           className={colorCell(cell?.isCorrect, index, currentQuestionIndex)}>{index + 1}</div>
       ))}

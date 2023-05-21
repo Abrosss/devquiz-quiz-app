@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 import axios from '../../api/axios';
 import Axios from 'axios';
 import Cookies from 'js-cookie';
-
+import Delete from '../../assets/delete.svg'
 import AddQuestions from '../../components/AddTest/AddQuestions';
 
 import { Link } from 'react-router-dom';
@@ -38,26 +38,9 @@ function AddTheme() {
     }, []);
 
 
-  const handleImageUpload = (e, index) =>{
-    const file = e.target.files[0];
-    setFileToBase(file, index);
+  
 
-}
 
- function setFileToBase (file, questionIndex){
-    const reader = new FileReader();
-    const updated = [...questions]
-    reader.readAsDataURL(file);
-    reader.onloadend = async () =>{
-
-      const response = await axios.post('/addImage', {"image" : reader.result} )
-      updated[questionIndex].image=response.data.url
-      updated[questionIndex].cloudinaryId=response.data.id
-      setQuestions(updated)
-     
-    }
-
-}
 async function deleteImage(index, id) {
   const updated = [...questions]
   try {

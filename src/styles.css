@@ -41,6 +41,12 @@ nav {
   gap: 2rem;
 }
 
+.container-right {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 button,
 .button {
   border-radius: 8px;

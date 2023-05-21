@@ -39,7 +39,11 @@ nav {
     align-items: center;
     gap: 2rem;
 }
-
+.container-right {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
 button,
 .button {

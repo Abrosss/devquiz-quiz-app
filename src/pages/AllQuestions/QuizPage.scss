@@ -4,7 +4,7 @@
     gap: 2rem;
     padding-top: 2rem;
 
-    .question {
+    .question-section {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -27,7 +27,7 @@
         }
     }
 
-    .answers {
+    .answers-section {
         display: flex;
         width: 40%;
         flex-direction: column;
@@ -96,12 +96,12 @@ nav {
   .quiz {
   flex-direction: column;
 
-    .question {
+    .question-section {
  
         width: 100%;
      
     }
-    .answers {
+    .answers-section {
         width: 100%;
       }
 }

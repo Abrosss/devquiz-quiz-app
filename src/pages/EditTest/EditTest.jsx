@@ -7,34 +7,16 @@ import Footer from '../../components/Footer'
 import Add from '../../assets/add.svg'
 import Cookies from 'js-cookie';
 import Delete from '../../assets/delete.svg'
+import Question from '../../components/Question';
 import { Link } from 'react-router-dom';
-function EditTest() {
+function EditTest({questions}) {
     const { testId } = useParams()
     const [category, setCategory] = useState(null)
-    const [questions, setQuestions] = useState([])
-    const [updatedQuestions, setUpdatedQuestions] = useState([])
+
+    const [updatedQuestions, setUpdatedQuestions] = useState(questions)
     const [isLoading, setIsLoading] = useState(true)
-    console.log(questions, category)
-    useEffect(() => {
-        async function getQuestions() {
-          setIsLoading(true)
-          const response = await axios.get(`/questions/${testId}`)
-          setQuestions(response.data)
-          setUpdatedQuestions(response.data)
-    
-          setIsLoading(false)
-        }
-        async function getCategory() {
-          setIsLoading(true)
-          const response = await axios.get(`/categories/${testId}`)
-          setCategory(response.data[0])
-    
-    
-          setIsLoading(false)
-        }
-        getQuestions()
-        getCategory()
-      }, [])
+
+    console.log(updatedQuestions)
       const optionLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
       const question = {
         title:'', 
@@ -49,23 +31,13 @@ function EditTest() {
           {title:"", correct: false, letter: "B"}
         ]}
 
-      const [questionsExpanded, setQuestionsExpanded] = useState([0])
+      const [questionsExpanded, setQuestionsExpanded] = useState([])
       const [questionAdded, setQuestionAdded] = useState(false)
       const [error, setError] = useState(null)
       const [loggedIn, setLoggedIn] = useState(false);
     
-        useEffect(() => {
-          const authToken = Cookies.get('auth_token');
-          console.log(authToken)
-          if (authToken) {
-            setLoggedIn(true)
-         
-          } else {
-            setLoggedIn(false)
-            navigate('/login');
-          }
-        }, []);
-      console.log(questionAdded)
+      
+   
       const addOption = (questionIndex) => {
        
         const updated = [...updatedQuestions]
@@ -134,11 +106,10 @@ function EditTest() {
       }
       const handleInputChange = (e, index) => {
         const { name, value } = e.target;
-        const list = [...updatedQuestions];
-        list[index][name] = value;
-        list[index]["category"] = category;
+        const updatedQuestions = [...questions];
+        updatedQuestions[index][name] = value;
       
-        setUpdatedQuestions(list); 
+        setUpdatedQuestions(updatedQuestions); 
     
       };
     console.log(updatedQuestions)
@@ -164,7 +135,7 @@ function EditTest() {
         setUpdatedQuestions(list); 
       
       }
-      console.log(questions)
+
       async function addCategory(e) {
         e.preventDefault()
         try {
@@ -237,63 +208,63 @@ function EditTest() {
        return errors
     }
     
-      console.log(questions)
+   function collapse(index) {
+    if (questionsExpanded.includes(index)) {
+      setQuestionsExpanded(questionsExpanded.filter((i) => i !== index))
+    } else {
+      setQuestionsExpanded([...questionsExpanded, index]);
+
+    }
+   }
+
+   function deleteQuestion(id) {
+
+    const filteredQuestions = updatedQuestions.filter(question => question.id !== id)
+    console.log(filteredQuestions)
+    setUpdatedQuestions(filteredQuestions)
+   }
       return (
         <>
-          <Header />
-          <section className='container'>
-            <section className='container-header'>
-              <h1>Edit Test</h1>
-              <div className='form-input'>
-                <span>
-                  Category
-                </span>
-                <input onChange={(e) => setCategory(e.target.value)} className='input' type="text" placeholder="Add Category" value={category?.title}></input>
-                <button onClick={(e) => addCategory(e)} className='save'>Save</button>
-              </div>
-    
-            </section>
-            {!questionAdded &&
+       
+
+         
               <section className='container-content'>
-              <h3>Add Questions</h3>
+              <h3>{updatedQuestions.length} questions</h3>
               {
                 updatedQuestions.map((question, index) => (
-                  <section className='sections'>
-     <section className='question-section'>
+                  <section className='question'>
+     <section>
                   <div className='form-input'>
+                    
                     {index === updatedQuestions.length-1 &&
                      <img onClick={() => {
                       addQuestion(index)
-                     }}  className='add' src={Add}></img>
+                     }}  className='add icon' src={Add} alt='add a question icon'></img>
                     }
+                    <img className='icon' onClick={() => deleteQuestion(question.id)} src={Delete}></img>
                    
-                  <span className='collapseButton'  onClick={() => {
-                  if (questionsExpanded.includes(index)) {
-                    setQuestionsExpanded(questionsExpanded.filter((i) => i !== index))
-                  } else {
-                    setQuestionsExpanded([...questionsExpanded, index]);
-             
-                  }
-                } }>
+                  <span className='collapseButton'  onClick={() => collapse(index) }>
                    {index+1}.
                   </span>
-                  <input onChange={(e) => handleInputChange(e, index)} className='input question' value={question.title} type="text" name='title' placeholder="Type a question here"></input>
+
+                  <input 
+                  onChange={(e) => handleInputChange(e, index)} 
+                  className='input question' 
+                  value={question.title} 
+                  type="text" 
+                  name='title' 
+                  placeholder="Type a question here"></input>
                   <span>?</span>
                 </div>
-                {error && 
-      <span className='error'>{error.questionError}</span>
-    }
+               
                 {  questionsExpanded.includes(index) &&
                 <>
                 {question.image &&
                  <section className='image-section'>
                  
-                            <img src={question.image}></img>
+                            <img src={question.image} alt='question illustration'></img>
                             <img className='icon' onClick={() => deleteImage(index, question.cloudinaryId)} src={Delete}></img>
-                 
-                 
-       
-      
+          
                 </section>
                 }
                  <div class="upload">
@@ -318,9 +289,7 @@ function EditTest() {
                      </label>
                    </div>
     ))}
-    {error && 
-      <span className='error'>{error.optionError}</span>
-    }
+
       <span onClick={() => addOption(index)} className='addButton'>Add another option</span>
     
         
@@ -342,15 +311,15 @@ function EditTest() {
              
     
             </section>
-            }
+            
             {questionAdded && 
             <section className='container-content'>
               <h2>Test Added!</h2>
               <Link className='button' to="/">BACK TO TESTS</Link>
             </section>
             }
-          </section>
-            <Footer />
+       
+       
         </>
       )
     
