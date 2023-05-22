@@ -8,11 +8,13 @@ import './styles.css'
 
 import Tests from './pages/AllTests/AllTests'
 import QuizPage from "./pages/AllQuestions/QuizPage";
+import AddTheme from './pages/AddTest/AddTheme'
 function App() {
   return (
 <Router>
 <Routes>
 <Route path='/admin/tests/:hash' element={<QuizPage isAdmin={true} />}/>
+<Route path='/admin/tests/addTest' element={<AddTheme/>}/>
 <Route path='/admin/tests' element={<Tests isAdmin={true} />}/>
 <Route path='/tests/:hash' element={<QuizPage isAdmin={false} />}/>
 <Route path='/tests' element={<Tests isAdmin={false} />}/>
