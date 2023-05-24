@@ -8,15 +8,13 @@ import Add from '../../assets/add.svg'
 import Cookies from 'js-cookie';
 import Delete from '../../assets/delete.svg'
 import { Link } from 'react-router-dom';
-function EditTest({ questions }) {
-  const { testId } = useParams()
-  const [category, setCategory] = useState(null)
-
+function EditTest({ questions, quizData }) {
+  const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
   const [isLoading, setIsLoading] = useState(true)
 
   console.log(updatedQuestions)
-  const optionLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+  
   const question = {
     title: '',
     category: "",
@@ -112,8 +110,9 @@ function EditTest({ questions }) {
     setUpdatedQuestions(updatedQuestions);
 
   };
-  console.log(updatedQuestions)
+
   const handleOptionChange = (e, index, questionIndex) => {
+    const optionLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     const { name, value } = e.target;
     const list = [...updatedQuestions];
     list[questionIndex].answers[index][name] = value;
@@ -230,6 +229,7 @@ function EditTest({ questions }) {
 
 
       <section className='container-content'>
+        <h1>Edit {quiz?.title}</h1>
         <h3>{updatedQuestions.length} questions</h3>
         {
           updatedQuestions.map((question, index) => (
@@ -308,7 +308,11 @@ function EditTest({ questions }) {
 
           ))
         }
+        <section className='flex gap-1'>
+        <button className='submit attention' >DELETE THIS TEST</button>
         <button className='submit' onClick={editQuestions}>SUBMIT</button>
+        </section>
+       
 
 
       </section>

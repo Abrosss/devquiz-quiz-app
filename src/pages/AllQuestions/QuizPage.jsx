@@ -84,31 +84,34 @@ function QuizPage({isAdmin}) {
       ]
     }
   ]
-  const { hash } = useParams();
+
 
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
   const [questions, setQuestions] = useState([])
-  const [category, setCategory] = useState({})
-console.log(category, questions)
-  useEffect(() => {
-     function init() {
+  const [quiz, setQuiz] = useState({})
+  const { quizID } = useParams();
 
-      setIsLoading(true)
-      const category = categoriesData.find(category => category.hash === hash)
-      const questions = questionsData.filter(question => question.category === category.id)
-      console.log(questions)
-      setCategory(category)
-      setQuestions(questions)
-      setIsLoading(false)
-    }
-    init()
-  }, [])
+
+    useEffect(() => {
+      async function init() {
+  
+        setIsLoading(true)
+        const questions = await axios.get(`/questions/${quizID}`) //change to url hash search later
+        const quiz = await axios.get(`/quizzes/${quizID}`)
+  
+        setQuiz(quiz.data[0])
+        setQuestions(questions.data)
+        setIsLoading(false)
+      }
+      init()
+    }, [])
+
 
 
   return (
     <>
-      <Header />
+      <Header link={isAdmin ? '/admin/tests' : '/tests'}/>
       {isLoading ?
         <section className='container-content'>
           <Loading />
@@ -118,7 +121,7 @@ console.log(category, questions)
 
         <section className='container'>
           <Navigation
-            currentPage={category.title}
+            currentPage={quiz.title}
             linkToText="All Tests"
             linkTo={isAdmin ? "/admin/tests" : "/tests"}
           />
@@ -127,7 +130,7 @@ console.log(category, questions)
           <div>No questions added yet!</div> :
           
           isAdmin ? 
-            <div><EditTest questions={questions} setQuestions={setQuestions}/></div>
+            <div><EditTest quizData={quiz} questions={questions} setQuestions={setQuestions}/></div>
             : <Quiz questions={questions} />
           
         

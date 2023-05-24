@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import axios from '../../api/axios';
 import Dots from '../../assets/dots.svg'
 import './AllTests.css'
 
@@ -20,10 +21,17 @@ let categoriesData = [
 ]
 function AllTests({ isAdmin }) {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState(categoriesData)
+  const [quizzes, setQuizzes] = useState(categoriesData)
   const [menuOpened, setMenuOpened] = useState(null)
 
-
+  useEffect(() => {
+    async function getQuizzes() {
+      const response = await axios.get('/quizzes')
+      console.log(response)
+      setQuizzes(response.data)
+    }
+    getQuizzes()
+  }, [])
   console.log(isAdmin)
 
   function toggleMenu(index) {
@@ -32,11 +40,11 @@ function AllTests({ isAdmin }) {
   }
   return (
     <>
-      <Header />
+      <Header link='/'/>
       <section className='container tests'>
         <div className='container-right'>
           <button> <Link
-                to={'/admin/addTest'}
+                to={'/admin/tests/addTest'}
               >
                 Add a test
               </Link>
@@ -45,13 +53,13 @@ function AllTests({ isAdmin }) {
         
         <h2>Tests</h2>
         <ul className='categories'>
-          {categories.map((category, index) => (
+          {quizzes.map((quiz, index) => (
 
-            <li key={category._id} className='category'>
+            <li key={quiz._id} className='category'>
               <Link
-                to={isAdmin ? `/admin/tests/${category.hash}` : `/tests/${category.hash}`}
+                to={isAdmin ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
               >
-                {category.title}
+                {quiz.title}
               </Link>
           
 
