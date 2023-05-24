@@ -130,15 +130,15 @@ async function submitQuiz(title) {
       <Header link ='/admin/tests'/>
       { saved ? 
   <section className='container-content'>
-  <h2>Test Added!</h2>
-  <Link className='button' to="/admin/tests">BACK TO TESTS</Link>
+  <h2>Quiz Added!</h2>
+  <Link className='button' to="/admin/tests">BACK TO QUIZZES</Link>
 </section>
 :
 
         <>
          <section className='container'>
         <section className='container-header'>
-          <h1>Add New Test</h1>
+          <h1>Add New Quiz</h1>
           <div className='form-input'>
             <span>
               Title
