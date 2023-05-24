@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import axios from '../../api/axios'
-
-import Header from '../../components/Header';
-import Footer from '../../components/Footer'
 import Add from '../../assets/add.svg'
-import Cookies from 'js-cookie';
 import Delete from '../../assets/delete.svg'
 import { Link } from 'react-router-dom';
-function EditTest({ questions, quizData }) {
+import { uploadToCloudinary } from '../../helpFunctions';
+function EditQuiz({ questions, quizData }) {
   const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.log(updatedQuestions)
-  
   const question = {
     title: '',
     category: "",
@@ -31,8 +25,7 @@ function EditTest({ questions, quizData }) {
 
   const [questionsExpanded, setQuestionsExpanded] = useState([])
   const [questionAdded, setQuestionAdded] = useState(false)
-  const [error, setError] = useState(null)
-  const [loggedIn, setLoggedIn] = useState(false);
+
 
 
 
@@ -42,26 +35,21 @@ function EditTest({ questions, quizData }) {
     updated[questionIndex].answers.push({ title: "" })
     setUpdatedQuestions(updated)
   };
-  const handleImageUpload = (e, index) => {
+  async function handleImageUpload (e, index) {
+    const updatedArray = [...updatedQuestions]
     const file = e.target.files[0];
-    setFileToBase(file, index);
-    console.log(file);
-  }
-
-  function setFileToBase(file, questionIndex) {
-    const reader = new FileReader();
-    const updated = [...updatedQuestions]
-    reader.readAsDataURL(file);
-    reader.onloadend = async () => {
-      console.log(reader.result)
-      const response = await axios.post('/addImage', { "image": reader.result })
-      updated[questionIndex].image = response.data.url
-      updated[questionIndex].cloudinaryId = response.data.id
-      setUpdatedQuestions(updated)
-
+    try {
+      const imageData =  await uploadToCloudinary(file)
+      updatedArray[index].image = imageData.url
+      updatedArray[index].cloudinaryId = imageData.id
+      console.log(updatedArray)
+      setUpdatedQuestions(updatedArray)
+  
+    } catch (error) {
+      console.error(error);
     }
-
   }
+
   async function deleteImage(index, id) {
     const updated = [...updatedQuestions]
     try {
@@ -332,4 +320,4 @@ function EditTest({ questions, quizData }) {
 }
 
 
-export default EditTest
+export default EditQuiz

@@ -9,7 +9,7 @@ import Options from '../../components/Admin/Options';
 import Add from '../../assets/add.svg';
 import Delete from '../../assets/delete.svg';
 
-import { deleteFromArray, recordInputs, addToArray } from '../../helpFunctions';
+import { deleteFromArray, recordInputs, addToArray, uploadToCloudinary } from '../../helpFunctions';
 
 import './AddQuiz.css';
 
@@ -45,20 +45,25 @@ function handleQuestionInputs(e, index) {
 function handleDeleteQuestion(index) {
   setQuestions(deleteFromArray(questions, index))
 }
-function handleImageUpload (e, index) {
+async function handleImageUpload (e, index) {
   const updatedArray = [...questions]
   const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = async () =>{
-    const response = await axios.post('/addImage', {"image" : reader.result} )
-    updatedArray[index].image=response.data.url
-    updatedArray[index].cloudinaryId=response.data.id
+  try {
+    const imageData =  await uploadToCloudinary(file)
+    updatedArray[index].image = imageData.url
+    updatedArray[index].cloudinaryId = imageData.id
+    console.log(updatedArray)
     setQuestions(updatedArray)
-   
-  }
 
+  } catch (error) {
+    console.error(error);
+  }
 }
+
+
+ 
+
+
 async function handleImageDelete(index, cloudinaryId) {
 const updatedArray = [...questions]
 try {

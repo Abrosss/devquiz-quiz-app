@@ -4,15 +4,15 @@ import axios from '../../api/axios';
 
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
-import {Quiz} from '../../components/Quiz';
+import { Quiz } from '../../components/Quiz';
 import Loading from '../../components/Loading';
-import EditTest from '../EditTest/EditTest'
+import EditQuiz from '../EditQuiz/EditQuiz'
 import '../../App.css';
 import '../../styles.css';
 import './QuizPage.css';
 
 
-function QuizPage({isAdmin}) {
+function QuizPage({ isAdmin }) {
   let categoriesData = [
     {
       id: "001001",
@@ -36,12 +36,12 @@ function QuizPage({isAdmin}) {
         {
           title: "answer1",
           correct: true,
-          letter : 'A'
+          letter: 'A'
         },
         {
           title: "answer2",
           correct: false,
-          letter : 'B'
+          letter: 'B'
         }
       ]
     },
@@ -55,12 +55,12 @@ function QuizPage({isAdmin}) {
         {
           title: "answer1",
           correct: true,
-          letter : 'A'
+          letter: 'A'
         },
         {
           title: "answer2",
           correct: false,
-          letter : 'B'
+          letter: 'B'
         }
       ]
     },
@@ -74,12 +74,12 @@ function QuizPage({isAdmin}) {
         {
           title: "answer1",
           correct: true,
-          letter : 'A'
+          letter: 'A'
         },
         {
           title: "answer2",
           correct: false,
-          letter : 'B'
+          letter: 'B'
         }
       ]
     }
@@ -93,25 +93,25 @@ function QuizPage({isAdmin}) {
   const { quizID } = useParams();
 
 
-    useEffect(() => {
-      async function init() {
-  
-        setIsLoading(true)
-        const questions = await axios.get(`/questions/${quizID}`) //change to url hash search later
-        const quiz = await axios.get(`/quizzes/${quizID}`)
-  
-        setQuiz(quiz.data[0])
-        setQuestions(questions.data)
-        setIsLoading(false)
-      }
-      init()
-    }, [])
+  useEffect(() => {
+    async function init() {
+
+      setIsLoading(true)
+      const questions = await axios.get(`/questions/${quizID}`) //change to url hash search later
+      const quiz = await axios.get(`/quizzes/${quizID}`)
+
+      setQuiz(quiz.data[0])
+      setQuestions(questions.data)
+      setIsLoading(false)
+    }
+    init()
+  }, [])
 
 
 
   return (
     <>
-      <Header link={isAdmin ? '/admin/tests' : '/tests'}/>
+      <Header link={isAdmin ? '/admin/tests' : '/tests'} />
       {isLoading ?
         <section className='container-content'>
           <Loading />
@@ -127,15 +127,15 @@ function QuizPage({isAdmin}) {
           />
           {questions.length === 0 ?
 
-          <div>No questions added yet!</div> :
-          
-          isAdmin ? 
-            <div><EditTest quizData={quiz} questions={questions} setQuestions={setQuestions}/></div>
-            : <Quiz questions={questions} />
-          
-        
-        }
-          
+            <div>No questions added yet!</div> :
+
+            isAdmin ?
+              <div><EditQuiz quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
+              : <Quiz questions={questions} />
+
+
+          }
+
         </section>
 
       }

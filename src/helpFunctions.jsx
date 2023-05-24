@@ -1,4 +1,5 @@
 
+import axios from "./api/axios";
 export function deleteFromArray(array, index) {
   const filteredQuestions = [...array]; 
   filteredQuestions.splice(index, 1); 
@@ -15,3 +16,21 @@ export function deleteFromArray(array, index) {
   updatedArray[index][name] = value;
   return updatedArray
 };
+
+export function uploadToCloudinary(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = async () => {
+      try {
+        const response = await axios.post('/addImage', { image: reader.result });
+        resolve(response.data);
+      } catch (error) {
+        reject(error);
+      }
+    };
+    reader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
