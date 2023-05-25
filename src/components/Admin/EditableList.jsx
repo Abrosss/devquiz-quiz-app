@@ -3,7 +3,8 @@ import axios from '../../api/axios'
 import Add from '../../assets/add.svg'
 import Delete from '../../assets/delete.svg'
 import { Link } from 'react-router-dom';
-import { uploadToCloudinary } from '../../helpFunctions';
+import { uploadToCloudinary, addToArray, deleteFromCloudinary } from '../../helpFunctions';
+import Button from '../Button';
 function EditQuiz({ questions, quizData }) {
   const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
@@ -27,68 +28,44 @@ function EditQuiz({ questions, quizData }) {
   const [questionAdded, setQuestionAdded] = useState(false)
 
 
-
-
   const addOption = (questionIndex) => {
-
     const updated = [...updatedQuestions]
     updated[questionIndex].answers.push({ title: "" })
     setUpdatedQuestions(updated)
   };
-  async function handleImageUpload (e, index) {
+
+  async function handleImageUpload(e, index) {
     const updatedArray = [...updatedQuestions]
     const file = e.target.files[0];
     try {
-      const imageData =  await uploadToCloudinary(file)
+      const imageData = await uploadToCloudinary(file)
       updatedArray[index].image = imageData.url
       updatedArray[index].cloudinaryId = imageData.id
-      console.log(updatedArray)
       setUpdatedQuestions(updatedArray)
-  
+
     } catch (error) {
       console.error(error);
     }
   }
 
-  async function deleteImage(index, id) {
+  async function deleteImage(index, cloudinaryId) {
     const updated = [...updatedQuestions]
-    try {
-      const response = await axios.post('/deleteImage', {
-        id: id
-      });
-      if (response.status === 200) {
-        updated[index].image = ""
-        updated[index].cloudinaryId = ""
-        setUpdatedQuestions(updated)
-      }
-
-
-    } catch (err) {
-
-      console.error(err);
+    const deleted = await deleteFromCloudinary(cloudinaryId)
+    if (deleted) {
+      updated[index].image = ""
+      updated[index].cloudinaryId = ""
+      setUpdatedQuestions(updated)
     }
+
   }
 
   function addQuestion(index) {
-    let err = checkValidation(updatedQuestions[index])
-
-    if (Object.keys(err).length === 0) {
-      setUpdatedQuestions([...updatedQuestions, { title: '', new: true, answers: [{ title: "" }, { title: "" }] }])
-
-      const updated = [...questionsExpanded]
-      if (updated.length > 0) {
-        updated.pop()
-      }
-      setQuestionsExpanded([...updated, index + 1])
-
+    setUpdatedQuestions(addToArray(updatedQuestions, { title: '', new: true, answers: [{ title: "" }, { title: "" }] })) ////add a new question
+    const expanded = [...questionsExpanded]
+    if (expanded.length > 0) {
+        expanded.pop()
     }
-    else {
-      setError(err)
-    }
-
-
-
-
+    setQuestionsExpanded([...expanded, index + 1])
   }
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -183,18 +160,7 @@ function EditQuiz({ questions, quizData }) {
 
 
   }
-  function checkValidation(question) {
-    console.log(question)
-    let errors = {}
-    let answers = question.answers.filter(answer => answer.correct === false);
-    if (question.answers.length === answers.length) {
-      errors.optionError = 'set a correct answer'
-    }
-    if (question.title === "") {
-      errors.questionError = 'what is the question?'
-    }
-    return errors
-  }
+
 
   function collapse(index) {
     if (questionsExpanded.includes(index)) {
@@ -204,7 +170,7 @@ function EditQuiz({ questions, quizData }) {
 
     }
   }
-
+console.log(quiz)
   function deleteQuestion(id) {
 
     const filteredQuestions = updatedQuestions.filter(question => question.id !== id)
@@ -217,7 +183,12 @@ function EditQuiz({ questions, quizData }) {
 
 
       <section className='container-content'>
-        <h1>Edit {quiz?.title}</h1>
+      <div className='form-input'>
+            <span>
+              Edit
+            </span>
+            <input onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} className='input' type="text" value={quiz.title} placeholder="Add a Quiz Title"></input>
+          </div>
         <h3>{updatedQuestions.length} questions</h3>
         {
           updatedQuestions.map((question, index) => (
@@ -297,10 +268,10 @@ function EditQuiz({ questions, quizData }) {
           ))
         }
         <section className='flex gap-1'>
-        <button className='submit attention' >DELETE THIS TEST</button>
-        <button className='submit' onClick={editQuestions}>SUBMIT</button>
+          <button className='submit attention' >DELETE THIS TEST</button>
+          <button className='submit' onClick={editQuestions}>SUBMIT</button>
         </section>
-       
+
 
 
       </section>

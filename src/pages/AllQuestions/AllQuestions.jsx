@@ -6,10 +6,10 @@ import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 import { Quiz } from '../../components/Quiz';
 import Loading from '../../components/Loading';
-import EditQuiz from '../EditQuiz/EditQuiz'
+import EditableList from '../../components/Admin/EditableList'
 import '../../App.css';
 import '../../styles.css';
-import './QuizPage.css';
+import './AllQuestions.css';
 
 
 function QuizPage({ isAdmin }) {
@@ -130,7 +130,7 @@ function QuizPage({ isAdmin }) {
             <div>No questions added yet!</div> :
 
             isAdmin ?
-              <div><EditQuiz quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
+              <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
               : <Quiz questions={questions} />
 
 

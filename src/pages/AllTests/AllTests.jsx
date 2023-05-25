@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import axios from '../../api/axios';
+import ButtonRedirect from '../../components/ButtonRedirect';
 import Dots from '../../assets/dots.svg'
 import './AllTests.css'
 
@@ -40,17 +41,15 @@ function AllTests({ isAdmin }) {
   }
   return (
     <>
-      <Header link='/'/>
+      <Header link='/' />
       <section className='container tests'>
-        <div className='container-right'>
-          <button> <Link
-                to={'/admin/tests/addTest'}
-              >
-                Add a test
-              </Link>
-              </button>
-        </div>
-        
+        {isAdmin &&
+
+          <div className='container-right'>
+            <ButtonRedirect link="/admin/tests/addTest" name="Add a test" />
+          </div>
+        }
+
         <h2>Tests</h2>
         <ul className='categories'>
           {quizzes.map((quiz, index) => (
@@ -61,7 +60,7 @@ function AllTests({ isAdmin }) {
               >
                 {quiz.title}
               </Link>
-          
+
 
             </li>
           ))}

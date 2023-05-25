@@ -1,5 +1,6 @@
 
 import axios from "./api/axios";
+
 export function deleteFromArray(array, index) {
   const filteredQuestions = [...array]; 
   filteredQuestions.splice(index, 1); 
@@ -10,6 +11,7 @@ export function deleteFromArray(array, index) {
     return [...array, element]
   
  }
+
  export function recordInputs (e, array, index) {
   const { name, value } = e.target;
   const updatedArray = [ ...array ]
@@ -33,4 +35,20 @@ export function uploadToCloudinary(file) {
       reject(error);
     };
   });
+}
+export async function deleteFromCloudinary(cloudinaryId) {
+  try {
+    const response = await axios.post('/deleteImage', {
+      cloudinaryId: cloudinaryId
+    });
+    if (response.status === 200) {
+      return true
+    }
+    else return false
+  
+  
+  } catch (err) {
+  
+    console.error(err);
+  }
 }

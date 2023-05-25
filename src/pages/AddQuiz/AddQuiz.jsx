@@ -9,7 +9,7 @@ import Options from '../../components/Admin/Options';
 import Add from '../../assets/add.svg';
 import Delete from '../../assets/delete.svg';
 
-import { deleteFromArray, recordInputs, addToArray, uploadToCloudinary } from '../../helpFunctions';
+import { deleteFromArray, recordInputs, addToArray, uploadToCloudinary, deleteFromCloudinary } from '../../helpFunctions';
 
 import './AddQuiz.css';
 
@@ -66,20 +66,11 @@ async function handleImageUpload (e, index) {
 
 async function handleImageDelete(index, cloudinaryId) {
 const updatedArray = [...questions]
-try {
-  const response = await axios.post('/deleteImage', {
-      id: cloudinaryId
-  });
-  if (response.status === 200) {
-    updatedArray[index].image=""
-    updatedArray[index].cloudinaryId=""
-    setQuestions(updatedArray)
-  }
-
-
-} catch (err) {
-
-  console.error(err);
+const deleted = await deleteFromCloudinary(cloudinaryId)
+if (deleted) {
+  updatedArray[index].image = ""
+  updatedArray[index].cloudinaryId = ""
+  setQuestions(updatedArray)
 }
 }
 function addEmptyQuestion(index) {
