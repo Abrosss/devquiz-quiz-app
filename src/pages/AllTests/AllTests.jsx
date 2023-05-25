@@ -1,78 +1,73 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useNavigate  } from 'react-router-dom';
-import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import jwtDecode from 'jwt-decode';
-import Cookies from 'js-cookie';
+import axios from '../../api/axios';
+import ButtonRedirect from '../../components/ButtonRedirect';
 import Dots from '../../assets/dots.svg'
 import './AllTests.css'
-function AllTests() {
+
+let categoriesData = [
+  {
+    id: "001001",
+    title: "Programming",
+    hash: "programming"
+  },
+  {
+    id: "001002",
+    title: "Programming Tules",
+    hash: "programming_tules"
+  }
+]
+function AllTests({ isAdmin }) {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState([])
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [quizzes, setQuizzes] = useState(categoriesData)
   const [menuOpened, setMenuOpened] = useState(null)
-  console.log(isAdmin)
-  
+
   useEffect(() => {
-    const token = Cookies.get('auth_token');
-    console.log(token)
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      console.log(decodedToken)
-      setIsAdmin(decodedToken.isAdmin);
+    async function getQuizzes() {
+      const response = await axios.get('/quizzes')
+      console.log(response)
+      setQuizzes(response.data)
     }
-  }, []);
-  useEffect(() => {
-    async function getCategories() {
-      const response = await axios.get('/categories')
-      setCategories(response.data)
-    }
-    getCategories()
+    getQuizzes()
   }, [])
- 
+  console.log(isAdmin)
+
   function toggleMenu(index) {
     if (menuOpened === null) setMenuOpened(index)
     else setMenuOpened(null)
   }
   return (
-   <>
-      <Header/>
+    <>
+      <Header link='/' />
       <section className='container tests'>
-      <h2>Tests</h2>
-      <ul className='categories'>
-        {categories.map((category, index) => (
-         
-         <li key={category._id} className='category'>
-            <Link
-              to={`/tests/${category.title.toLowerCase()}`}
-              state={{ category: category}}>
-             {category.title} 
-            </Link>
-            {isAdmin &&
-            <>
-             <div onClick={() => toggleMenu(index) } className='settings'><img className='icon' src={Dots}></img></div>
-             {menuOpened === index &&
-             <ul className='settingsPopup'>
-             <li><Link
-              to={`/tests/edit/${category._id}`}>
-             Edit
-            </Link></li>
-            </ul>
-             }
-             
-             </>
-            }
-           
-            
-            
-            </li> 
-        ))}
-      </ul>
+        {isAdmin &&
+
+          <div className='container-right'>
+            <ButtonRedirect link="/admin/tests/addTest" name="Add a test" />
+          </div>
+        }
+
+        <h2>Tests</h2>
+        <ul className='categories'>
+          {quizzes.map((quiz, index) => (
+
+            <li key={quiz._id} className='category'>
+              <Link
+                to={isAdmin ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
+              >
+                {quiz.title}
+              </Link>
+
+
+            </li>
+          ))}
+        </ul>
       </section>
-      <Footer position={"fixed"}/>
-   </>
+      <Footer position={"fixed"} />
+    </>
   )
 }
 

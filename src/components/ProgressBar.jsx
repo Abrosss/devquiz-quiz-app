@@ -1,17 +1,24 @@
 import React from 'react';
-
-function ProgressBar({ questionsTracking, currentQuestionIndex }) {
-  
+function colorCell(isCorrect, index, currentQuestionIndex) {
+  if (currentQuestionIndex === index) {
+    return "cell active";
+  } else if (isCorrect === true) {
+    return "cell correctCell";
+  } else if (isCorrect === false) {
+    return "cell incorrectCell";
+  } else {
+    return "cell";
+  }
+}
+function ProgressBar({ questions, currentQuestionIndex }) {
   return (
-    <section className='progress'>
-      {questionsTracking.map((cell, index) => (
-        <div key={index} 
-        className={currentQuestionIndex === index ? 'cell active' : 
-        (cell.isCorrect ? "cell correctCell" : 
-        (cell.isCorrect === null ? "cell" : "cell incorrectCell"))}>{index+1}</div>
+    <section className='progress' >
+      {questions.map((cell, index) => (
+        <div key={index} data-testid='progress-bar-cell'
+          className={colorCell(cell?.isCorrect, index, currentQuestionIndex)}>{index + 1}</div>
       ))}
     </section>
   );
 }
 
-export default ProgressBar;
+export { ProgressBar, colorCell }
