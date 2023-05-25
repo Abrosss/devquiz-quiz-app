@@ -7,7 +7,6 @@ import Navigation from '../../components/Navigation';
 import { Quiz } from '../../components/Quiz';
 import Loading from '../../components/Loading';
 import EditableList from '../../components/Admin/EditableList'
-import '../../App.css';
 import '../../styles.css';
 import './AllQuestions.css';
 
