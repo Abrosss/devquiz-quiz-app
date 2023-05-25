@@ -163,10 +163,14 @@ button, .button {
   position: relative;
 }
 .add {
-  width: 24px;
-  height: 24px;
+
   position: absolute;
   left: -3rem;
+ 
+}
+.icon {
+  width: 24px;
+  height: 24px;
   cursor: pointer;
 }
 .form-input.options {
@@ -202,7 +206,7 @@ border: none;
 border-radius: unset;
 border-bottom: 1px #489FB5 solid;;
 }
-.sections {
+.question {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -309,7 +313,7 @@ ul {
   display: flex;
   gap: 1rem;
 }
-.sections {
+.question {
   /* border-bottom: 1px #489FB5 solid; */
   padding-bottom: 1rem;
   gap: 5rem;

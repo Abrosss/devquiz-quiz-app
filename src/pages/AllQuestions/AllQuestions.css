@@ -4,30 +4,30 @@
   gap: 2rem;
   padding-top: 2rem;
 }
-.quiz .question {
+.quiz .question-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
   width: 60%;
 }
-.quiz .question h2 {
+.quiz .question-section h2 {
   word-break: break-word;
   text-align: center;
 }
-.quiz .question .question__image-container {
+.quiz .question-section .question__image-container {
   display: flex;
   justify-content: center;
   width: 20rem;
   height: 20rem;
   position: relative;
 }
-.quiz .question .question__image-container img {
+.quiz .question-section .question__image-container img {
   -o-object-fit: contain;
      object-fit: contain;
   width: 100%;
 }
-.quiz .answers {
+.quiz .answers-section {
   display: flex;
   width: 40%;
   flex-direction: column;
@@ -93,10 +93,10 @@ nav {
   .quiz {
     flex-direction: column;
   }
-  .quiz .question {
+  .quiz .question-section {
     width: 100%;
   }
-  .quiz .answers {
+  .quiz .answers-section {
     width: 100%;
   }
 }/*# sourceMappingURL=QuizPage.css.map */

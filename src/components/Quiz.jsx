@@ -1,103 +1,166 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { ProgressBar } from './ProgressBar'
 import Question from './Question';
-import Answer from './Answer';
-function Quiz({ questions, currentQuestionIndex, userResults, setUserResults, setQuizState, updateProgressBar }) {
-    const [visibleAnswers, setVisibleAnswers] = useState(questions[currentQuestionIndex].answers)
-    //RESET ANSWERS WHEN A QUESTION IS CHANGED
-
-    useEffect(() => {
-
-      
-        setVisibleAnswers(questions[currentQuestionIndex]?.answers)
-
-    }, [currentQuestionIndex])
-    function filterAnswers(selectedAnswer, allAnswers) {
-        if (selectedAnswer.correct) {
-            return [selectedAnswer];
-        }
-        else {
-            return allAnswers.filter(answer => answer.title === selectedAnswer.title || answer.correct);
-        }
-    }
-    function saveUserResults(question, correctAnswer, selectedAnswer) {
-     
-        setUserResults(prevResults => {
-            const newResults = [...prevResults];
-            newResults[currentQuestionIndex] = { ...newResults[currentQuestionIndex], question: question, correctAnswer: correctAnswer, selectedAnswer: selectedAnswer };
-            return newResults;
-        });
-    }
-    
-    function checkAnswer(answer) {
-        const answerSelected = userResults[currentQuestionIndex].selectedAnswer !== null;
-        if (!answerSelected) {
-            let correctAnswer = questions[currentQuestionIndex].answers.find(answer => answer.correct)
-            saveUserResults(questions[currentQuestionIndex], correctAnswer, answer)
-            updateProgressBar(answer, currentQuestionIndex)
-            const answersToDisplay = filterAnswers(answer, questions[currentQuestionIndex].answers)
-            setVisibleAnswers(answersToDisplay)
-            if (answer.correct) {
-                setQuizState(prevState => ({
-                    ...prevState,
-                    correctAnswerCount: prevState.correctAnswerCount + 1
-                }));
-
-            }
-
-        }
-    }
-    function wrapString(string) {
-        return string.split(';')
-    }
-    function nextQuestion() {
-        if (currentQuestionIndex === questions.length - 1) {
-            setQuizState(prevState => ({
-                ...prevState,
-                quizIsFinished: true
-            }));
-        }
-        else {
-            setQuizState(prevState => ({
-                ...prevState,
-                currentQuestionIndex: prevState.currentQuestionIndex + 1
-            }));
-        }
-    }
-    return (
-        <section className='quiz'>
-            <Question
-                currentQuestion={questions[currentQuestionIndex]}
-                questionNumber={currentQuestionIndex + 1}
-                amountOfQuestions={questions.length}
-            />
-            <section className='answers'>
-                <Answer
-                    answers={visibleAnswers}
-                    checkAnswer={checkAnswer}
-                    selectedAnswer={userResults[currentQuestionIndex].selectedAnswer}
-
-                />
-
-                {userResults[currentQuestionIndex].selectedAnswer && questions[currentQuestionIndex].explanation &&
-                    <section className='explanation test'>
-                        <h4>Explanation</h4>
-                        <div className='explanation-text'>{wrapString(questions[currentQuestionIndex].explanation).map(sentence => (
-                            <p>{sentence}</p>
-                        ))}</div>
-
-                    </section>
-                }
-                {userResults[currentQuestionIndex].selectedAnswer &&
-                    <button data-testid='next-question-button' onClick={nextQuestion}>{currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}</button>
-                }
+import Answers from './Answers';
+import Result from './Result'
+import { useState, useEffect } from 'react';
+import Explanation from './Explanation';
+import Button from './Button'
 
 
-            </section>
-
-
-        </section>
-    )
+function filterAnswers(selectedAnswer, allAnswers) {
+  if (selectedAnswer.correct) {
+    return [selectedAnswer];
+  }
+  else {
+    return allAnswers.filter(answer => answer.title === selectedAnswer.title || answer.correct);
+  }
 }
 
-export default Quiz
+function Quiz({ questions }) {
+
+  const [quizState, setQuizState] = useState({
+    currentQuestionIndex: 0,
+    correctAnswerCount: 0,
+    quizIsFinished: false
+  });
+  const { currentQuestionIndex, correctAnswerCount, quizIsFinished } = quizState
+  const [progressTracking, setProgressTracking] = useState(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
+  const [visibleAnswers, setVisibleAnswers] = useState(getCurrentQuestion().answers)
+  const [userResults, setUserResults] = useState(Array.from({ length: questions.length }, () => Object.assign({}, { question: null, selectedAnswer: null })))
+
+  useEffect(() => {
+    setVisibleAnswers(getCurrentQuestion().answers)
+
+  }, [currentQuestionIndex])
+
+  function getCurrentQuestion() {
+    return questions[currentQuestionIndex];
+  }
+
+  function getSelectedAnswer() {
+    return userResults[currentQuestionIndex].selectedAnswer
+  }
+
+  function saveUserResults(question, selectedAnswer) {
+    setUserResults(prevResults => {
+      const newResults = [...prevResults];
+      newResults[currentQuestionIndex] = { ...newResults[currentQuestionIndex], question: question, selectedAnswer: selectedAnswer };
+      return newResults;
+    });
+  }
+
+  function updateProgressBar(answer, index) {
+    if (!answer) {
+      return;
+    }
+    const updatedArray = [...progressTracking];
+    updatedArray[index].isCorrect = answer.correct;
+    setProgressTracking(updatedArray);
+
+  }
+
+  function checkAnswer(selectedAnswer) {
+
+    //CHECK IF an answer was already selected, to avoid click dublication
+
+    const answerAlreadySelected = getSelectedAnswer() !== null;
+    if (answerAlreadySelected) return
+
+    if (selectedAnswer.correct) updateCounter() //UPDATE the quiz counter
+
+    saveUserResults(getCurrentQuestion(), selectedAnswer)  //Save user progress
+    updateProgressBar(selectedAnswer, currentQuestionIndex) //update progress bars
+    setVisibleAnswers(filterAnswers(selectedAnswer, getCurrentQuestion().answers)) //filter answers to display the selected and the correct answers only
+  }
+
+  function nextQuestion() {
+    if (currentQuestionIndex === questions.length - 1) {
+      setQuizState(prevState => ({
+        ...prevState,
+        quizIsFinished: true
+      }));
+    }
+    else {
+      setQuizState(prevState => ({
+        ...prevState,
+        currentQuestionIndex: prevState.currentQuestionIndex + 1
+      }));
+    }
+  }
+  function updateCounter() {
+    setQuizState(prevState => ({
+      ...prevState,
+      correctAnswerCount: prevState.correctAnswerCount + 1
+    }));
+  }
+  function restartQuiz() {
+    setQuizState(prevState => ({
+      ...prevState,
+      quizIsFinished: false,
+      currentQuestionIndex: 0,
+      correctAnswerCount: 0,
+    }));
+    setUserResults(Array.from({ length: questions.length }, () =>
+      Object.assign({},
+        { question: null, selectedAnswer: null })))
+    setProgressTracking(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
+    setVisibleAnswers(getCurrentQuestion().answers)
+  }
+
+
+  return (
+
+    <>
+      {quizIsFinished ?
+        <Result
+          correctAnswerCount={correctAnswerCount}
+          amountOfQuestions={questions.length}
+          handleRestartQuiz={restartQuiz}
+        />
+        :
+        <>
+          <ProgressBar
+            questions={progressTracking}
+            currentQuestionIndex={currentQuestionIndex} />
+
+          <section className='quiz'>
+            <section className='question-section'>
+              <Question
+                currentQuestion={getCurrentQuestion()}
+                questionNumber={currentQuestionIndex + 1}
+                amountOfQuestions={questions.length}
+              />
+            </section>
+            <section className='answers-section'>
+
+              <Answers
+                answers={visibleAnswers}
+                checkAnswer={checkAnswer}
+                selectedAnswer={getSelectedAnswer()}
+              />
+
+              {getSelectedAnswer() !== null && getCurrentQuestion().explanation &&
+                <Explanation
+                  explanation={getCurrentQuestion().explanation} />
+              }
+
+              {getSelectedAnswer() !== null &&
+                <Button
+                  func={nextQuestion}
+                  name={currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}
+                />
+              }
+
+            </section>
+          </section>
+
+        </>
+
+      }
+
+    </>
+  )
+}
+
+export { filterAnswers, Quiz }
