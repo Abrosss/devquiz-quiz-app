@@ -26,4 +26,3 @@ dist-ssr
 .netlify
 
 netlify.toml
-vite.config.js
