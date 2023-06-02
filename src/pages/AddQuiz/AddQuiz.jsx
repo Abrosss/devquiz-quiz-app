@@ -156,7 +156,7 @@ async function submitQuiz(title) {
                   <div className='form-input'>
             
             {index === questions.length - 1 &&
-                <img className='icon add' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(question, index)}></img>
+                <img className='icon add' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index)}></img>
             }
              <img className='icon' onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
             <span className='collapseButton' onClick={() => handleQuestionToggle(index)}>
