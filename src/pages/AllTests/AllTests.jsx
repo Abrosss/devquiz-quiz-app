@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
@@ -7,8 +7,9 @@ import axios from '../../api/axios';
 import ButtonRedirect from '../../components/ButtonRedirect';
 import Loading from '../../components/Loading';
 import Dots from '../../assets/dots.svg'
+import { UserContext } from '../../context/User'
 import './AllTests.css'
-
+import Cookies from 'js-cookie';
 let categoriesData = [
   {
     id: "001001",
@@ -21,11 +22,24 @@ let categoriesData = [
     hash: "programming_tules"
   }
 ]
-function AllTests({ isAdmin }) {
+function AllTests({loggedIn}) {
   const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState(categoriesData)
   const [menuOpened, setMenuOpened] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+
+
+  useEffect(() => {
+    const authToken = Cookies.get('auth_token');
+
+    if (authToken) {
+      console.log(authToken)
+      console.log('kowkowkf')
+   
+    } else {
+      navigate('/login');
+    }
+  }, []);
   useEffect(() => {
     async function getQuizzes() {
       setIsLoading(true)
@@ -36,7 +50,6 @@ function AllTests({ isAdmin }) {
     }
     getQuizzes()
   }, [])
-  console.log(isAdmin)
 
   function toggleMenu(index) {
     if (menuOpened === null) setMenuOpened(index)
@@ -44,9 +57,9 @@ function AllTests({ isAdmin }) {
   }
   return (
     <>
-      <Header link='/' />
+      <Header link='/' loggedIn={loggedIn}/>
       <section className='container tests'>
-        {isAdmin &&
+        {loggedIn &&
 
           <div className='container-right'>
             <ButtonRedirect link="/admin/tests/addTest" name="Add a test" />
@@ -66,7 +79,7 @@ function AllTests({ isAdmin }) {
 
               <li key={quiz._id} className='category'>
                 <Link
-                  to={isAdmin ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
+                  to={loggedIn ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
                 >
                   {quiz.title}
                 </Link>

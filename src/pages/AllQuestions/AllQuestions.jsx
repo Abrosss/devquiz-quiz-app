@@ -11,7 +11,7 @@ import '../../styles.css';
 import './AllQuestions.css';
 
 
-function QuizPage({ isAdmin }) {
+function QuizPage({ loggedIn }) {
   let categoriesData = [
     {
       id: "001001",
@@ -90,7 +90,7 @@ function QuizPage({ isAdmin }) {
   const [questions, setQuestions] = useState([])
   const [quiz, setQuiz] = useState({})
   const { quizID } = useParams();
-
+console.log(loggedIn)
 
   useEffect(() => {
     async function init() {
@@ -110,7 +110,7 @@ function QuizPage({ isAdmin }) {
 
   return (
     <>
-      <Header link={isAdmin ? '/admin/tests' : '/tests'} />
+      <Header link={loggedIn ? '/admin/tests' : '/tests'} />
       {isLoading ?
         <section className='container-content'>
           <Loading />
@@ -122,13 +122,13 @@ function QuizPage({ isAdmin }) {
           <Navigation
             currentPage={quiz.title}
             linkToText="All Tests"
-            linkTo={isAdmin ? "/admin/tests" : "/tests"}
+            linkTo={loggedIn ? "/admin/tests" : "/tests"}
           />
           {questions.length === 0 ?
 
             <div>No questions added yet!</div> :
 
-            isAdmin ?
+            loggedIn ?
               <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
               : <Quiz questions={questions} />
 
