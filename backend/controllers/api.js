@@ -174,7 +174,37 @@ module.exports = {
       res.status(500).send({ message: 'error updating question: ' + err });
     }
   },
+  editQuiz: async (req, res) => {
+    console.log('sfsefsef');
+    if (!req.body) {
+      return res.status(400).send({ message: 'nothing to update' });
+    }
+    let id = req.params.id;
+    let title = req.body.title
+    try {
+      
+          let updatedQuiz = {
+            $set: {
+              title: title
+            },
+          };
 
+          const data = await Quiz.findByIdAndUpdate(
+            id,
+            updatedQuiz
+          );
+
+          if (!data) {
+            throw new Error('quiz  is not found');
+          }
+        
+      
+
+      res.status(200).send({ message: 'Questions updated successfully' });
+    } catch (err) {
+      res.status(500).send({ message: 'error updating question: ' + err });
+    }
+  },
 
   addTips: async (req, res) => {
     console.log('sfsefsefsef')

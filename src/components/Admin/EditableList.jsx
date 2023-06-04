@@ -146,6 +146,9 @@ function EditQuiz({ questions, quizData }) {
     const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));
   
     try {
+      await axios.put(`/quizzes/${quiz._id}`, {
+        title: quiz.title,
+      });
       if (questionsToBeDeleted.length > 0) {
         console.log(questionsToBeDeleted);
         await axios.delete('/questions', {

@@ -8,7 +8,7 @@ router.put("/questions", apiController.editQuestion)
 router.delete("/questions", apiController.deleteQuestion)
 router.get("/quizzes", apiController.getQuizzes)
 router.get("/quizzes/:id", apiController.getQuiz)
-router.put("/quizzes/:id", apiController.addTips)
+router.put("/quizzes/:id", apiController.editQuiz)
 router.delete("/quizzes/:id", apiController.deleteQuiz)
 
 router.post("/addQuiz", apiController.postQuiz)
