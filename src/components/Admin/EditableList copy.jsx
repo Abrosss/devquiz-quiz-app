@@ -3,16 +3,15 @@ import axios from '../../api/axios'
 import Add from '../../assets/add.svg'
 import Delete from '../../assets/delete.svg'
 import { Link } from 'react-router-dom';
-import { uploadToCloudinary, addToArray, deleteFromCloudinary, deleteFromArray } from '../../helpFunctions';
+import { uploadToCloudinary, addToArray, deleteFromCloudinary } from '../../helpFunctions';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button';
 function EditQuiz({ questions, quizData }) {
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
-  const [questionsToBeDeleted, setQuestionsToBeDeleted] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  console.log(updatedQuestions)
+
   const question = {
     title: '',
     category: "",
@@ -63,19 +62,19 @@ function EditQuiz({ questions, quizData }) {
   }
 
   function addQuestion(index) {
-    setUpdatedQuestions(addToArray(updatedQuestions, { title: '', answers: [{ title: "" }, { title: "" }] })) ////add a new question
+    setUpdatedQuestions(addToArray(updatedQuestions, { title: '', new: true, answers: [{ title: "" }, { title: "" }] })) ////add a new question
     const expanded = [...questionsExpanded]
     if (expanded.length > 0) {
-      expanded.pop()
+        expanded.pop()
     }
     setQuestionsExpanded([...expanded, index + 1])
   }
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    const edited = [...updatedQuestions];
-    edited[index][name] = value;
+    const updatedQuestions = [...questions];
+    updatedQuestions[index][name] = value;
 
-    setUpdatedQuestions(edited);
+    setUpdatedQuestions(updatedQuestions);
 
   };
 
@@ -140,32 +139,30 @@ function EditQuiz({ questions, quizData }) {
 
 
   }
-  console.log(questionsToBeDeleted.length )
   async function editQuestions(e) {
-    e.preventDefault();
-    const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));
-  
-    try {
-      if (questionsToBeDeleted.length > 0) {
-        console.log(questionsToBeDeleted);
-        await axios.delete('/questions', {
-          data: { ids: questionsToBeDeleted },
-        });
-      } else if (newQuestions.length > 0) {
-        const sent = await submitQuestions(quiz._id, newQuestions);
-        console.log(sent);
-        if (sent) {
-          await axios.put('/questions', {
-            questions: updatedQuestions,
-          });
-          setQuestionAdded(true);
-        }
-      }
-    } catch (error) {
-      console.error('Error editing questions:', error.response.data);
+    e.preventDefault()
+    const newQuestions = updatedQuestions.filter(que => que.new)
+    const updatedQuestions2 = updatedQuestions.filter(que => !que.new)
+    if (newQuestions) {
+      addQuestions(newQuestions)
     }
-  }
+    try {
+      const response = await axios.put('/questions', {
+        questions: updatedQuestions2
+      });
+      if (response.status === 200) {
+        setQuestionAdded(true)
+      }
 
+
+    } catch (err) {
+
+      console.error(err);
+    }
+
+
+  }
+  
 
   function collapse(index) {
     if (questionsExpanded.includes(index)) {
@@ -175,26 +172,21 @@ function EditQuiz({ questions, quizData }) {
 
     }
   }
-  console.log(questionsToBeDeleted)
-  function deleteQuestion(index) {
-    const existedQuestion = updatedQuestions[index].hasOwnProperty('_id')
-    console.log(existedQuestion)
-    if (existedQuestion) {
-      setQuestionsToBeDeleted(addToArray(questionsToBeDeleted, updatedQuestions[index]._id))
-    }
+console.log(quiz)
+  function deleteQuestion(id) {
 
-    const filteredQuestions = deleteFromArray(updatedQuestions, index)
+    const filteredQuestions = updatedQuestions.filter(question => question.id !== id)
     console.log(filteredQuestions)
     setUpdatedQuestions(filteredQuestions)
   }
   async function deleteQuiz(id) {
-    console.log(quiz)
+  console.log(quiz)
     try {
       await axios.delete(`/quizzes/${id}`)
         .then(res => {
           if (res.status === 200) {
             navigate('/admin/tests')
-
+      
           }
         })
         .catch(err => console.log(err))
@@ -205,33 +197,18 @@ function EditQuiz({ questions, quizData }) {
     }
 
   }
-  async function submitQuestions(quizID, questions) {
-    console.log(quizID)
-
-    try {
-      const response = await axios.post(`/questions`, {
-        questions: questions,
-        quizID: quizID
-      })
-      if (response.status === 200) {
-        return true
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
   return (
     <>
 
 
 
       <section className='container-content'>
-        <div className='form-input'>
-          <span>
-            Edit
-          </span>
-          <input onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} className='input' type="text" value={quiz.title} placeholder="Add a Quiz Title"></input>
-        </div>
+      <div className='form-input'>
+            <span>
+              Edit
+            </span>
+            <input onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} className='input' type="text" value={quiz.title} placeholder="Add a Quiz Title"></input>
+          </div>
         <h3>{updatedQuestions.length} questions</h3>
         {
           updatedQuestions.map((question, index) => (
@@ -244,7 +221,7 @@ function EditQuiz({ questions, quizData }) {
                       addQuestion(index)
                     }} className='add icon' src={Add} alt='add a question icon'></img>
                   }
-                  <img className='icon' onClick={() => deleteQuestion(index)} src={Delete}></img>
+                  <img className='icon' onClick={() => deleteQuestion(question.id)} src={Delete}></img>
 
                   <span className='collapseButton' onClick={() => collapse(index)}>
                     {index + 1}.
@@ -312,7 +289,7 @@ function EditQuiz({ questions, quizData }) {
         }
         <section className='flex gap-1'>
           <button onClick={() => deleteQuiz(quiz._id)} className='submit attention' >DELETE THIS TEST</button>
-          <button className='submit' onClick={(e) => editQuestions(e)}>SUBMIT</button>
+          <button className='submit' onClick={editQuestions}>SUBMIT</button>
         </section>
 
 
