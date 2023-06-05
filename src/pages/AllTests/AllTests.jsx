@@ -22,7 +22,7 @@ let categoriesData = [
     hash: "programming_tules"
   }
 ]
-function AllTests({loggedIn}) {
+function AllTests({ loggedIn }) {
   const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState(categoriesData)
   const [menuOpened, setMenuOpened] = useState(null)
@@ -33,11 +33,10 @@ function AllTests({loggedIn}) {
     const authToken = Cookies.get('auth_token');
 
     if (authToken) {
-      console.log(authToken)
-      console.log('kowkowkf')
-   
+
+
     } else {
-      navigate('/login');
+
     }
   }, []);
   useEffect(() => {
@@ -57,7 +56,7 @@ function AllTests({loggedIn}) {
   }
   return (
     <>
-      <Header link='/' loggedIn={loggedIn}/>
+      <Header link='/' loggedIn={loggedIn} />
       <section className='container tests'>
         {loggedIn &&
 

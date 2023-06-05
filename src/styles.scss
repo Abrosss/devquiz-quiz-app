@@ -21,7 +21,7 @@ h2 {
   font-size: 1.5rem;
 }
 
-.progress {
+.progress-bar {
   display: flex;
   gap: 1rem;
 }
@@ -43,46 +43,22 @@ h2 {
   color: white;
 }
 
-.question h2{
-  color: black;
-  margin: 0;
-  font-size: 1.8rem;
-}
 
 
-.answer {
-  display: flex;
-  border: 1px aquamarine solid;
-  border-radius: 15px;
-  align-items: center;
-  gap: .5rem;
 
- cursor: pointer;
-transition: all 0.5s ease-in-out;
-  
-}
-.answer.correct {
+.correct {
   background-color: aquamarine;
 }
-.answer.incorrect {
+.incorrect {
   background-color: red;
 }
-.answer:hover {
-  transform: scale(1.05);
-}
+
 .letter {
   height: 100%;
   display: flex;
   align-items: center;
 }
-.answer span {
-  padding: 1rem 1.5rem;
-  border-radius: 15px 0 0 15px;
 
-}
-.answer span:first-child {
-  background-color: aquamarine;
-}
 
 .finish {
   margin-left: auto;
@@ -206,12 +182,7 @@ border: none;
 border-radius: unset;
 border-bottom: 1px #489FB5 solid;;
 }
-.question {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 2rem;
-}
+
 .image-section {
   display: flex;
   justify-content: center;
@@ -313,11 +284,7 @@ ul {
   display: flex;
   gap: 1rem;
 }
-.question {
-  /* border-bottom: 1px #489FB5 solid; */
-  padding-bottom: 1rem;
-  gap: 5rem;
-}
+
 .save {
   background-color: white;
   color: #489FB5;

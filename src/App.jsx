@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 
 import Tests from './pages/AllTests/AllTests'
 import AllQuestions from "./pages/AllQuestions/AllQuestions";
+import QuizPage from "./pages/User/QuizPage/QuizPage";
 import AddQuiz from './pages/AddQuiz/AddQuiz'
 import Login from "./pages/Login/Login";
 import { useState } from "react";
@@ -30,7 +31,7 @@ function App() {
 <Route path='/admin/tests/addTest' element={<AddQuiz/>}/>
 <Route path='/admin/tests' element={<Tests loggedIn={true} />}/>
 <Route path='/tests/:quizID' element={<AllQuestions />}/>
-<Route path='/tests' element={<Tests />}/>
+<Route path='/tests' element={<Tests loggedIn={false} />}/>
 <Route path='/login' element={<Login />}/>
 </Routes>
 

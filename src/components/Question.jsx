@@ -7,9 +7,9 @@ function Question(props) {
 
       <span>Question {questionNumber} / {amountOfQuestions}</span>
 
-      <h2>{currentQuestion.title}</h2>
+      <h2 className='question-section__title'>{currentQuestion.title}</h2>
       {currentQuestion.image &&
-        <div className='question__image-container'>
+        <div className='question-section__image'>
           <img src={currentQuestion.image}></img>
         </div>
       }

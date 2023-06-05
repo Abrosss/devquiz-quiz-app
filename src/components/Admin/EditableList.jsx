@@ -5,31 +5,34 @@ import Delete from '../../assets/delete.svg'
 import { Link } from 'react-router-dom';
 import { uploadToCloudinary, addToArray, deleteFromCloudinary, deleteFromArray } from '../../helpFunctions';
 import { useNavigate } from 'react-router-dom';
+
 import Button from '../Button';
+export async function updateQuizTitle(quizId, quizTitle) {
+  try {
+    await axios.put(`/quizzes/${quizId}`, {
+      title: quizTitle,
+    });
+  } catch (error) {
+    console.error('Error updating quiz title');
+  }
+}
+export async function deleteQuestions(questionsToBeDeleted) {
+  try {
+    await axios.delete('/questions', {
+      data: { ids: questionsToBeDeleted },
+    });
+  } catch (error) {
+    console.error('Error deleting questions');
+  }
+}
+
 function EditQuiz({ questions, quizData }) {
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
   const [questionsToBeDeleted, setQuestionsToBeDeleted] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  console.log(updatedQuestions)
-  const question = {
-    title: '',
-    category: "",
-    image: "",
-    cloudinaryId: "",
-    explanation: "",
-    letter: "",
-    options:
-      [
-        { title: "", correct: false, letter: "A" },
-        { title: "", correct: false, letter: "B" }
-      ]
-  }
-
   const [questionsExpanded, setQuestionsExpanded] = useState([])
   const [questionAdded, setQuestionAdded] = useState(false)
-
 
   const addOption = (questionIndex) => {
     const updated = [...updatedQuestions]
@@ -103,69 +106,27 @@ function EditQuiz({ questions, quizData }) {
     setUpdatedQuestions(list);
 
   }
-
-  async function addCategory(e) {
-    e.preventDefault()
-    try {
-      const response = await axios.post('/addCategory', {
-        category: category
-      });
-      if (response.status === 200) {
-
-        setCategory(response.data) //id
-      }
-
-
-    } catch (err) {
-
-      console.error(err);
-    }
-
-
-  }
-  async function addQuestions(questions) {
-    try {
-      const response = await axios.post('/questions', {
-        questions: questions
-      });
-      if (response.status === 200) {
-        setQuestionAdded(true)
-      }
-
-
-    } catch (err) {
-
-      console.error(err);
-    }
-
-
-  }
-  console.log(questionsToBeDeleted.length )
+console.log(questionAdded)
   async function editQuestions(e) {
     e.preventDefault();
     const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));
-  
+
     try {
-      await axios.put(`/quizzes/${quiz._id}`, {
-        title: quiz.title,
-      });
+      await updateQuizTitle(quiz._id, quiz.title);
       if (questionsToBeDeleted.length > 0) {
-        console.log(questionsToBeDeleted);
-        await axios.delete('/questions', {
-          data: { ids: questionsToBeDeleted },
-        });
+        await deleteQuestions(questionsToBeDeleted)
       } else if (newQuestions.length > 0) {
         const sent = await submitQuestions(quiz._id, newQuestions);
-        console.log(sent);
         if (sent) {
           await axios.put('/questions', {
             questions: updatedQuestions,
           });
-          setQuestionAdded(true);
+         
         }
       }
+      setQuestionAdded(true);
     } catch (error) {
-      console.error('Error editing questions:', error.response.data);
+      console.error('Error editing questions:');
     }
   }
 
@@ -227,107 +188,111 @@ function EditQuiz({ questions, quizData }) {
     <>
 
 
+{
+  questionAdded ? 
+  <section className='container-content'>
+  <h2>Test Edited!</h2>
+  <Link className='button' to="/admin/tests">BACK TO TESTS</Link>
+</section>
 
-      <section className='container-content'>
+:
+<section className='container-content'>
+<div className='form-input'>
+  <span>
+    Edit
+  </span>
+  <input onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} className='input' type="text" value={quiz.title} placeholder="Add a Quiz Title"></input>
+</div>
+<h3>{updatedQuestions.length} questions</h3>
+{
+  updatedQuestions.map((question, index) => (
+    <section className='question-section-admin '>
+      <section className='question'>
         <div className='form-input'>
-          <span>
-            Edit
+
+          {index === updatedQuestions.length - 1 &&
+            <img onClick={() => {
+              addQuestion(index)
+            }} className='add icon' src={Add} alt='add a question icon'></img>
+          }
+          <img className='icon' onClick={() => deleteQuestion(index)} src={Delete}></img>
+
+          <span className='collapseButton' onClick={() => collapse(index)}>
+            {index + 1}.
           </span>
-          <input onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} className='input' type="text" value={quiz.title} placeholder="Add a Quiz Title"></input>
+
+          <input
+            onChange={(e) => handleInputChange(e, index)}
+            className='input question'
+            value={question.title}
+            type="text"
+            name='title'
+            placeholder="Type a question here"></input>
+          <span>?</span>
         </div>
-        <h3>{updatedQuestions.length} questions</h3>
-        {
-          updatedQuestions.map((question, index) => (
-            <section className='question'>
-              <section>
-                <div className='form-input'>
 
-                  {index === updatedQuestions.length - 1 &&
-                    <img onClick={() => {
-                      addQuestion(index)
-                    }} className='add icon' src={Add} alt='add a question icon'></img>
-                  }
-                  <img className='icon' onClick={() => deleteQuestion(index)} src={Delete}></img>
+        {questionsExpanded.includes(index) &&
+          <>
+            {question.image &&
+              <section className='image-section'>
 
-                  <span className='collapseButton' onClick={() => collapse(index)}>
-                    {index + 1}.
-                  </span>
-
-                  <input
-                    onChange={(e) => handleInputChange(e, index)}
-                    className='input question'
-                    value={question.title}
-                    type="text"
-                    name='title'
-                    placeholder="Type a question here"></input>
-                  <span>?</span>
-                </div>
-
-                {questionsExpanded.includes(index) &&
-                  <>
-                    {question.image &&
-                      <section className='image-section'>
-
-                        <img src={question.image} alt='question illustration'></img>
-                        <img className='icon' onClick={() => deleteImage(index, question.cloudinaryId)} src={Delete}></img>
-
-                      </section>
-                    }
-                    <div class="upload">
-                      <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)} />
-                      <div class="upload-list"></div>
-                    </div>
-
-                  </>
-                }
-
+                <img src={question.image} alt='question illustration'></img>
+                <img className='icon' onClick={() => deleteImage(index, question.cloudinaryId)} src={Delete}></img>
 
               </section>
-              {questionsExpanded.includes(index) &&
-                <div className='form-input options'>
+            }
+            <div class="upload">
+              <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)} />
+              <div class="upload-list"></div>
+            </div>
 
-                  <div class="radio-item-container">
-                    {question.answers.map((answer, optIndex) => (
-                      <div class="radio-item">
-                        <label for={optIndex}>
-                          <input checked={answer.correct} onChange={(e) => handleCorrectOption(e, optIndex, index)} type="radio" id={optIndex} name={`correct-${index}`} value="vanilla" />
-                          <textarea name='title' onChange={(e) => handleOptionChange(e, optIndex, index)} className='input option' value={answer.title} type="text" placeholder="Type an option here"></textarea>
-                        </label>
-                      </div>
-                    ))}
-
-                    <span onClick={() => addOption(index)} className='addButton'>Add another option</span>
-
-
-                  </div>
-                  <section className='explanation'>
-                    <h5>Explanation</h5>
-                    <textarea value={question.explanation} name='explanation' onChange={(e) => handleInputChange(e, index)}></textarea>
-                  </section>
-
-
-
-                </div>
-              }
-            </section>
-
-          ))
+          </>
         }
-        <section className='flex gap-1'>
-          <button onClick={() => deleteQuiz(quiz._id)} className='submit attention' >DELETE THIS TEST</button>
-          <button className='submit' onClick={(e) => editQuestions(e)}>SUBMIT</button>
-        </section>
-
 
 
       </section>
+      {questionsExpanded.includes(index) &&
+        <div className='form-input options'>
 
-      {questionAdded &&
-        <section className='container-content'>
-          <h2>Test Added!</h2>
-          <Link className='button' to="/">BACK TO TESTS</Link>
-        </section>
+          <div class="radio-item-container">
+            {question.answers.map((answer, optIndex) => (
+              <div class="radio-item">
+                <label for={optIndex}>
+                  <input checked={answer.correct} onChange={(e) => handleCorrectOption(e, optIndex, index)} type="radio" id={optIndex} name={`correct-${index}`} value="vanilla" />
+                  <textarea name='title' onChange={(e) => handleOptionChange(e, optIndex, index)} className='input option' value={answer.title} type="text" placeholder="Type an option here"></textarea>
+                </label>
+              </div>
+            ))}
+
+            <span onClick={() => addOption(index)} className='addButton'>Add another option</span>
+
+
+          </div>
+          <section className='explanation'>
+            <h5>Explanation</h5>
+            <textarea value={question.explanation} name='explanation' onChange={(e) => handleInputChange(e, index)}></textarea>
+          </section>
+
+
+
+        </div>
       }
+    </section>
+
+  ))
+}
+<section className='flex gap-1'>
+  <button onClick={() => deleteQuiz(quiz._id)} className='submit attention' >DELETE THIS TEST</button>
+  <button className='submit' onClick={(e) => editQuestions(e)}>SUBMIT</button>
+</section>
+
+
+
+</section>
+}
+     
+
+      
 
 
     </>
@@ -337,4 +302,4 @@ function EditQuiz({ questions, quizData }) {
 }
 
 
-export default EditQuiz
+export default EditQuiz;

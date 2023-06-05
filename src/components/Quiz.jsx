@@ -18,7 +18,7 @@ function filterAnswers(selectedAnswer, allAnswers) {
 }
 
 function Quiz({ questions }) {
-
+  console.log(questions)
   const [quizState, setQuizState] = useState({
     currentQuestionIndex: 0,
     correctAnswerCount: 0,

@@ -5,10 +5,8 @@ import axios from '../../api/axios';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Options from '../../components/Admin/Options';
-
 import Add from '../../assets/add.svg';
 import Delete from '../../assets/delete.svg';
-
 import { deleteFromArray, recordInputs, addToArray, uploadToCloudinary, deleteFromCloudinary } from '../../helpFunctions';
 
 import './AddQuiz.css';
@@ -151,6 +149,7 @@ async function submitQuiz(title) {
         <h3>Add Questions</h3>
             {
                 questions.map((question, index) => (
+                  <section className='question-section-admin '>
                   <section className='question'>
                   <section className='question-section'>
                   <div className='form-input'>
@@ -214,6 +213,7 @@ async function submitQuiz(title) {
         
                     </div>
                   }
+                </section>
                 </section>
 
                 ))

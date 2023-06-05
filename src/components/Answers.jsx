@@ -21,7 +21,7 @@ function Answers({ answers, checkAnswer, selectedAnswer }) {
                     onClick={() => checkAnswer (answer)}
                     
     >       
-                    <span className='letter'>{answer.letter && answer.letter}</span>
+                    <span className='answers-section__letter'>{answer.letter && answer.letter}</span>
                     <span>{answer.title}</span>
                 </div>
 
