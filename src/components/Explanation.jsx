@@ -4,10 +4,10 @@ function indented(text) {
 }
 function Explanation({ explanation }) {
     return (
-        <section className='explanation test'>
+        <section className='explanation test'  data-testid='explanation'>
             <h4>Explanation</h4>
-            <div className='explanation-text'>{indented(explanation).map(sentence => (
-                <p>{sentence}</p>
+            <div className='explanation-text'>{indented(explanation).map((sentence, index) => (
+                <p key={index}>{sentence}</p>
             ))}</div>
 
         </section>

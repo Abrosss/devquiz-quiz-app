@@ -13,10 +13,11 @@ function Answers({ answers, checkAnswer, selectedAnswer }) {
 
     return (
         <>
-            {answers.map((answer, index) => (
+            {answers?.map((answer, index) => (
 
                 <div
                     key={index}
+                    data-testid= {`answer-${index}`}
                     className={colorButton(answer.correct, selectedAnswer)}
                     onClick={() => checkAnswer (answer)}
                     
