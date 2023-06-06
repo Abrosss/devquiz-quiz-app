@@ -1,89 +1,44 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import {Quiz} from '../../components/Quiz'
-
+import { Quiz } from '../../components/Quiz'
+import '@testing-library/jest-dom/extend-expect';
 
 describe('Quiz', () => {
-    it('should increment currentQuestionIndex and update quizIsFinished correctly when clicking "Next Question"', () => {
-      const questions = [
-        {
-          id: "001002",
-          title: "Programmingafa",
-          image: "",
-          explanation: "explanationssesgesg",
-          category: "001001",
-          answers: [
-            {
-              title: "answer1",
-              correct: true,
-              letter: 'A'
-            },
-            {
-              title: "answer2",
-              correct: false,
-              letter: 'B'
-            }
-          ]
-        },
-        {
-          id: "001003",
-          title: "Programmingafa",
-          image: "",
-          explanation: "explanationssesgesg",
-          category: "001001",
-          answers: [
-            {
-              title: "answer1",
-              correct: true,
-              letter: 'A'
-            },
-            {
-              title: "answer2",
-              correct: false,
-              letter: 'B'
-            }
-          ]
-        },
-        {
-          id: "001004",
-          title: "Programmingafa",
-          image: "",
-          explanation: "explanationssesgesg",
-          category: "001001",
-          answers: [
-            {
-              title: "answer1",
-              correct: true,
-              letter: 'A'
-            },
-            {
-              title: "answer2",
-              correct: false,
-              letter: 'B'
-            }
-          ]
-        }
-      ]
-  
-      // Render the Quiz component
-      const { getByText } = render(<Quiz questions={questions} />);
-  
-      // Click the "Next Question" button
-      fireEvent.click(getByText('Next Question'));
-  
-      // Assert that currentQuestionIndex is incremented correctly
-      expect(getByText('Question 2')).toBeInTheDocument();
-  
-      // Click the "Next Question" button again
-      fireEvent.click(getByText('Next Question'));
-  
-      // Assert that currentQuestionIndex is incremented correctly again
-      expect(getByText('Question 3')).toBeInTheDocument();
-  
-      // Click the "Next Question" button for the last question
-      fireEvent.click(getByText('Next Question'));
-  
-      // Assert that quizIsFinished is updated correctly
-      expect(getByText('Quiz Finished')).toBeInTheDocument();
-    });
+  const questions = [
+    { id: 1, text: 'Question 1', answers: [{ title: '' }, { title: '' }, { title: '' }], explanation: '' },
+    { id: 2, text: 'Question 2', answers: [{ title: '' }, { title: '' }, { title: '' }], explanation: '' },
+    { id: 3, text: 'Question 3', answers: [{ title: '' }, { title: '' }, { title: '' }], explanation: '' },
+    { id: 4, text: 'Question 4', answers: [{ title: '' }, { title: '' }, { title: '' }], explanation: '' },
+  ];
+
+  it('all questions are rendered in the progress bar', () => {
+
+    const { getAllByTestId } = render(<Quiz questions={questions} />);
+    const cells = getAllByTestId('progress-bar-cell');
+    expect(cells).toHaveLength(questions.length);
+
   });
+  it('next question button appears after a user chooses an answer', () => {
+
+    const { getByTestId, queryByTestId } = render(<Quiz questions={questions}/>);
+    const initialButtons = [
+      getByTestId('answer-0'),
+      getByTestId('answer-1'),
+      getByTestId('answer-2'),
+    ]
+
+    const hiddenButton = queryByTestId('next-question');
+
+    expect(hiddenButton).toBeNull(); 
+
+    initialButtons.forEach((initialButton) => {
+      fireEvent.click(initialButton);
+      const hiddenButton = queryByTestId('next-question');
+      expect(hiddenButton).toBeInTheDocument()
+    });
+
+ ; 
+  });
+
+
+});
