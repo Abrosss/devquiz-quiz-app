@@ -31,7 +31,7 @@ function EditQuiz({ questions, quizData }) {
   const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
   const [questionsToBeDeleted, setQuestionsToBeDeleted] = useState([])
-  const [questionsExpanded, setQuestionsExpanded] = useState([])
+  const [questionsExpanded, setQuestionsExpanded] = useState([0])
   const [questionAdded, setQuestionAdded] = useState(false)
 
   const addOption = (questionIndex) => {
@@ -116,14 +116,13 @@ console.log(questionAdded)
       if (questionsToBeDeleted.length > 0) {
         await deleteQuestions(questionsToBeDeleted)
       } else if (newQuestions.length > 0) {
-        const sent = await submitQuestions(quiz._id, newQuestions);
-        if (sent) {
+        await submitQuestions(quiz._id, newQuestions);
+      }
           await axios.put('/questions', {
             questions: updatedQuestions,
           });
          
-        }
-      }
+      
       setQuestionAdded(true);
     } catch (error) {
       console.error('Error editing questions:');
@@ -139,7 +138,7 @@ console.log(questionAdded)
 
     }
   }
-  console.log(questionsToBeDeleted)
+
   function deleteQuestion(index) {
     const existedQuestion = updatedQuestions[index].hasOwnProperty('_id')
     console.log(existedQuestion)
