@@ -7,7 +7,7 @@ function Question(props) {
 
       <span>Question {questionNumber} / {amountOfQuestions}</span>
 
-      <h2 className='question-section__title' data-testid='question-title'>{currentQuestion.title}</h2>
+      <h2 className='question-section__title' data-testid='question-title'>{currentQuestion.title} ?</h2>
       {currentQuestion.image &&
         <div className='question-section__image'>
           <img src={currentQuestion.image}></img>
