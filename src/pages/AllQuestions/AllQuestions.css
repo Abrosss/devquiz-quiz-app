@@ -111,6 +111,7 @@ nav {
 }
 .question-section-admin .question {
   display: flex;
+  flex-direction: column;
   gap: 5rem;
 }
 .question-section-admin h2 {

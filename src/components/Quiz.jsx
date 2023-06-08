@@ -25,19 +25,19 @@ function Quiz({ questions }) {
   });
   const { currentQuestionIndex, correctAnswerCount, quizIsFinished } = quizState
   const [progressTracking, setProgressTracking] = useState(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
-  const [visibleAnswers, setVisibleAnswers] = useState(getCurrentQuestion().answers)
+  const [visibleAnswers, setVisibleAnswers] = useState(currentQuestion().answers)
   const [userResults, setUserResults] = useState(Array.from({ length: questions.length }, () => Object.assign({}, { question: null, selectedAnswer: null })))
 
   useEffect(() => {
-    setVisibleAnswers(getCurrentQuestion().answers)
+    setVisibleAnswers(currentQuestion().answers)
 
   }, [currentQuestionIndex])
 
-  function getCurrentQuestion() {
+  function currentQuestion() {
     return questions[currentQuestionIndex];
   }
 
-  function getSelectedAnswer() {
+  function selectedAnswer() {
     return userResults[currentQuestionIndex].selectedAnswer
   }
 
@@ -59,18 +59,18 @@ function Quiz({ questions }) {
 
   }
 
-  function checkAnswer(selectedAnswer) {
+  function checkAnswer(answer) {
 
     //CHECK IF an answer was already selected, to avoid click dublication
 
-    const answerAlreadySelected = getSelectedAnswer() !== null;
+    const answerAlreadySelected = selectedAnswer() !== null;
     if (answerAlreadySelected) return
 
-    if (selectedAnswer.correct) updateCounter() //UPDATE the quiz counter
+    if (answer.correct) updateCounter() //UPDATE the quiz counter
 
-    saveUserResults(getCurrentQuestion(), selectedAnswer)  //Save user progress
-    updateProgressBar(selectedAnswer, currentQuestionIndex) //update progress bars
-    setVisibleAnswers(filterAnswers(selectedAnswer, getCurrentQuestion().answers)) //filter answers to display the selected and the correct answers only
+    saveUserResults(currentQuestion(), answer)  //Save user progress
+    updateProgressBar(answer, currentQuestionIndex) //update progress bars
+    setVisibleAnswers(filterAnswers(answer, currentQuestion().answers)) //filter answers to display the selected and the correct answers only
   }
 
   function nextQuestion() {
@@ -104,7 +104,7 @@ function Quiz({ questions }) {
       Object.assign({},
         { question: null, selectedAnswer: null })))
     setProgressTracking(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
-    setVisibleAnswers(getCurrentQuestion().answers)
+    setVisibleAnswers(currentQuestion().answers)
   }
 
 
@@ -126,7 +126,7 @@ function Quiz({ questions }) {
           <section className='quiz' data-testid="quiz">
             <section className='question-section'>
               <Question
-                currentQuestion={getCurrentQuestion()}
+                currentQuestion={currentQuestion()}
                 questionNumber={currentQuestionIndex + 1}
                 amountOfQuestions={questions.length}
               />
@@ -136,15 +136,15 @@ function Quiz({ questions }) {
               <Answers
                 answers={visibleAnswers}
                 checkAnswer={checkAnswer}
-                selectedAnswer={getSelectedAnswer()}
+                selectedAnswer={selectedAnswer()}
               />
 
-              {getSelectedAnswer() !== null && getCurrentQuestion().explanation &&
+              {selectedAnswer() !== null && currentQuestion().explanation &&
                 <Explanation
-                  explanation={getCurrentQuestion().explanation} />
+                  explanation={currentQuestion().explanation} />
               }
 
-              {getSelectedAnswer() !== null &&
+              {selectedAnswer() !== null &&
                 <Button
                   func={nextQuestion}
                   name={currentQuestionIndex === questions.length - 1 ? "Finish" : "Next Question"}

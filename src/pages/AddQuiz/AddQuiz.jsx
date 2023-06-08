@@ -150,8 +150,8 @@ async function submitQuiz(title) {
             {
                 questions.map((question, index) => (
                   <section className='question-section-admin '>
+    
                   <section className='question'>
-                  <section className='question-section'>
                   <div className='form-input'>
             
             {index === questions.length - 1 &&
@@ -213,7 +213,7 @@ async function submitQuiz(title) {
         
                     </div>
                   }
-                </section>
+              
                 </section>
 
                 ))
