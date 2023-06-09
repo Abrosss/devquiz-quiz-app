@@ -65,7 +65,12 @@
 
   }
 }
-
+.quiz.column {
+  flex-direction: column;
+}
+.quiz.center {
+  align-items: center;
+}
 .explanation {
   width: 100%;
   margin: 0;

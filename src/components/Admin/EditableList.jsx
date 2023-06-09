@@ -31,7 +31,7 @@ function EditQuiz({ questions, quizData }) {
   const [quiz, setQuiz] = useState(quizData)
   const [updatedQuestions, setUpdatedQuestions] = useState(questions)
   const [questionsToBeDeleted, setQuestionsToBeDeleted] = useState([])
-  const [questionsExpanded, setQuestionsExpanded] = useState([0])
+  const [questionsExpanded, setQuestionsExpanded] = useState([questions.length-1])
   const [questionAdded, setQuestionAdded] = useState(false)
 
   const addOption = (questionIndex) => {
@@ -106,7 +106,7 @@ function EditQuiz({ questions, quizData }) {
     setUpdatedQuestions(list);
 
   }
-console.log(questionAdded)
+console.log(updatedQuestions)
   async function editQuestions(e) {
     e.preventDefault();
     const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));

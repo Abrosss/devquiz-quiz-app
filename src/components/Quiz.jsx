@@ -123,7 +123,7 @@ function Quiz({ questions }) {
             questions={progressTracking}
             currentQuestionIndex={currentQuestionIndex} />
 
-          <section className='quiz' data-testid="quiz">
+          <section className={currentQuestion().image ? "quiz" : "quiz column center"} data-testid="quiz">
             <section className='question-section'>
               <Question
                 currentQuestion={currentQuestion()}
