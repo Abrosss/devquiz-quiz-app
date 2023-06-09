@@ -254,6 +254,7 @@ a {
 .radio-item {
   display: flex;
   position: relative;
+  align-items: center;
 }
 
 label {

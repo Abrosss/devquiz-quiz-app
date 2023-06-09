@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 function colorButton(answer, selectedAnswer) {
     if (selectedAnswer === null) {
       return "answer";
@@ -24,6 +25,7 @@ function Answers({ answers, checkAnswer, selectedAnswer }) {
     >       
                     <span className='answers-section__letter'>{answer.letter && answer.letter}</span>
                     <span>{answer.title}</span>
+                   
                 </div>
 
             ))}

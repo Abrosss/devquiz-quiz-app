@@ -33,13 +33,24 @@ function EditQuiz({ questions, quizData }) {
   const [questionsToBeDeleted, setQuestionsToBeDeleted] = useState([])
   const [questionsExpanded, setQuestionsExpanded] = useState([questions.length-1])
   const [questionAdded, setQuestionAdded] = useState(false)
-
+  const [hoveredIndex, setHoveredIndex] = useState (null)
   const addOption = (questionIndex) => {
     const updated = [...updatedQuestions]
     updated[questionIndex].answers.push({ title: "" })
     setUpdatedQuestions(updated)
   };
-
+  function handleMouseEnter(index) {
+    setHoveredIndex(index);
+  }
+  function handleMouseLeave() {
+    setHoveredIndex(null);
+  }
+  function handleDelete(questionIndex, index) {
+    const list = [...updatedQuestions]
+    const updated = list[questionIndex].answers.filter((item, i) => i !== index);
+    list[questionIndex].answers = updated
+    setUpdatedQuestions(list)
+  }
   async function handleImageUpload(e, index) {
     const updatedArray = [...updatedQuestions]
     const file = e.target.files[0];
@@ -255,11 +266,16 @@ console.log(updatedQuestions)
 
           <div class="radio-item-container">
             {question.answers.map((answer, optIndex) => (
-              <div class="radio-item">
+              <div class="radio-item" onMouseEnter={() => handleMouseEnter(optIndex)} onMouseLeave={handleMouseLeave}>
                 <label for={optIndex}>
                   <input checked={answer.correct} onChange={(e) => handleCorrectOption(e, optIndex, index)} type="radio" id={optIndex} name={`correct-${index}`} value="vanilla" />
                   <textarea name='title' onChange={(e) => handleOptionChange(e, optIndex, index)} className='input option' value={answer.title} type="text" placeholder="Type an option here"></textarea>
                 </label>
+                {hoveredIndex === optIndex && 
+                
+                <img onClick={() => handleDelete (index, optIndex)}  className='icon' src={Delete} alt="delete icon"></img>
+                }
+                
               </div>
             ))}
 
