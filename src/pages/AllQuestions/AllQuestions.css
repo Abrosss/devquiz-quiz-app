@@ -147,6 +147,7 @@ nav {
   }
   .quiz {
     flex-direction: column;
+    padding-bottom: 2rem;
   }
   .quiz .question-section {
     width: 100%;
