@@ -134,13 +134,13 @@ console.log(newQuestions)
       const submitted = await axios.put('/questions', {
             questions: updatedQuestions,
           });
-         console.log(updatedQuestions)
+         console.log(submitted)
       if(submitted) {
         setQuestionAdded(true);
       }
       
     } catch (error) {
-      console.error('Error editing questions:');
+      console.error(error);
     }
   }
 
