@@ -138,16 +138,15 @@ module.exports = {
   },
 
   editQuestion: async (req, res) => {
-    console.log('sfsefsef');
     if (!req.body) {
       return res.status(400).send({ message: 'nothing to update' });
     }
-    let questions = req.body.questions;
+    const questions = req.body.questions;
 
     try {
       await Promise.all(
         questions.map(async (question) => {
-          let updatedQuestion = {
+          const updatedQuestion = {
             $set: {
               title: question.title,
               image: question.image,
@@ -162,7 +161,6 @@ module.exports = {
             updatedQuestion,
             { new: true }
           );
-
           if (!data) {
             throw new Error('question is not found');
           }

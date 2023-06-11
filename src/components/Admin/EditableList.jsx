@@ -117,7 +117,7 @@ function EditQuiz({ questions, quizData }) {
     setUpdatedQuestions(list);
 
   }
-console.log(updatedQuestions)
+
   async function editQuestions(e) {
     e.preventDefault();
     const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));
@@ -126,15 +126,18 @@ console.log(updatedQuestions)
       await updateQuizTitle(quiz._id, quiz.title);
       if (questionsToBeDeleted.length > 0) {
         await deleteQuestions(questionsToBeDeleted)
-      } else if (newQuestions.length > 0) {
+      } 
+      if (newQuestions.length > 0) {
         await submitQuestions(quiz._id, newQuestions);
       }
-          await axios.put('/questions', {
+      const submitted = await axios.put('/questions', {
             questions: updatedQuestions,
           });
          
+      if(submitted) {
+        setQuestionAdded(true);
+      }
       
-      setQuestionAdded(true);
     } catch (error) {
       console.error('Error editing questions:');
     }
