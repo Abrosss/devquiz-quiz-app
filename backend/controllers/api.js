@@ -142,7 +142,7 @@ module.exports = {
       return res.status(400).send({ message: 'nothing to update' });
     }
     const questions = req.body.questions;
-
+    
     try {
       await Promise.all(
         questions.map(async (question) => {
@@ -155,7 +155,7 @@ module.exports = {
               explanation: question.explanation,
             },
           };
-
+          console.log(updatedQuestion)
           const data = await Question.findByIdAndUpdate(
             question._id,
             updatedQuestion,

@@ -72,9 +72,9 @@ function AddQuiz() {
     }
   } console.log(questions)
   function validatedAnswers(array) {
-    const correctSelected = array.filter(answer => answer.correct)
-    const titlesAdded = array.filter(answer => answer.title === "").length ===0
-    return correctSelected.length === 1 && array.length >= 2 && titlesAdded? true : false
+    const correctSelected = array.some(answer => answer.correct)
+    const titlesAdded = array.every(answer => answer.title !== "")
+    return correctSelected && array.length >= 2 && titlesAdded ? true : false
   }
   function addEmptyQuestion(index) {
     if (questions[index].title !== "") {
@@ -89,7 +89,8 @@ function AddQuiz() {
   }
   function handleSubmit(e) {
     e.preventDefault()
-   const allAnswersFilled = questions.filter(question => !validatedAnswers(question.options)).length === 0
+   const allAnswersFilled = questions.every(question => validatedAnswers(question.options))
+   console.log(allAnswersFilled)
     if (quiz.title && allAnswersFilled) submitQuiz(quiz.title)
     //submit quiz, if successful, submit questions for it
 
@@ -115,7 +116,7 @@ function AddQuiz() {
         title: title
       });
       if (response.status === 200) {
-        submitQuestions(response.data) //response.data is the quiz ID
+        await submitQuestions(response.data) //response.data is the quiz ID
       }
 
 

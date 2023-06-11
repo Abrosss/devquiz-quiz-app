@@ -120,8 +120,9 @@ function EditQuiz({ questions, quizData }) {
 
   async function editQuestions(e) {
     e.preventDefault();
-    const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));
 
+    const newQuestions = updatedQuestions.filter((que) => !que.hasOwnProperty('_id'));
+console.log(newQuestions)
     try {
       await updateQuizTitle(quiz._id, quiz.title);
       if (questionsToBeDeleted.length > 0) {
@@ -133,7 +134,7 @@ function EditQuiz({ questions, quizData }) {
       const submitted = await axios.put('/questions', {
             questions: updatedQuestions,
           });
-         
+         console.log(updatedQuestions)
       if(submitted) {
         setQuestionAdded(true);
       }
