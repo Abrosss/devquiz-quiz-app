@@ -6,14 +6,14 @@ module.exports = {
 
   postImage: async (req, res) => {
     const file = req.body.image;
-    console.log(file)
+    
     cloudinary.uploader.upload(file, (err, result) => {
       if (err) {
         console.log(err);
         return res.status(500).json({ error: 'Something went wrong' });
       }
 
-      console.log(result);
+
       res.json({ url: result.secure_url, id: result.public_id });
     })
 
@@ -91,7 +91,7 @@ module.exports = {
   deleteQuestion: async (req, res) => {
 
     const IDs = req.body.ids
-    console.log(IDs)
+
     try {
       await Question.deleteMany({ _id: { $in: IDs } });
       console.log('Questions deleted successfully');
@@ -106,20 +106,9 @@ module.exports = {
       let questions = req.body.questions
 
       let quizID = req.body.quizID
-      console.log(quizID)
+    
       questions.map(async question => {
-        // check if the question already exists in the database
-        const existingQuestion = await Question.findOne({ title: question.title })
-
-        if (existingQuestion) {
-          // if the question exists, update it
-          existingQuestion.image = question.image
-          existingQuestion.quizID = quizID
-          existingQuestion.answers = question.answers
-          existingQuestion.explanation = question.explanation
-
-          await existingQuestion.save()
-        } else {
+     
           // if the question doesn't exist, create it
           await Question.create({
             title: question.title,
@@ -128,7 +117,7 @@ module.exports = {
             answers: question.answers,
             explanation: question.explanation
           })
-        }
+        
       })
 
       res.send('questions added or updated')
@@ -155,7 +144,7 @@ module.exports = {
               explanation: question.explanation,
             },
           };
-          console.log(updatedQuestion)
+     
           const data = await Question.findByIdAndUpdate(
             question._id,
             updatedQuestion,
@@ -173,7 +162,7 @@ module.exports = {
     }
   },
   editQuiz: async (req, res) => {
-    console.log('sfsefsef');
+
     if (!req.body) {
       return res.status(400).send({ message: 'nothing to update' });
     }
@@ -205,7 +194,7 @@ module.exports = {
   },
 
   addTips: async (req, res) => {
-    console.log('sfsefsefsef')
+
     if (!req.body) {
       return res
         .status(400)
@@ -213,7 +202,7 @@ module.exports = {
     }
     let id = req.params.id
     let tips = req.body.tips
-    console.log(tips)
+   
     try {
 
       let addedTips = {
