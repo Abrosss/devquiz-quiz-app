@@ -52,7 +52,7 @@ function QuizPage({ loggedIn }) {
           <Navigation
             currentPage={quiz.title}
             linkToText="All Tests"
-            linkTo={loggedIn ? "/admin/tests" : "/tests"}
+            linkTo={loggedIn ? "/admin/tests" : "/"}
           />
           {questions.length === 0 ?
 
