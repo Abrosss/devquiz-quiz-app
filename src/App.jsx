@@ -31,8 +31,9 @@ function App() {
 <Route path='/admin/tests/addTest' element={<AddQuiz/>}/>
 <Route path='/admin/tests' element={<Tests loggedIn={true} />}/>
 <Route path='/tests/:quizID' element={<AllQuestions />}/>
-<Route path='/tests' element={<Tests loggedIn={false} />}/>
+
 <Route path='/login' element={<Login />}/>
+<Route path='/' element={<Tests loggedIn={false} />}/>
 </Routes>
 
 </Router>

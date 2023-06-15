@@ -9,7 +9,7 @@ function Result(props) {
       <p>Result: {correctAnswerCount}/{amountOfQuestions}</p>
       <div>
        
-        <Link to="/tests" className='button'>Back To Tests</Link>
+        <Link to="/" className='button'>Back To Tests</Link>
         <button className='button no-background buttonWithIcon' onClick={handleRestartQuiz}>
           <img className='icon' src={Restart} alt="restart"></img>
           <span>Restart</span>

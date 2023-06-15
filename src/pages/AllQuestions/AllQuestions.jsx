@@ -40,7 +40,7 @@ function QuizPage({ loggedIn }) {
 
   return (
     <>
-      <Header link={loggedIn ? '/admin/tests' : '/tests'} />
+      <Header link={loggedIn ? '/admin/tests' : '/'} />
       {isLoading ?
         <section className='container-content'>
           <Loading />
