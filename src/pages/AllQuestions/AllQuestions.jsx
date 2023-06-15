@@ -29,9 +29,7 @@ function QuizPage() {
       setLoggedIn(true)
    
     } 
-    else {
-      navigate('/login')
-    }
+  
   }, []);
   useEffect(() => {
     async function init() {

@@ -35,9 +35,7 @@ function AllTests() {
     if (authToken) {
       setLoggedIn(true)
 
-    } else {
-      navigate('/login')
-    }
+    } 
   }, []);
   useEffect(() => {
     async function getQuizzes() {
