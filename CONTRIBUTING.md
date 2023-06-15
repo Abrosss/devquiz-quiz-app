@@ -13,7 +13,7 @@ Here are the instructions on setting up the project locally.
    ```
 3. Navigate to the project directory.
    ```sh
-   cd Workspace
+   cd devquiz-quiz-app
    ```
 4. Add a reference to the original repository.
    ```sh
