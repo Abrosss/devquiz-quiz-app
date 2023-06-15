@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
-
+import Cookies from 'js-cookie';
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
 import { Quiz } from '../../components/Quiz';
@@ -11,17 +11,28 @@ import '../../styles.css';
 import './AllQuestions.css';
 
 
-function QuizPage({ loggedIn }) {
-
+function QuizPage() {
+  const navigate = useNavigate();
 
 
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
+  const [loggedIn, setLoggedIn] = useState(false)
   const [questions, setQuestions] = useState([])
   const [quiz, setQuiz] = useState({})
   const { quizID } = useParams();
 
+  useEffect(() => {
+    const authToken = Cookies.get('auth_token');
 
+    if (authToken) {
+      setLoggedIn(true)
+   
+    } 
+    else {
+      navigate('/login')
+    }
+  }, []);
   useEffect(() => {
     async function init() {
 

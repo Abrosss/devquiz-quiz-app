@@ -22,21 +22,21 @@ let categoriesData = [
     hash: "programming_tules"
   }
 ]
-function AllTests({ loggedIn }) {
+function AllTests() {
   const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState(categoriesData)
   const [menuOpened, setMenuOpened] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-
+  const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
     const authToken = Cookies.get('auth_token');
 
     if (authToken) {
-
+      setLoggedIn(true)
 
     } else {
-
+      navigate('/login')
     }
   }, []);
   useEffect(() => {
