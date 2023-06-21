@@ -40,6 +40,7 @@
   gap: 0.5rem;
   cursor: pointer;
   transition: all 0.5s ease-in-out;
+  border: 1px aquamarine solid;
 }
 .quiz .answers-section .answer div {
   border-radius: 15px 0 0 15px;
@@ -48,11 +49,23 @@
 .quiz .answers-section .answer:hover {
   transform: scale(1.05);
 }
-.quiz .answers-section__letter {
+.quiz .answers-section .answer.correct {
   background-color: aquamarine;
+  border: none;
+}
+.quiz .answers-section .answer.incorrect {
+  background-color: red;
+  border: none;
+}
+.quiz .answers-section__letter {
+  background-color: rgba(127, 255, 212, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 1px aquamarine solid;
+}
+.quiz .answers-section__letter.selected {
+  border-right: 1px rgb(96, 198, 164) solid;
 }
 
 .quiz.column {

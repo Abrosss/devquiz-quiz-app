@@ -41,14 +41,6 @@ h2 {
   color: white;
 }
 
-.correct {
-  background-color: aquamarine;
-}
-
-.incorrect {
-  background-color: red;
-}
-
 .letter {
   height: 100%;
   display: flex;

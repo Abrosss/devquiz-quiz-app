@@ -43,6 +43,7 @@
       gap: .5rem;
       cursor: pointer;
       transition: all 0.5s ease-in-out;
+      border: 1px aquamarine solid;
 
       div {
         border-radius: 15px 0 0 15px;
@@ -54,15 +55,25 @@
       }
     }
 
-    ;
+    .answer.correct {
+      background-color: aquamarine;
+      border: none;
+    }
+    .answer.incorrect {
+      background-color: red;
+      border: none;
+    }
 
     &__letter {
-      background-color: aquamarine;
+      background-color: rgba(127, 255, 212, .3);
       display: flex;
       align-items: center;
       justify-content: center;
+      border-right: 1px aquamarine solid;
     }
-
+    &__letter.selected {
+      border-right: 1px rgb(96, 198, 164) solid;
+    }
   }
 }
 .quiz.column {
