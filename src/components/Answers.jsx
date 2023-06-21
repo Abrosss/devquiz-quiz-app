@@ -24,8 +24,10 @@ function Answers({ answers, checkAnswer, selectedAnswer }) {
                     onClick={() => checkAnswer (answer)}
                     
     >       
-                    <span className='answers-section__letter'>{answer.letter && answer.letter}</span>
-                    <span>{answer.title}</span>
+                    <div className='answers-section__letter'>
+                    <span>{answer.letter && answer.letter}</span>
+                    </div>
+                    <div><span>{answer.title}</span></div>
                    
                 </div>
 

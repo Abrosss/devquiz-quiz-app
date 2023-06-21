@@ -36,22 +36,23 @@
 }
 .quiz .answers-section .answer {
   display: flex;
-  border: 1px aquamarine solid;
   border-radius: 15px;
-  align-items: center;
   gap: 0.5rem;
   cursor: pointer;
   transition: all 0.5s ease-in-out;
 }
-.quiz .answers-section .answer span {
-  padding: 1rem 1.5rem;
+.quiz .answers-section .answer div {
   border-radius: 15px 0 0 15px;
+  padding: 1rem 1rem;
 }
 .quiz .answers-section .answer:hover {
   transform: scale(1.05);
 }
 .quiz .answers-section__letter {
   background-color: aquamarine;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .quiz.column {
