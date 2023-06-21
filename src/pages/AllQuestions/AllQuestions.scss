@@ -39,18 +39,14 @@
 
     .answer {
       display: flex;
-      border: 1px aquamarine solid;
       border-radius: 15px;
-      align-items: center;
       gap: .5rem;
-
       cursor: pointer;
       transition: all 0.5s ease-in-out;
-
-      span {
-        padding: 1rem 1.5rem;
-        border-radius: 15px 0 0 15px;
-      }
+     div {
+      border-radius: 15px 0 0 15px;
+      padding: 1rem 1rem;
+     }
 
       &:hover {
         transform: scale(1.05);
@@ -61,6 +57,11 @@
 
     &__letter {
       background-color: aquamarine;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+        
     }
 
   }
