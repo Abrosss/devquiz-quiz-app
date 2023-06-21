@@ -359,9 +359,10 @@ nav {
     display: flex;
     justify-content: flex-end;
 }
-
-button,
-.button {
+.btn {
+  padding: 0.8em 4.2em !important;
+}
+button, .btn, .button {
     border-radius: 8px;
 
     padding: 0.6em 2em;
@@ -386,7 +387,7 @@ button,
 .buttonWithIcon {
     display: flex;
     align-items: center;
-    gap: .2rem;
+    margin-right: 1em;
 }
 .correct {
     color: green;
@@ -409,7 +410,7 @@ button,
     align-items: center;
     padding: 4rem 0;
     padding-top: 2rem;
-    gap: 1rem;
+    gap: 1.5rem;
 
 }
 
@@ -423,4 +424,10 @@ button,
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8em;
 }

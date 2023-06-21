@@ -12,7 +12,7 @@ body {
 }
 
 h2 {
-  color: #489fb5;
+  color: #489FB5;
   font-size: 1.5rem;
 }
 
@@ -28,7 +28,7 @@ h2 {
 }
 
 .cell {
-  border: 1px #489fb5 solid;
+  border: 1px #489FB5 solid;
   width: 25px;
   height: 25px;
   display: flex;
@@ -37,7 +37,7 @@ h2 {
 }
 
 .cell.active {
-  background-color: #489fb5;
+  background-color: #489FB5;
   color: white;
 }
 
@@ -59,16 +59,14 @@ h2 {
   margin-left: auto;
 }
 
-h4,
-p {
+h4, p {
   margin: 0;
 }
 
-button,
-.button {
+button, .button {
   word-break: unset;
   white-space: nowrap;
-  background-color: #489fb5;
+  background-color: #489FB5;
   outline: none;
   border: none;
   color: white;
@@ -100,7 +98,7 @@ button,
   list-style-type: none;
   display: flex;
   align-items: center;
-  border: 1px #489fb5 solid;
+  border: 1px #489FB5 solid;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -161,15 +159,15 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: 1px #489fb5 solid;
+  border-bottom: 1px #489FB5 solid;
   padding-bottom: 2rem;
-  background-color: #489fb5;
+  background-color: #489FB5;
   color: white;
 }
 
 .container-header input {
   border: 1px white solid;
-  background-color: #489fb5;
+  background-color: #489FB5;
   color: white;
 }
 
@@ -184,7 +182,7 @@ a {
 .input {
   padding: 1rem 1.5rem;
   border-radius: 15px;
-  border: 1px #489fb5 solid;
+  border: 1px #489FB5 solid;
   font-weight: bold;
 }
 
@@ -192,7 +190,7 @@ a {
   min-width: 30rem;
   border: none;
   border-radius: unset;
-  border-bottom: 1px #489fb5 solid;
+  border-bottom: 1px #489FB5 solid;
 }
 
 .image-section {
@@ -210,13 +208,13 @@ a {
 .image-section img {
   width: 80%;
   -o-object-fit: contain;
-  object-fit: contain;
+     object-fit: contain;
 }
 
 .input.option {
   border: none;
   border-radius: 15px;
-  border: 1px #489fb5 solid;
+  border: 1px #489FB5 solid;
   min-width: 25rem;
   resize: none;
 }
@@ -224,20 +222,20 @@ a {
 .option {
   min-width: 20rem;
   padding: 1rem;
-  border-bottom: 1px #489fb5 solid;
+  border-bottom: 1px #489FB5 solid;
 }
 
 .input::-moz-placeholder {
-  color: #489fb5;
+  color: #489FB5;
 }
 
 .input::placeholder {
-  color: #489fb5;
+  color: #489FB5;
 }
 
 .addButton {
   font-size: 0.8rem;
-  color: #489fb5;
+  color: #489FB5;
   cursor: pointer;
   margin-left: 2.5rem;
   text-decoration: underline;
@@ -316,7 +314,7 @@ ul {
 
 .save {
   background-color: white;
-  color: #489fb5;
+  color: #489FB5;
 }
 
 .upload-input {
@@ -377,7 +375,7 @@ header a {
 }
 
 .highlighted {
-  color: #489fb5;
+  color: #489FB5;
 }
 
 nav {
@@ -400,9 +398,7 @@ nav {
   padding: 0.8em 4.2em !important;
 }
 
-button,
-.btn,
-.button {
+button, .btn, .button {
   border-radius: 8px;
   padding: 0.6em 2em;
   font-size: 1em;
@@ -411,15 +407,13 @@ button,
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover,
-.btn:hover,
-.button:hover {
+button:hover, .btn:hover, .button:hover {
   border-color: #646cff;
 }
 
 .no-background {
   background-color: transparent;
-  color: #489fb5;
+  color: #489FB5;
 }
 
 .buttonWithIcon {
@@ -449,13 +443,6 @@ button:hover,
   gap: 1.5rem;
 }
 
-.result {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8em;
-}
-
 .icon {
   width: 24px;
   height: 24px;
@@ -466,4 +453,11 @@ button:hover,
   display: flex;
   align-items: center;
   justify-content: center;
-} /*# sourceMappingURL=styles.css.map */
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8em;
+}/*# sourceMappingURL=styles.css.map */
