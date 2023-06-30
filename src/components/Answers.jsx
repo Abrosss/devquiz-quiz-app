@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 function colorButton(answer, selectedAnswer) {
-  console.log( selectedAnswer)
+
     if (selectedAnswer === null) {
       return "answer";
     } else if (answer === true) {
@@ -11,7 +11,7 @@ function colorButton(answer, selectedAnswer) {
     } 
   }
 function Answers({ answers, checkAnswer, selectedAnswer }) {
-    console.log(answers)
+
 
     return (
         <>
