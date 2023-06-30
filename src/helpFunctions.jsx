@@ -12,6 +12,21 @@ export function deleteFromArray(array, index) {
   
  }
 
+ export function randomizeArray(array) {
+  let resultArray = [...array]
+  let currentIndex = resultArray.length
+  let temporaryValue
+  let randomIndex
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex--);
+    temporaryValue = resultArray[currentIndex];
+    resultArray[currentIndex] = resultArray[randomIndex];
+    resultArray[randomIndex] = temporaryValue;
+  }
+
+  return resultArray;
+}
  export function recordInputs (e, array, index) {
   const { name, value } = e.target;
   const updatedArray = [ ...array ]

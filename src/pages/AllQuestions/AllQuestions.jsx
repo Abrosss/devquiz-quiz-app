@@ -10,7 +10,7 @@ import EditableList from '../../components/Admin/EditableList'
 import '../../styles.css';
 import './AllQuestions.css';
 
-
+import { randomizeArray } from '../../helpFunctions';
 function QuizPage() {
   const navigate = useNavigate();
 
@@ -33,14 +33,25 @@ function QuizPage() {
   }, []);
   useEffect(() => {
     async function init() {
+      try {
+        setIsLoading(true);
 
-      setIsLoading(true)
-      const questions = await axios.get(`/questions/${quizID}`) //change to url hash search later
-      const quiz = await axios.get(`/quizzes/${quizID}`)
+        const questions = await axios.get(`/questions/${quizID}`);
+        const quiz = await axios.get(`/quizzes/${quizID}`);
 
-      setQuiz(quiz.data[0])
-      setQuestions(questions.data)
-      setIsLoading(false)
+        setQuiz(quiz.data[0]);
+      
+        const randomizedArray =  randomizeArray(questions.data);
+    
+        setQuestions(randomizedArray);
+        setIsLoading(false);
+
+      } catch (error) {
+        console.error(error);
+        // Handle error here (e.g., display an error message)
+      }
+
+
     }
     init()
   }, [])

@@ -41,7 +41,8 @@ function AllTests() {
     async function getQuizzes() {
       setIsLoading(true)
       const response = await axios.get('/quizzes')
-      console.log(response)
+  
+      
       setQuizzes(response.data)
       setIsLoading(false)
     }
