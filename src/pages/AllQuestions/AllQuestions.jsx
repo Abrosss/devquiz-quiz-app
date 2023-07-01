@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useContext } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import Cookies from 'js-cookie';
@@ -8,33 +8,23 @@ import jwtDecode from 'jwt-decode'
 import { Quiz } from '../../components/Quiz';
 import Loading from '../../components/Loading';
 import EditableList from '../../components/Admin/EditableList'
+import { UserContext } from '../../context/User'
 import '../../styles.css';
 import './AllQuestions.css';
 
 import { randomizeArray } from '../../helpFunctions';
 function AllQuestions() {
   const navigate = useNavigate();
-
+const {isAdmin} = useContext(UserContext)
 
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
-  const [isAdmin, setIsAdmin] = useState(false)
+
   const [questions, setQuestions] = useState([])
   const [quiz, setQuiz] = useState({})
   const { quizID } = useParams();
 
-  useEffect(() => {
-    const authToken = Cookies.get('auth_token');
-    if(authToken) {
-      const user = jwtDecode(authToken)
-      if(user.isAdmin) setIsAdmin(true)
-      else {
-        setIsAdmin(false)
-      }
-    }
-  
 
-  }, []);
   useEffect(() => {
     async function init() {
       try {
