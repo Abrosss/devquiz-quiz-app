@@ -3,12 +3,12 @@ const User = require("../models/User");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
-const {registerValidation, loginValidation, verifyToken} = require('../config/validation')
+const { registerValidation, loginValidation, verifyToken } = require('../config/validation')
 
 
 
 const createToken = user => {
-  console.log(user)
+
   // Sign the JWT
   return jwt.sign(
     {
@@ -21,72 +21,114 @@ const createToken = user => {
 };
 
 exports.postLogin = (req, res, next) => {
-  const {error} = loginValidation(req.body)
-  if(error) return res.status(400).send(error.details[0].message)
+  const { error } = loginValidation(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
 
   passport.authenticate("local", (err, user, info) => {
- 
+
     if (err) {
       return next(err);
     }
     if (!user) {
       res.status(400).send("No user found")
-   
+
     }
     req.logIn(user, (err) => {
       if (err) {
         return next(err);
       }
-      
+
       const token = createToken(req.user)
       res.json({
-        token:token,
-        username:req.user.username,
-        isAdmin:req.user.isAdmin,
-        id:req.user._id,
+        token: token,
+        username: req.user.username,
+        isAdmin: req.user.isAdmin,
+        id: req.user._id,
       })
-  
+
 
     });
   })(req, res, next);
 };
 
 exports.postSignup = async (req, res) => {
-  console.log(req.body)
-     const {error} = registerValidation(req.body, req.body.confirm_password)
 
-     if(error) return res.status(400).send(error.details[0].message)
-   
-       
- 
-      //check if username exists
+  const { error } = registerValidation(req.body, req.body.confirm_password)
 
-      const usernameExists = await User.findOne({username:req.body.username})
-      if(usernameExists) 
-       return res.status(400).send('Create a unique username')
+  if (error) return res.status(400).send(error.details[0].message)
 
-     
-     
-     //HASH THE PW
- 
-    const salt = await bcrypt.genSalt(10)
-    const hashPassword = await bcrypt.hash(req.body.password, salt)
- 
-      //CREATE USER
-     
-      let user = new User({
-       username:req.body.username, 
-       password:hashPassword,
-        isAdmin: false
 
-   })
 
-            //SAVE USER
-     try{
-       const savedUser = await user.save()
-       res.status(200).send(req.user)
-   } catch(err){
-       res.status(400).send(err)
-   }
+  //check if username exists
+
+  const usernameExists = await User.findOne({ username: req.body.username })
+  if (usernameExists)
+    return res.status(400).send('Create a unique username')
+
+
+
+  //HASH THE PW
+
+  const salt = await bcrypt.genSalt(10)
+  const hashPassword = await bcrypt.hash(req.body.password, salt)
+
+  //CREATE USER
+
+  let user = new User({
+    username: req.body.username,
+    password: hashPassword,
+    isAdmin: false
+
+  })
+
+  //SAVE USER
+  try {
+    const savedUser = await user.save()
+    res.status(200).send(req.user)
+  } catch (err) {
+    res.status(400).send(err)
+  }
+};
+exports.postGoogleSignup = async (req, res) => {
+  let email = req.body.email
+  let username = req.body.username
+
+  //check if username exists
+  const emailExists = await User.findOne({ email: req.body.email })
+
+  if (emailExists) {
+    const token = createToken(emailExists)
+
+    res.json({
+      token: token,
+
+    })
+  }
+
+  //CREATE USER
+
+  else {
+    let user = new User({
+      username: username,
+      email: email,
+      location: "",
+      password: "googleauth",
+      isAdmin: false
+
+
+    })
+
+    //SAVE USER
+    try {
+      const savedUser = await user.save()
+      const token = createToken(req.user)
+      res.json({
+        token: token,
+
+      })
+    } catch (err) {
+      res.status(400).send(err)
+    }
+  }
 };
 
