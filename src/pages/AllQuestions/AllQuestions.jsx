@@ -4,6 +4,7 @@ import axios from '../../api/axios';
 import Cookies from 'js-cookie';
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
+import jwtDecode from 'jwt-decode'
 import { Quiz } from '../../components/Quiz';
 import Loading from '../../components/Loading';
 import EditableList from '../../components/Admin/EditableList'
@@ -11,25 +12,28 @@ import '../../styles.css';
 import './AllQuestions.css';
 
 import { randomizeArray } from '../../helpFunctions';
-function QuizPage() {
+function AllQuestions() {
   const navigate = useNavigate();
 
 
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [questions, setQuestions] = useState([])
   const [quiz, setQuiz] = useState({})
   const { quizID } = useParams();
 
   useEffect(() => {
     const authToken = Cookies.get('auth_token');
-
-    if (authToken) {
-      setLoggedIn(true)
-   
-    } 
+    if(authToken) {
+      const user = jwtDecode(authToken)
+      if(user.isAdmin) setIsAdmin(true)
+      else {
+        setIsAdmin(false)
+      }
+    }
   
+
   }, []);
   useEffect(() => {
     async function init() {
@@ -60,7 +64,7 @@ function QuizPage() {
 
   return (
     <>
-      <Header link={loggedIn ? '/admin/tests' : '/'} />
+      <Header link={isAdmin ? '/admin/tests' : '/'} />
       {isLoading ?
         <section className='container-content'>
           <Loading />
@@ -72,13 +76,13 @@ function QuizPage() {
           <Navigation
             currentPage={quiz.title}
             linkToText="All Tests"
-            linkTo={loggedIn ? "/admin/tests" : "/"}
+            linkTo={isAdmin ? "/admin/tests" : "/"}
           />
           {questions.length === 0 ?
 
             <div>No questions added yet!</div> :
 
-            loggedIn ?
+            isAdmin ?
               <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
               : <Quiz questions={questions} />
 
@@ -97,4 +101,4 @@ function QuizPage() {
 
 }
 
-export default QuizPage
+export default AllQuestions

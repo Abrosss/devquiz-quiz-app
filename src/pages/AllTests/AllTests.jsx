@@ -24,25 +24,17 @@ let categoriesData = [
 ]
 function AllTests() {
   const navigate = useNavigate();
+  const {isAdmin} = useContext(UserContext)
   const [quizzes, setQuizzes] = useState(categoriesData)
   const [menuOpened, setMenuOpened] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [loggedIn, setLoggedIn] = useState(false)
 
-  useEffect(() => {
-    const authToken = Cookies.get('auth_token');
 
-    if (authToken) {
-      setLoggedIn(true)
 
-    } 
-  }, []);
   useEffect(() => {
     async function getQuizzes() {
       setIsLoading(true)
       const response = await axios.get('/quizzes')
-  
-      
       setQuizzes(response.data)
       setIsLoading(false)
     }
@@ -55,9 +47,9 @@ function AllTests() {
   }
   return (
     <>
-      <Header link='/' loggedIn={loggedIn} />
+      <Header link='/' loggedIn={isAdmin} />
       <section className='container tests'>
-        {loggedIn &&
+        {isAdmin &&
 
           <div className='container-right'>
             <ButtonRedirect link="/admin/tests/addTest" name="Add a test" />
@@ -77,7 +69,7 @@ function AllTests() {
 
               <li key={quiz._id} className='category'>
                 <Link
-                  to={loggedIn ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
+                  to={isAdmin ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
                 >
                   {quiz.title}
                 </Link>

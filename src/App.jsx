@@ -4,8 +4,6 @@ import './styles.css'
 import { useEffect } from "react";
 import User from './context/User.jsx'
 
-
-
 import Tests from './pages/AllTests/AllTests'
 import AllQuestions from "./pages/AllQuestions/AllQuestions";
 import QuizPage from "./pages/User/QuizPage/QuizPage";
@@ -13,8 +11,6 @@ import AddQuiz from './pages/AddQuiz/AddQuiz'
 import Login from "./pages/Login/Login";
 import { useState } from "react";
 function App() {
-
-  const [loggedIn, setLoggedIn] = useState(false)
 
   return (
     <User>

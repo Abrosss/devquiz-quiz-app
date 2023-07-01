@@ -1,18 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
+import { UserContext } from '../context/User'
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
 function Header({link, loggedIn}) {
+  const { setIsAdmin } = useContext(UserContext);
 const navigate = useNavigate()
   function handleLogOut () {
 
-      const authToken = Cookies.get('auth_token');
-    
-      if (authToken) {
-        console.log(authToken)
-        Cookies.remove('auth_token');
-        navigate('/tests');
-      } 
+        setIsAdmin(false)
+        navigate('/');
+      
 
   }
   return (
