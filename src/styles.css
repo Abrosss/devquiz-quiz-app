@@ -99,6 +99,7 @@ button, .button {
 
 .category a:hover {
   background-color: rgba(72, 159, 181, 0.5);
+  border-radius: 10px;
 }
 
 .flex {

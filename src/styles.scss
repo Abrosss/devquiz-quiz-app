@@ -104,7 +104,7 @@ button, .button {
 }
 .category a:hover {
   background-color: rgba(72, 159, 181,.5);
- 
+  border-radius: 10px;
 }
 .flex {
   display: flex;
@@ -293,6 +293,7 @@ footer {
   bottom: 0;
   display: flex;
   justify-content: center;
+  padding-bottom: 1em;
 }
 footer.fixed {
   position: fixed;
