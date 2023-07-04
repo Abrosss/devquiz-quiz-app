@@ -9,7 +9,7 @@ import Add from '../../assets/add.svg';
 import Delete from '../../assets/delete.svg';
 import { deleteFromArray, recordInputs, addToArray, uploadToCloudinary, deleteFromCloudinary } from '../../helpFunctions';
 
-import './AddQuiz.css';
+
 
 function AddQuiz() {
 

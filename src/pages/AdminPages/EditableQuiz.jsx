@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useMemo, useContext } from 'react';
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
-import Cookies from 'js-cookie';
+
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
-import jwtDecode from 'jwt-decode'
-import { Quiz } from '../../components/Quiz';
+
 import Loading from '../../components/Loading';
 import EditableList from '../../components/Admin/EditableList'
-import { UserContext } from '../../context/User'
-import '../../styles.css';
-import './AllQuestions.css';
 
-import { randomizeArray } from '../../helpFunctions';
-function AllQuestions() {
-  const navigate = useNavigate();
-const {isAdmin} = useContext(UserContext)
+import '../../styles.css';
+
+
+function EditableQuiz() {
+
 
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
@@ -24,6 +21,7 @@ const {isAdmin} = useContext(UserContext)
   const [quiz, setQuiz] = useState({})
   const { quizID } = useParams();
 
+ 
 
   useEffect(() => {
     async function init() {
@@ -32,12 +30,8 @@ const {isAdmin} = useContext(UserContext)
 
         const questions = await axios.get(`/questions/${quizID}`);
         const quiz = await axios.get(`/quizzes/${quizID}`);
-
         setQuiz(quiz.data[0]);
-      
-        const randomizedArray =  randomizeArray(questions.data);
-    
-        setQuestions(randomizedArray);
+         setQuestions(questions.data)
         setIsLoading(false);
 
       } catch (error) {
@@ -54,7 +48,7 @@ const {isAdmin} = useContext(UserContext)
 
   return (
     <>
-      <Header link={isAdmin ? '/admin/tests' : '/'} />
+      <Header link='/admin/tests' />
       {isLoading ?
         <section className='container-content'>
           <Loading />
@@ -66,16 +60,13 @@ const {isAdmin} = useContext(UserContext)
           <Navigation
             currentPage={quiz.title}
             linkToText="All Tests"
-            linkTo={isAdmin ? "/admin/tests" : "/"}
+            linkTo="/admin/tests"
           />
           {questions.length === 0 ?
 
             <div>No questions added yet!</div> :
 
-            isAdmin ?
               <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
-              : <Quiz questions={questions} />
-
 
           }
 
@@ -91,4 +82,4 @@ const {isAdmin} = useContext(UserContext)
 
 }
 
-export default AllQuestions
+export default EditableQuiz

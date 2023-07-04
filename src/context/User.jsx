@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const authToken = Cookies.get('auth_token');
+    const authToken = Cookies.get('auth');
     console.log(authToken);
 
     if (authToken) {

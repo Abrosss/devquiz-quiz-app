@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import axios from '../../api/axios';
-import ButtonRedirect from '../../components/ButtonRedirect';
-import Loading from '../../components/Loading';
-import Dots from '../../assets/dots.svg'
-import { UserContext } from '../../context/User'
-import './AllTests.css'
-import Cookies from 'js-cookie';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import axios from '../api/axios';
+import ButtonRedirect from '../components/ButtonRedirect';
+import Loading from '../components/Loading';
+import { UserContext } from '../context/User'
+
 let categoriesData = [
   {
     id: "001001",

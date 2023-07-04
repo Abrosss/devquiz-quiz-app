@@ -8,8 +8,8 @@ function Header({link, loggedIn}) {
   const { setIsAdmin } = useContext(UserContext);
 const navigate = useNavigate()
   function handleLogOut () {
-
-        setIsAdmin(false)
+    Cookies.remove('auth')
+          setIsAdmin(false)
         navigate('/');
       
 
