@@ -23,6 +23,7 @@ h2 {
 
 .progress-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 .headingNav {
