@@ -223,7 +223,7 @@ h4, p {
   margin: 0;
 }
 
-button, .button {
+button, .button, button a {
   word-break: unset;
   white-space: nowrap;
   background-color: #489FB5;
@@ -700,6 +700,9 @@ form button {
   }
   .container {
     padding: 1rem;
+  }
+  .container-right {
+    justify-content: center;
   }
   .question-section-admin {
     flex-direction: column;

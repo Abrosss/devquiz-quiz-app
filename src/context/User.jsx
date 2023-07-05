@@ -9,14 +9,13 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const authToken = Cookies.get('auth');
-    console.log(authToken);
 
     if (authToken) {
       const user = jwtDecode(authToken);
       if (user.isAdmin) setIsAdmin(true);
       else {
         setIsAdmin(false);
-        // Redirect to the desired path using react-router or any other routing mechanism
+
         // navigate('/');
       }
     }
