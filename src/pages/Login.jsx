@@ -3,6 +3,7 @@ import axios from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Loading from '../components/Loading'
 import GoogleAuthButton from '../components/GoogleAuthButton'
 import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode'
@@ -12,9 +13,9 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function Login() {
   const navigate = useNavigate();
-
+  const { setIsAdmin } = useContext(UserContext)
   const [user, setUser] = useState({ username: "", password: "" })
-
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleUserChange = (e) => {
     const { name, value } = e.target;
@@ -47,21 +48,12 @@ function Login() {
 
   }
   const onSuccess = (response) => {
-
-    console.log(response)
-    // The response object is passed as an argument to the onSuccess function.
-    // You can access it using the "response" argument.
-
     handleGoogle(jwtDecode(response.credential))
-
-    // You can use the response object to get the user's profile information,
-    // such as their name and email address.
   };
   const onFailure = (error) => {
     console.error('Failed to log in with Google!');
     console.error(error);
-    // You can use the error object to handle the error and display an appropriate
-    // message to the user.
+
   };
   const handleGoogle = (user) => {
     setIsLoading(true)
@@ -80,8 +72,7 @@ function Login() {
             navigate('/admin/tests')
           }
           else {
-            
-            // Redirect to the desired path using react-router or any other routing mechanism
+          
             navigate('/');
           }
         }
@@ -101,24 +92,31 @@ function Login() {
     <>
       <Header />
       <section className='container-content'>
-        <div className='centered'>
-          <h1>SIGN IN</h1>
-          <p>To create tests</p>
-        </div>
-        <form>
-          <input onChange={(e) => handleUserChange(e)} placeholder='LOGIN' type="text" name='username'></input>
-          <input onChange={(e) => handleUserChange(e)} placeholder='PASSWORD' type="text" name='password'></input>
-          <button onClick={addUser}>LOGIN</button>
-          <GoogleOAuthProvider
-            clientId="3617139942-q2tpaatkgh80vuenj239u3i5vgm5v1ad.apps.googleusercontent.com"
-
-          >
-            <div className='flex'>
-              {/* <button onClick={() => handleGoogle({email:'demo@gmail.com'})} className='button-demo'>Demo</button> */}
-              <GoogleAuthButton onSuccess={onSuccess} onFailure={onFailure} />
+        {isLoading ?
+          <Loading />
+          :
+          <>
+            <div className='centered'>
+              <h1>SIGN IN</h1>
+              <p>To create tests</p>
             </div>
-          </GoogleOAuthProvider>
-        </form>
+            <form>
+              <input onChange={(e) => handleUserChange(e)} placeholder='LOGIN' type="text" name='username'></input>
+              <input onChange={(e) => handleUserChange(e)} placeholder='PASSWORD' type="text" name='password'></input>
+              <button onClick={addUser}>LOGIN</button>
+              <GoogleOAuthProvider
+                clientId="3617139942-q2tpaatkgh80vuenj239u3i5vgm5v1ad.apps.googleusercontent.com"
+
+              >
+                <div className='flex'>
+                  {/* <button onClick={() => handleGoogle({email:'demo@gmail.com'})} className='button-demo'>Demo</button> */}
+                  <GoogleAuthButton onSuccess={onSuccess} onFailure={onFailure} />
+                </div>
+              </GoogleOAuthProvider>
+            </form>
+          </>
+        }
+
       </section>
       <Footer position={"fixed"} />
     </>
