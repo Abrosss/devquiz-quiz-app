@@ -100,11 +100,15 @@ button a {
   text-decoration: underline;
 }
 
-
 .buttonWithIcon {
   display: flex;
   align-items: center;
   margin-right: 1em;
+}
+
+.buttons-combined {
+  display: flex;
+  gap: 1rem;
 }
 
 a {
@@ -275,6 +279,14 @@ label {
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+.icon.show {
+  display: block;
+}
+
+.icon.hidden {
+  display: none;
 }
 
 .option {
@@ -650,17 +662,69 @@ form {
   .container {
     padding: 1rem;
   }
+  .container-content {
+    padding-top: 0;
+  }
   .container-right {
     justify-content: center;
   }
   .question-section-admin {
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
 
+    .image-section {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: unset;
+    }
     .question {
       display: flex;
       flex-direction: column;
       gap: 1rem;
+
+      .form-input {
+        .add {
+          left: -1.5rem;
+     
+        }
+      }
+
+      .input.question {
+        min-width: unset;
+      }
+      .upload {
+        justify-content: center;
+        .upload-input {
+          margin: 0;
+        }
+      }
+     
+    }
+
+    .form-input.options {
+      width: 100%;
+    
+      .radio-item-container {
+        width: 100%;
+        margin-left: 0;
+        min-width: unset;
+        .radio-item {
+          justify-content: space-between;
+
+          label {
+            width: 90%;
+          }
+        }
+        .input {
+          padding: 1rem;
+        }
+        .input.option {
+          min-width: unset;
+          width: 100%
+        }
+      }
     }
   }
   .quiz {
@@ -682,6 +746,14 @@ form {
     }
   }
   .explanation {
-    width: unset;
+    margin-left: 0;
+    width: 100%;
+  }
+  .submit {
+    margin: 0;
+  }
+
+  .icon.hidden {
+    display: block;
   }
 }

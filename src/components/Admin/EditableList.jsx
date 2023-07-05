@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from '../../api/axios'
 import Add from '../../assets/add.svg'
 import Delete from '../../assets/delete.svg'
@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { uploadToCloudinary, addToArray, deleteFromCloudinary, deleteFromArray } from '../../helpFunctions';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '../Button';
 export async function updateQuizTitle(quizId, quizTitle) {
   try {
     await axios.put(`/quizzes/${quizId}`, {
@@ -278,10 +277,10 @@ console.log(newQuestions)
                   <input checked={answer.correct} onChange={(e) => handleCorrectOption(e, optIndex, index)} type="radio" id={optIndex} name={`correct-${index}`} value="vanilla" />
                   <textarea name='title' onChange={(e) => handleOptionChange(e, optIndex, index)} className='input option' value={answer.title} type="text" placeholder="Type an option here"></textarea>
                 </label>
-                {hoveredIndex === optIndex && 
+              
+          
+                <img onClick={() => handleDelete (index, optIndex)}  className={hoveredIndex === optIndex ? 'icon show' : "icon hidden"} src={Delete} alt="delete icon"></img>
                 
-                <img onClick={() => handleDelete (index, optIndex)}  className='icon' src={Delete} alt="delete icon"></img>
-                }
                 
               </div>
             ))}
@@ -303,7 +302,7 @@ console.log(newQuestions)
 
   ))
 }
-<section className='flex gap-1'>
+<section className='buttons-combined'>
   <button onClick={() => deleteQuiz(quiz._id)} className='submit attention' >DELETE THIS TEST</button>
   <button className='submit' onClick={(e) => editQuestions(e)}>SUBMIT</button>
 </section>

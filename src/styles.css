@@ -101,6 +101,11 @@ button a:hover {
   margin-right: 1em;
 }
 
+.buttons-combined {
+  display: flex;
+  gap: 1rem;
+}
+
 a {
   color: black;
   text-decoration: none;
@@ -259,6 +264,14 @@ label {
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+.icon.show {
+  display: block;
+}
+
+.icon.hidden {
+  display: none;
 }
 
 .option {
@@ -607,17 +620,60 @@ form button {
   .container {
     padding: 1rem;
   }
+  .container-content {
+    padding-top: 0;
+  }
   .container-right {
     justify-content: center;
   }
   .question-section-admin {
     flex-direction: column;
     align-items: center;
+    gap: 2rem;
+  }
+  .question-section-admin .image-section {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: unset;
   }
   .question-section-admin .question {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+  .question-section-admin .question .form-input .add {
+    left: -1.5rem;
+  }
+  .question-section-admin .question .input.question {
+    min-width: unset;
+  }
+  .question-section-admin .question .upload {
+    justify-content: center;
+  }
+  .question-section-admin .question .upload .upload-input {
+    margin: 0;
+  }
+  .question-section-admin .form-input.options {
+    width: 100%;
+  }
+  .question-section-admin .form-input.options .radio-item-container {
+    width: 100%;
+    margin-left: 0;
+    min-width: unset;
+  }
+  .question-section-admin .form-input.options .radio-item-container .radio-item {
+    justify-content: space-between;
+  }
+  .question-section-admin .form-input.options .radio-item-container .radio-item label {
+    width: 90%;
+  }
+  .question-section-admin .form-input.options .radio-item-container .input {
+    padding: 1rem;
+  }
+  .question-section-admin .form-input.options .radio-item-container .input.option {
+    min-width: unset;
+    width: 100%;
   }
   .quiz {
     flex-direction: column;
@@ -634,6 +690,13 @@ form button {
     width: 100%;
   }
   .explanation {
-    width: unset;
+    margin-left: 0;
+    width: 100%;
+  }
+  .submit {
+    margin: 0;
+  }
+  .icon.hidden {
+    display: block;
   }
 }/*# sourceMappingURL=styles.css.map */
