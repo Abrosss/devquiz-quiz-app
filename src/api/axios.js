@@ -1,6 +1,6 @@
 import axios from 'axios'
 
 export default axios.create({
-    baseURL: "https://devquiz-taupe.vercel.app/api"
+    baseURL: import.meta.env.VITE_API_URL
 })
 

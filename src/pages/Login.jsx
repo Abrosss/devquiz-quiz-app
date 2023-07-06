@@ -105,7 +105,7 @@ function Login() {
               <input onChange={(e) => handleUserChange(e)} placeholder='PASSWORD' type="text" name='password'></input>
               <button onClick={addUser}>LOGIN</button>
               <GoogleOAuthProvider
-                clientId="3617139942-q2tpaatkgh80vuenj239u3i5vgm5v1ad.apps.googleusercontent.com"
+                clientId= {import.meta.env.VITE_CLIENT_ID}
 
               >
                 <div className='flex'>

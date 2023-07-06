@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-const secret = '12345645'; // Replace with your own secret key
+const secret = '12345645';
 const registerValidation =(data, confirm_password) =>{
     const schema = Joi.object({
         username:Joi.string().min(6),
