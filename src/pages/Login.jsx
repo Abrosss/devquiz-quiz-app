@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from '../api/auth';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -106,7 +106,6 @@ function Login() {
               <button onClick={addUser}>LOGIN</button>
               <GoogleOAuthProvider
                 clientId= {import.meta.env.VITE_CLIENT_ID}
-
               >
                 <div className='flex'>
                   {/* <button onClick={() => handleGoogle({email:'demo@gmail.com'})} className='button-demo'>Demo</button> */}

@@ -16,7 +16,7 @@ const navigate = useNavigate()
   }
   return (
     <header>
-        <Link to={link}>prepped<span className='highlighted'>.dev</span></Link>
+        <Link to={link ? link : "/"}>prepped<span className='highlighted'>.dev</span></Link>
         {loggedIn &&
             <button onClick={handleLogOut}>Log out</button>
         }
