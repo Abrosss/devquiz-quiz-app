@@ -8,7 +8,7 @@ import Navigation from '../../components/Navigation';
 import Loading from '../../components/Loading';
 import EditableList from '../../components/Admin/EditableList'
 
-import '../../styles.css';
+
 
 
 function EditableQuiz() {

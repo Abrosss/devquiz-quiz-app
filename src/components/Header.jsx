@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { UserContext } from '../context/User'
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-function Header({link, loggedIn}) {
+function Header({link, loggedIn, headerButton, page}) {
   const { setIsAdmin } = useContext(UserContext);
 const navigate = useNavigate()
   function handleLogOut () {
@@ -14,9 +14,24 @@ const navigate = useNavigate()
       
 
   }
+
+  function isCreateTestPage (page) {
+    if(!page) {
+      return false
+    }
+    else if(page === "createTest") {
+      return true
+    }
+  
+    return false
+  }
   return (
-    <header>
+    <header className={isCreateTestPage(page) && "header-new"}>
         <Link to={link ? link : "/"}>prepped<span className='highlighted'>.dev</span></Link>
+        {isCreateTestPage(page) &&
+        <button onClick={headerButton.onClick} className='button-2'>{headerButton.text}</button>
+        }
+        
         {loggedIn &&
             <button onClick={handleLogOut}>Log out</button>
         }

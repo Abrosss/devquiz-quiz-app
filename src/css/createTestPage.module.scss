@@ -10,6 +10,8 @@
 body {
   font-family: 'Righteous', cursive;
   overflow-x: hidden;
+  background-color: rgba(72, 159, 181, .2);
+  padding: 1rem;
 }
 
 header {
@@ -17,8 +19,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 10rem;
+  padding: 2rem 5rem;
   box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 15px;
 
   a {
     font-size: 2.5rem;
@@ -91,7 +95,16 @@ button a {
 .btn {
   padding: 0.8em 4.2em !important;
 }
+.button-2 {
+  background-color: unset;
+  border: 1px #489FB5 solid;
+  color: #489FB5;
 
+  &:hover {
+    background-color: #489FB5;
+    color: white;
+  }
+}
 .addButton {
   font-size: .8rem;
   color: #489FB5;
@@ -130,6 +143,11 @@ label {
   gap: 1rem;
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
 .progress-bar {
   display: flex;
   flex-wrap: wrap;
@@ -142,6 +160,7 @@ label {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
   
   .cell.active {
@@ -167,7 +186,6 @@ label {
   display: flex;
   justify-content: center;
 }
-
 .centered {
   display: flex;
   flex-direction: column;
@@ -184,19 +202,14 @@ label {
   margin-top: 5rem;
 }
 
-.upload {
-  display: flex;
-  gap: 1rem;
-}
+
 
 .save {
   background-color: white;
   color: #489FB5;
 }
 
-.upload-input {
-  margin-left: 3rem;
-}
+
 
 .gap-1 {
   gap: 1rem;
@@ -262,10 +275,10 @@ label {
   color: #489FB5;
 }
 
-.add {
-
-  position: absolute;
-  left: -3rem;
+.icon.add {
+  width: 32px;
+  height: 32px;
+ 
 
 }
 
@@ -299,6 +312,7 @@ label {
   padding: 1rem 1.5rem;
   border-radius: 15px;
   border: 1px #489FB5 solid;
+  background-color: unset;
   font-weight: bold;
   &::placeholder {
     color: #489FB5;
@@ -317,14 +331,44 @@ label {
   border-bottom: 1px #489FB5 solid;
   ;
 }
-.input.option {
-  border: none;
-  border-radius: 15px;
-  border: 1px #489FB5 solid;
-  min-width: 25rem;
-  resize: none;
-}
 
+.explanation {
+  width: 100%;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgba(72, 159, 181, .1);
+  padding: 1rem;
+  border-radius: 15px;
+  
+  h5 {
+    color: #489FB5;
+  }
+
+  textarea {
+    width: 100%;
+    height: 5rem;
+    border-radius: 15px;
+    border: none;
+    resize: none;
+    padding: 1rem;
+    color: #489FB5;
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .explanation-text {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    border: none;
+  }
+
+}
 form {
   display: flex;
   flex-direction: column;
@@ -356,23 +400,38 @@ form {
   gap: 1rem;
   align-items: center;
   position: relative;
-}
 
+ 
+  .input {
+    text-align: center;
+    font-size: 1.8rem;
+    border: 1px #489FB5 solid;
+    &::placeholder {
+      color: #489FB5;
+    }
+ 
+  }
+ 
+}
+ 
 .form-input.options {
   justify-content: flex-start;
   flex-direction: column;
+  width: 50%;
+  border-radius: 15px;
+  gap: 2rem;
+
+
+ 
 }
 
 .image-section {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  width: 30rem;
-  max-height: 20rem;
-
-  img {
-    width: 80%;
-  
+  gap: 1rem;
+  img:first-child {
+    width: 50%;
     object-fit: contain;
   }
 }
@@ -385,11 +444,22 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 10rem;
+  border-radius: 15px;
+  padding: 2rem 5rem;
   padding-bottom: 8rem;
+  margin-top: 1rem;
+
+  background-color: white;
   h1 {
     font-size: 2rem;
   }
+}
+
+.container-fullpage-center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container.tests {
@@ -408,51 +478,74 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: 1px #489FB5 solid;
   padding-bottom: 2rem;
-  background-color: #489FB5;
+  background-color: white;
   color: white;
   gap: 2rem;
-  padding: 2rem 0;
+  padding: 1rem 0;
+  border-radius: 15px 15px 0 0;
 
   h1 {
-    color: white;
+    color: #489FB5;
   }
 
   input {
-    border: 1px white solid;
-    background-color: #489FB5;
-    color: white;
+    border: 1px #489FB5 solid;
+  
+    color: #489FB5;
     &::placeholder {
       color: white;
     }
+  }
+  .form-input {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+  
+   
+    .input {
+  
+      border: none;
+      text-align: center;
+      font-size: 1.8rem;
+      border: 1px transparent solid;
+      &::placeholder {
+        color: #489FB5;
+      }
+      &:focus-visible {
+        border: 1px #489FB5 solid;
+      }
+    }
+   
   }
 }
 
 .container-content {
   display: flex;
-
+  background-color: white;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 0;
-  padding-top: 2rem;
   gap: 1.5rem;
 
 }
 
 .radio-item-container {
   display: flex;
-  margin-left: 1rem;
   flex-direction: column;
   border-top: 0;
-  background: #fff;
+  border-radius: 15px;
   gap: 1rem;
   min-width: 15rem;
+  width: 100%;
 
   .radio-item {
     display: flex;
     position: relative;
     align-items: center;
+    label {
+      width: 100%;
+    }
   
   }
 }
@@ -478,7 +571,7 @@ form {
       word-break: break-word;
       text-align: center;
     }
-
+  
     &__image {
       display: flex;
       justify-content: center;
@@ -550,37 +643,7 @@ form {
   align-items: center;
 }
 
-.explanation {
-  width: 100%;
-  padding: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-left: 2.5rem;
-  gap: 1rem;
-  
 
-  textarea {
-    width: 100%;
-    height: 5rem;
-    border-radius: 15px;
-    border: 3px #489FB5 solid;
-    resize: none;
-    padding: 1rem;
-
-    &:focus-visible {
-      outline: none;
-    }
-  }
-
-  .explanation-text {
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    border: none;
-  }
-
-}
 
 .explanation.test {
   margin-left: 0;
@@ -596,22 +659,92 @@ form {
 .question-section-admin {
   /* border-bottom: 1px #489FB5 solid; */
   padding-bottom: 1rem;
-
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
-
-  .question {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  background-color: rgba(72, 159, 181, .1);
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  gap: 2rem;
+  .input.option {
+    border: none;
+    border-radius: 8px;
+    resize: none;
+    width: 100%;
   }
-
+  .upload-input::-webkit-file-upload-button {
+    background-color: #489FB5;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding: .5rem 1rem;
+    color: white;
+    cursor: pointer;
+  }
+  &__title {
+    width: 100%;
+  }
+  &__title.collapsed {
+    background-color: unset;
+    cursor: pointer;
+  }
+  .question-mark {
+    color: #489FB5;
+  }
+ 
+  .input {
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    color: #489FB5;
+    padding: .8rem 1rem;
+    background-color: #fff;
+    text-align: left;
+  }
+  .input.collapsed {
+    background-color: unset;
+  }
+  &__header {
+    display: flex;
+    justify-content: center;
+  }
+  &__content {
+    display: flex;
+   
+    .question {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 50%;
+      .question-mark {
+        color: #489FB5;
+      }
+      .upload {
+        display: flex;
+        gap: 1rem;
+        .upload-input {
+          margin-left: 0;
+        }
+      }
+      
+    }
+  }
+  h3 {
+    color: #489FB5;
+  }
   h2 {
     color: black;
     margin: 0;
     font-size: 1.8rem;
   }
+
+  
+}
+.question-section-admin.collapsed {
+  padding: 0;
+  border-radius: 8px;
+
 }
 
 .categories {
@@ -654,10 +787,12 @@ form {
 
 @media only screen and (max-width: 800px) {
   header {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem 0;
-    justify-content: center;
+
+    padding: 1rem 2rem;
+    justify-content: space-between;
+    a {
+      font-size: 2rem;
+    }
   }
   .container {
     padding: 1rem;
@@ -665,6 +800,16 @@ form {
   .container-content {
     padding-top: 0;
   }
+  .form-input {
+    width: 100%;
+    input {
+      width: 100%;
+    }
+    span {
+      display: none;
+    }
+  }
+
   .container-right {
     justify-content: center;
   }
@@ -702,10 +847,10 @@ form {
       }
      
     }
-
+  
     .form-input.options {
       width: 100%;
-    
+
       .radio-item-container {
         width: 100%;
         margin-left: 0;

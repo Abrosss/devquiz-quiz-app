@@ -9,7 +9,7 @@ import { Quiz } from '../components/Quiz';
 import Loading from '../components/Loading';
 import EditableList from '../components/Admin/EditableList'
 import { UserContext } from '../context/User'
-import '../styles.css';
+
 
 
 import { randomizeArray } from '../helpFunctions';
