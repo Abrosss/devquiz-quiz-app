@@ -30,16 +30,19 @@ function CreateTest() {
   const [quizTitle, setQuizTitle] = useState('')
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
-    if (quiz) setQuiz(quiz)
-    if (quiz.quizTitle) {
-      setQuizTitle(quiz.quizTitle);
+    if (quiz) {
+      setQuiz(quiz)
+      if (quiz.quizTitle) {
+        setQuizTitle(quiz.quizTitle);
+      }
+      if (quiz.questions) {
+        setQuestions(quiz.questions)
+      }
+      if (quiz.questionsExpanded) {
+        setQuestionsExpanded(quiz.questionsExpanded)
+      }
     }
-    if (quiz.questions) {
-      setQuestions(quiz.questions)
-    }
-    if (quiz.questionsExpanded) {
-      setQuestionsExpanded(quiz.questionsExpanded)
-    }
+   
   }, []);
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
