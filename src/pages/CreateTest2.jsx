@@ -87,6 +87,10 @@ function CreateTest() {
 
     }
   }
+  const isLastQuestion = (index) => {
+    console.log(index === questions.length - 1 )
+    return index === questions.length - 1 
+  }
   function handleQuestionInputs(e, index) {
     setQuestions(recordInputs(e, questions, index))
   }
@@ -312,8 +316,8 @@ function CreateTest() {
                             </section>
                           }
                         </section>
-                        {index === questions.length - 1 &&
-                          <img className='icon add' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index)}></img>
+                        {isLastQuestion(index) &&
+                          <img className='icon add-new' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index)}></img>
                         }
                       </>
                     ))
