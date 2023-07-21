@@ -237,7 +237,8 @@ function CreateTest() {
                   {
                     questions.map((question, index) => (
                       <>
-                        <section
+                         {questionsExpanded.includes(index) ?
+                          <section
                           className={questionsExpanded.includes(index) ? "question-section-admin-new" : "question-section-admin-new collapsed"}>
                           {questionsExpanded.includes(index) &&
 
@@ -315,7 +316,21 @@ function CreateTest() {
                               <textarea name='explanation' value={question.explanation} onChange={(e) => handleQuestionInputs(e, index)}></textarea>
                             </section>
                           }
-                        </section>
+                        </section> :
+
+<section
+className="question-section-collapsed">
+<span 
+className="question-section-collapsed__title"  
+onClick={() => handleQuestionToggle(index) }>{question.title}</span>
+
+<img className='icon deleteButton right' 
+onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
+  
+</section>
+                        
+                        }
+                   
                         {isLastQuestion(index) &&
                           <img className='icon add-new' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index)}></img>
                         }
@@ -324,7 +339,7 @@ function CreateTest() {
                   }
 
 
-                  <button className='submit' onClick={(e) => handleSubmit(e)}>SUBMIT</button>
+                  <button onClick={(e) => handleSubmit(e)}>SUBMIT</button>
 
 
 

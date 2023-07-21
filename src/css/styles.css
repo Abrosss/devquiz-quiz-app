@@ -372,17 +372,15 @@ form button {
   position: relative;
 }
 
-.form-input.collapsed {
-  padding: 1rem;
-}
-
 .form-input-new {
   display: flex;
   gap: 1rem;
   align-items: center;
   position: relative;
+  width: 100%;
 }
 .form-input-new .input {
+  width: 100%;
   text-align: center;
   font-size: 1.8rem;
   border: 1px #489FB5 solid;
@@ -453,7 +451,7 @@ form button {
   display: flex;
   flex-direction: column;
   border-radius: 15px;
-  padding: 0 5rem;
+  padding: 1rem 5rem;
   padding-bottom: 8rem;
   margin-top: 1rem;
   background-color: white;
@@ -516,6 +514,7 @@ form button {
 }
 .container-header-new input {
   border: 1px #489FB5 solid;
+  width: 100%;
   color: #489FB5;
 }
 .container-header-new input::-moz-placeholder {
@@ -841,9 +840,23 @@ form button {
   font-size: 1.8rem;
 }
 
-.question-section-admin-new.collapsed {
+.question-section-collapsed {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: rgba(72, 159, 181, 0.1);
+  border-radius: 15px;
   padding: 0;
   border-radius: 8px;
+  display: flex;
+  padding: 1rem;
+}
+.question-section-collapsed__title {
+  width: 100%;
+  color: #489FB5;
+  background-color: unset;
+  cursor: pointer;
+  word-break: break-word;
 }
 
 .categories {
@@ -881,6 +894,10 @@ form button {
 }
 
 @media only screen and (max-width: 800px) {
+  .page {
+    background-color: unset;
+    padding: 0;
+  }
   header {
     flex-direction: column;
     gap: 1rem;
@@ -889,13 +906,17 @@ form button {
   }
   .header-new {
     flex-direction: row;
-    padding: 1rem 2rem;
+    align-items: center;
+    padding: 1rem;
     justify-content: space-between;
+  }
+  .header-new button {
+    padding: 0.4rem 1rem;
   }
   .header-new a {
     font-size: 2rem;
   }
-  .container {
+  .container, .container-new {
     padding: 1rem;
   }
   .container-content {
@@ -903,6 +924,9 @@ form button {
   }
   .container-right {
     justify-content: center;
+  }
+  footer {
+    position: relative;
   }
   .question-section-admin {
     flex-direction: column;
@@ -953,23 +977,43 @@ form button {
     min-width: unset;
     width: 100%;
   }
+  .form-input {
+    width: 100%;
+  }
   .question-section-admin-new {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
   }
-  .question-section-admin-new .image-section {
+  .question-section-admin-new__header {
+    width: 100%;
+  }
+  .question-section-admin-new__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .question-section-admin-new .image-section, .question-section-admin-new .image-section-new {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: unset;
+  }
+  .question-section-admin-new .image-section img, .question-section-admin-new .image-section-new img {
+    width: 100%;
+  }
+  .question-section-admin-new .image-section .icon, .question-section-admin-new .image-section-new .icon {
+    width: 24px;
   }
   .question-section-admin-new .question {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-  .question-section-admin-new .question .form-input .add {
+  .question-section-admin-new .question .form-input, .question-section-admin-new .question .form-input-new {
+    width: 100%;
+  }
+  .question-section-admin-new .question .form-input .add, .question-section-admin-new .question .form-input-new .add {
     left: -1.5rem;
   }
   .question-section-admin-new .question .input.question {

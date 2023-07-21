@@ -387,19 +387,19 @@ form {
   gap: 1rem;
   align-items: center;
   position: relative;
+
 }
-.form-input.collapsed {
-  padding: 1rem;
-}
+
 
 .form-input-new {
   display: flex;
   gap: 1rem;
   align-items: center;
   position: relative;
-
+  width: 100%;
  
   .input {
+    width: 100%;
     text-align: center;
     font-size: 1.8rem;
     border: 1px #489FB5 solid;
@@ -473,7 +473,7 @@ form {
   display: flex;
   flex-direction: column;
   border-radius: 15px;
-  padding: 0 5rem;
+  padding: 1rem 5rem;
   padding-bottom: 8rem;
 
   margin-top: 1rem;
@@ -538,7 +538,7 @@ form {
 
   input {
     border: 1px #489FB5 solid;
-  
+    width: 100%;
     color: #489FB5;
     &::placeholder {
       color: white;
@@ -897,10 +897,29 @@ form {
 
   
 }
-.question-section-admin-new.collapsed {
-  padding: 0;
-  border-radius: 8px;
 
+.question-section-collapsed {
+    display: flex;
+
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgba(72, 159, 181, .1);
+    border-radius: 15px;
+    padding: 0;
+    border-radius: 8px;
+    display: flex;
+  
+    padding: 1rem;
+  
+    &__title {
+        width: 100%;
+        color: #489FB5;
+        background-color: unset;
+        cursor: pointer;
+        word-break: break-word;
+    
+    
+    }
 }
 
 .categories {
@@ -942,6 +961,10 @@ form {
 }
 
 @media only screen and (max-width: 800px) {
+  .page {
+    background-color: unset;
+    padding: 0;
+  }
   header {
     flex-direction: column;
     gap: 1rem;
@@ -950,22 +973,29 @@ form {
   }
   .header-new {
     flex-direction: row;
-    padding: 1rem 2rem;
+    align-items: center;
+    padding: 1rem;
     justify-content: space-between;
+    button {
+      padding: .4rem 1rem;
+    }
     a {
       font-size: 2rem;
     }
   }
-  .container {
+  .container, .container-new {
     padding: 1rem;
   }
+  
   .container-content {
     padding-top: 0;
   }
   .container-right {
     justify-content: center;
   }
-  
+  footer {
+    position: relative;
+  }
   .question-section-admin {
     flex-direction: column;
     align-items: center;
@@ -1025,23 +1055,41 @@ form {
       }
     }
   }
+  .form-input {
+    width: 100%;
+  }
   .question-section-admin-new {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
 
-    .image-section {
+    &__header {
+      width: 100%;
+    }
+    &__content {
+      flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    }
+    .image-section, .image-section-new {
       flex-direction: column;
       align-items: center;
       justify-content: center;
       width: unset;
+      img {
+        width: 100%;
+      }
+      .icon {
+        width: 24px;
+      }
     }
     .question {
       display: flex;
       flex-direction: column;
       gap: 1rem;
 
-      .form-input {
+      .form-input, .form-input-new {
+        width: 100%;
         .add {
           left: -1.5rem;
      
