@@ -10,7 +10,6 @@ router.get("/quizzes", apiController.getQuizzes)
 router.get("/quizzes/:id", apiController.getQuiz)
 router.put("/quizzes/:id", apiController.editQuiz)
 router.delete("/quizzes/:id", apiController.deleteQuiz)
-
 router.post("/addQuiz", apiController.postQuiz)
 router.post("/addImage", apiController.postImage)
 router.post("/deleteImage", apiController.deleteImage)

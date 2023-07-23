@@ -129,6 +129,23 @@ button a:hover {
   gap: 1rem;
 }
 
+.pdf-button {
+  background-color: unset;
+  border: 1px solid #489FB5;
+}
+.pdf-button:hover {
+  background-color: #489FB5;
+  border: 1px solid transparent;
+}
+.pdf-button:hover a {
+  color: white;
+}
+.pdf-button a {
+  color: #489FB5;
+  background-color: unset;
+  padding: 0;
+}
+
 a {
   color: black;
   text-decoration: none;
@@ -891,6 +908,10 @@ form button {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+.pdf-options {
+  display: flex;
 }
 
 @media only screen and (max-width: 800px) {

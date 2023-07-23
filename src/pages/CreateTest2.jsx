@@ -11,8 +11,14 @@ import { Quizzy } from '../components/Quizzy'
 import { deleteFromArray, recordInputs, addToArray, uploadToCloudinary, deleteFromCloudinary } from '../helpFunctions';
 import Navigation from '../components/Navigation';
 
-
+import PDFContent from '../components/PDFContent';
+import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 function CreateTest() {
+  const datar = {
+    name: 'John Doe',
+    email: 'john@example.com',
+    // Add more data as needed
+  };
   const defaultQuestion = () => {
     return {
       title: '',
@@ -26,7 +32,7 @@ function CreateTest() {
   const [quiz, setQuiz] = useState({})
   const [showPreview, setShowPreview] = useState(false)
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
-  console.log(showPreview)
+  console.log(quiz)
   const [quizTitle, setQuizTitle] = useState('')
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
@@ -42,7 +48,7 @@ function CreateTest() {
         setQuestionsExpanded(quiz.questionsExpanded)
       }
     }
-   
+
   }, []);
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
@@ -88,8 +94,8 @@ function CreateTest() {
     }
   }
   const isLastQuestion = (index) => {
-    console.log(index === questions.length - 1 )
-    return index === questions.length - 1 
+    console.log(index === questions.length - 1)
+    return index === questions.length - 1
   }
   function handleQuestionInputs(e, index) {
     setQuestions(recordInputs(e, questions, index))
@@ -194,8 +200,8 @@ function CreateTest() {
   };
   console.log(questions)
   return (
-   <section className='page'>
-      <Header page="createTest" link='/admin/tests' headerButton={headerButton}  />
+    <section className='page'>
+      <Header page="createTest" link='/admin/tests' headerButton={headerButton} />
       {saved ?
         <section className='container-content-new'>
           <h2>Quiz Added!</h2>
@@ -205,11 +211,11 @@ function CreateTest() {
 
         showPreview ?
           <div className='container-new'>
-             <Navigation
-            currentPage={quiz.quizTitle}
-            linkToText = ""
-            linkTo =""
-          />
+            <Navigation
+              currentPage={quiz.quizTitle}
+              linkToText=""
+              linkTo=""
+            />
             <Quizzy questions={questions} />
           </div>
 
@@ -237,100 +243,100 @@ function CreateTest() {
                   {
                     questions.map((question, index) => (
                       <>
-                         {questionsExpanded.includes(index) ?
+                        {questionsExpanded.includes(index) ?
                           <section
-                          className={questionsExpanded.includes(index) ? "question-section-admin-new" : "question-section-admin-new collapsed"}>
-                          {questionsExpanded.includes(index) &&
+                            className={questionsExpanded.includes(index) ? "question-section-admin-new" : "question-section-admin-new collapsed"}>
+                            {questionsExpanded.includes(index) &&
 
-                            <div className='question-section-admin-new__header collapseButton' onClick={() => handleQuestionToggle(index)}>
+                              <div className='question-section-admin-new__header collapseButton' onClick={() => handleQuestionToggle(index)}>
 
-                              <h3>Question {index + 1}</h3>
+                                <h3>Question {index + 1}</h3>
 
-                             <img className='icon deleteButton right' onClick={() => handleDeleteQuestion(index)} src={Delete}></img> 
+                                <img className='icon deleteButton right' onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
+                              </div>
+
+                            }
+
+
+                            <div className={questionsExpanded.includes(index) ? "form-input" : "form-input collapsed"}>
+
+                              <input
+                                className={questionsExpanded.includes(index) ? "input question-section-admin-new__title" : "input question-section-admin-new__title collapsed"}
+                                value={question.title}
+                                type="text"
+                                name='title'
+                                placeholder="Type a question here"
+                                onChange={(e) => handleQuestionInputs(e, index)}
+                                onClick={() => { !questionsExpanded.includes(index) && handleQuestionToggle(index) }}
+
+                              >
+
+
+                              </input>
+                              {!questionsExpanded.includes(index) && <img className='icon deleteButton right' onClick={() => handleDeleteQuestion(index)} src={Delete}></img>}
+
                             </div>
+                            {questionsExpanded.includes(index) &&
+                              <div className='question-section-admin-new__content'>
+                                <section className='question'>
 
-                          }
+                                  <>
+                                    {question.image &&
+                                      <section className='image-section-new'>
 
+                                        <img src={question.image} alt='question illustration'></img>
+                                        <img className='icon' alt='delete an image' src={Delete} onClick={() => handleImageDelete(index, question.cloudinaryId)}></img>
 
-                          <div className={questionsExpanded.includes(index) ? "form-input" : "form-input collapsed"}>
+                                      </section>
 
-                            <input
-                              className={questionsExpanded.includes(index) ? "input question-section-admin-new__title" : "input question-section-admin-new__title collapsed"}
-                              value={question.title}
-                              type="text"
-                              name='title'
-                              placeholder="Type a question here"
-                              onChange={(e) => handleQuestionInputs(e, index)}
-                              onClick={() => { !questionsExpanded.includes(index) && handleQuestionToggle(index) }}
+                                    }
+                                    <div class="upload">
+                                      <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)} />
 
-                            >
+                                      <div class="upload-list"></div>
+                                    </div>
+                                  </>
 
+                                </section>
 
-                            </input>
-                            {!questionsExpanded.includes(index) && <img className='icon deleteButton right' onClick={() => handleDeleteQuestion(index)} src={Delete}></img> }
-                            
-                          </div>
-                          {questionsExpanded.includes(index) &&
-                            <div className='question-section-admin-new__content'>
-                              <section className='question'>
+                                <div className='form-input options-new'>
 
-                                <>
-                                  {question.image &&
-                                    <section className='image-section-new'>
-
-                                      <img src={question.image} alt='question illustration'></img>
-                                      <img className='icon' alt='delete an image' src={Delete} onClick={() => handleImageDelete(index, question.cloudinaryId)}></img>
-
-                                    </section>
-
-                                  }
-                                  <div class="upload">
-                                    <input class="upload-input" id="file" type="file" onChange={(e) => handleImageUpload(e, index)} />
-
-                                    <div class="upload-list"></div>
-                                  </div>
-                                </>
-
-                              </section>
-
-                              <div className='form-input options-new'>
-
-                                <Options
-                                  options={question.options}
-                                  questionIndex={index}
-                                  questions={questions}
-                                  setQuestions={setQuestions} />
+                                  <Options
+                                    options={question.options}
+                                    questionIndex={index}
+                                    questions={questions}
+                                    setQuestions={setQuestions} />
 
 
 
+
+                                </div>
 
                               </div>
 
-                            </div>
+                            }
 
-                          }
+                            {questionsExpanded.includes(index) &&
+                              <section className='explanation-new'>
+                                <h5>Explanation</h5>
+                                <textarea name='explanation' value={question.explanation} onChange={(e) => handleQuestionInputs(e, index)}></textarea>
+                              </section>
+                            }
+                          </section> :
 
-                          {questionsExpanded.includes(index) &&
-                            <section className='explanation-new'>
-                              <h5>Explanation</h5>
-                              <textarea name='explanation' value={question.explanation} onChange={(e) => handleQuestionInputs(e, index)}></textarea>
-                            </section>
-                          }
-                        </section> :
+                          <section
+                            className="question-section-collapsed">
+                            <span
+                              className="question-section-collapsed__title"
+                              onClick={() => handleQuestionToggle(index)}>{question.title}</span>
 
-<section
-className="question-section-collapsed">
-<span 
-className="question-section-collapsed__title"  
-onClick={() => handleQuestionToggle(index) }>{question.title}</span>
+                            <img className='icon deleteButton right'
+                              onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
 
-<img className='icon deleteButton right' 
-onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
-  
-</section>
-                        
+                          </section>
+
                         }
-                   
+
                         {isLastQuestion(index) &&
                           <img className='icon add-new' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index)}></img>
                         }
@@ -339,12 +345,29 @@ onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
                   }
 
 
-                  <button onClick={(e) => handleSubmit(e)}>SUBMIT</button>
+
+                  <button onClick={(e) => handleSubmit(e)}>SHARE</button>
+                  <button className="pdf-button">
+                    <PDFDownloadLink document={<PDFContent data={quiz} />} fileName={quiz.quizTitle + '.pdf'}>
+                      {({ blob, url, loading, error }) =>
+                        loading ? 'Loading document...' : 'Save as PDF'
+                      }
+                    </PDFDownloadLink>
+                  </button>
+
 
 
 
                 </section>
               </>
+
+              <div>
+                {/* Your React component rendering */}
+                {/* <PDFViewer width="1000" height="600">
+        <PDFContent data={quiz} />
+      </PDFViewer> */}
+
+              </div>
             </section>
           </>
 
@@ -356,7 +379,7 @@ onClick={() => handleDeleteQuestion(index)} src={Delete}></img>
 
 
       <Footer position="" />
-   </section>
+    </section>
   )
 
 }
