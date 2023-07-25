@@ -73,7 +73,7 @@ const {isAdmin} = useContext(UserContext)
 
             isAdmin ?
               <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
-              : <Quizzy questions={questions} />
+              : <Quizzy questions={questions} shared={true} />
 
 
           }

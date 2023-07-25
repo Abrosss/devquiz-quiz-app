@@ -17,7 +17,7 @@ function filterAnswers(selectedAnswer, allAnswers) {
   }
 }
 
-function Quizzy({ questions, isAdmin }) {
+function Quizzy({ questions, isAdmin, shared}) {
   const [quizState, setQuizState] = useState({
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
@@ -122,6 +122,7 @@ function handleProgressCellClick(index) {
           correctAnswerCount={correctAnswerCount}
           amountOfQuestions={questions.length}
           handleRestartQuiz={restartQuiz}
+          shared={shared}
         />
         :
         <>

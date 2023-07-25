@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Restart from "../assets/restart.svg";
 function Result(props) {
-  const { correctAnswerCount, amountOfQuestions, handleRestartQuiz } = props;
+  const { correctAnswerCount, amountOfQuestions, handleRestartQuiz, shared } = props;
   return (
     <div className="container-content">
       <h2>You're finished!</h2>
@@ -10,14 +10,18 @@ function Result(props) {
         Result: {correctAnswerCount}/{amountOfQuestions}
       </p>
       <div className="result">
-        <Link to="/" className="button btn">
-          Back To Tests
-        </Link>
+        {!shared &&
+           <Link to="/" className="button btn">
+           Back To Tests
+         </Link>
+        }
+     
         <button
-          className="button no-background buttonWithIcon"
+          className={shared ? "button" : "button no-background buttonWithIcon"}
           onClick={handleRestartQuiz}
         >
-          <img className="icon" src={Restart} alt="restart"></img>
+          {!shared &&  <img className="icon" src={Restart} alt="restart"></img>}
+         
           <span>Restart</span>
         </button>
       </div>
