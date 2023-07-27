@@ -7,7 +7,7 @@ import AllQuestions from "./pages/AllQuestions";
 import EditableQuiz from "./pages/AdminPages/EditableQuiz";
 import AddQuiz from './pages/AdminPages/AddQuiz'
 import Login from "./pages/Login";
-import CreateTest from './pages/CreateTest2'
+import CreateTest from './pages/CreateTest'
 import './css/styles.css'
 function App() {
 
