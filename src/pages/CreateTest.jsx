@@ -26,6 +26,7 @@ function CreateTest() {
     }
   }
   const [quiz, setQuiz] = useState({})
+  const [questions, setQuestions] = useState([defaultQuestion()])
   const [showPreview, setShowPreview] = useState(false)
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
   const [quizTitle, setQuizTitle] = useState('')
@@ -53,9 +54,6 @@ function CreateTest() {
     };
     localStorage.setItem("quiz", JSON.stringify(updatedTitle));
   }, [quizTitle]);
-
-
-  const [questions, setQuestions] = useState([defaultQuestion()])
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
     const updatedQuestions = {
@@ -65,9 +63,6 @@ function CreateTest() {
     localStorage.setItem("quiz", JSON.stringify(updatedQuestions));
 
   }, [questions]);
-
-
-
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
     const updatedQuiz = {

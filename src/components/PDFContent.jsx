@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
 });
 
 const PDFContent = ({ data }) => {
+ 
   return (
     <Document>
       <Page style={styles.page}>
