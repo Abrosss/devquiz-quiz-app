@@ -146,7 +146,7 @@ function CreateTest() {
 
   return (
     <section className='page'>
-      <Header page="createTest" link='/admin/tests' headerButton={headerButton} />
+      <Header page={questions.length === 0 ? '' : "createTest"} link='/admin/tests' headerButton={headerButton} />
 
 
       {showPreview ?
