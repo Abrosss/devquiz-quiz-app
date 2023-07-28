@@ -26,7 +26,7 @@ const navigate = useNavigate()
     return false
   }
   return (
-    <header className={isCreateTestPage(page) && "header-new"}>
+    <header className={isCreateTestPage(page) ? "header-new" : "header"}>
         <Link to={link ? link : "/"}>prepped<span className='highlighted'>.dev</span></Link>
         {isCreateTestPage(page) &&
         <button onClick={headerButton.onClick} className='button-2'>{headerButton.text}</button>
