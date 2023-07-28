@@ -123,13 +123,13 @@ function CreateTest() {
 
   function addEmptyQuestion(index) {
 
-      setQuestions(addToArray(questions, defaultQuestion())) ////add a new question
-      const expanded = [...questionsExpanded]
-      if (expanded.length > 0) {
-        expanded.pop()
-      }
-      setQuestionsExpanded([...expanded, index])
-    
+    setQuestions(addToArray(questions, defaultQuestion())) ////add a new question
+    const expanded = [...questionsExpanded]
+    if (expanded.length > 0) {
+      expanded.pop()
+    }
+    setQuestionsExpanded([...expanded, index])
+
 
   }
 
@@ -283,7 +283,7 @@ function CreateTest() {
                       }
 
                       {isLastQuestion(index) &&
-                        <img className='icon add-new' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index+1)}></img>
+                        <img className='icon add-new' src={Add} alt='add a new question' onClick={() => addEmptyQuestion(index + 1)}></img>
                       }
                     </>
                   ))
@@ -291,19 +291,18 @@ function CreateTest() {
                 }
 
 
-
-
-                <button>SHARE</button>
-                <button className="pdf-button">
-                  <PDFDownloadLink document={<PDFContent data={quiz} />} fileName={quiz.quizTitle + '.pdf'}>
-                    {({ blob, url, loading, error }) =>
-                      loading ? 'Loading document...' : 'Save as PDF'
-                    }
-                  </PDFDownloadLink>
-                </button>
-
-
-
+                {questions.length !== 0 &&
+                  <>
+                    <button>SHARE</button>
+                    <button className="pdf-button">
+                      <PDFDownloadLink document={<PDFContent data={quiz} />} fileName={quiz.quizTitle + '.pdf'}>
+                        {({ blob, url, loading, error }) =>
+                          loading ? 'Loading document...' : 'Save as PDF'
+                        }
+                      </PDFDownloadLink>
+                    </button>
+                  </>
+                }
 
               </section>
             </>
