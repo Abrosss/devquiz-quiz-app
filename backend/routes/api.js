@@ -13,4 +13,6 @@ router.delete("/quizzes/:id", apiController.deleteQuiz)
 router.post("/addQuiz", apiController.postQuiz)
 router.post("/addImage", apiController.postImage)
 router.post("/deleteImage", apiController.deleteImage)
+router.post("/sharedQuiz", apiController.postSharedQuiz)
+router.get("/sharedQuiz/:id", apiController.getSharedQuiz)
 module.exports = router;

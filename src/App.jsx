@@ -8,11 +8,10 @@ import EditableQuiz from "./pages/AdminPages/EditableQuiz";
 import AddQuiz from './pages/AdminPages/AddQuiz'
 import Login from "./pages/Login";
 import CreateTest from './pages/CreateTest'
+import SharedQuiz from "./pages/SharedQuiz.jsx";
 import './css/styles.css'
 function App() {
-
   return (
-
 <Router>
 <Routes>
 <Route path='/admin/tests/:quizID' element={<EditableQuiz />}/>
@@ -21,6 +20,7 @@ function App() {
 <Route path='/tests/:quizID' element={<AllQuestions />}/>
 <Route path='/create-test' element={<CreateTest />}/>
 <Route path='/login' element={<Login />}/>
+<Route path='/shared/:id' element={<SharedQuiz/>}/>
 <Route path='/' element={<Tests loggedIn={false} />}/>
 </Routes>
 

@@ -984,7 +984,15 @@ form {
 .pdf-options {
   display: flex;
 }
-
+.share-link {
+  color: #489FB5;
+  font-size: 1.2rem;
+  font-weight: 200;
+  a {
+    color: #489FB5;
+    text-decoration: underline;
+  }
+}
 @media only screen and (max-width: 800px) {
   .page {
     background-color: unset;

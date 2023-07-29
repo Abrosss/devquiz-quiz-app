@@ -1,5 +1,6 @@
 const Question = require("../models/Question")
 const Quiz = require("../models/Quiz")
+const SharedQuiz = require("../models/SharedQuiz")
 const cloudinary = require("../config/cloudinary");
 const PDFDocument = require('pdfkit');
 module.exports = {
@@ -88,6 +89,34 @@ module.exports = {
     }
 
 
+  },
+  getSharedQuiz: async (req, res) => {
+    let quizId = req.params.id
+    try {
+      const quiz = await SharedQuiz.find({ _id: quizId })
+
+      res.json(quiz)
+
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  },
+  postSharedQuiz: async (req, res) => {
+    console.log(req.body)
+    try {
+      let title = req.body.title
+      let questions = req.body.questions
+      const newQuiz = await SharedQuiz.create({
+        title: title,
+        questions:questions
+      });
+
+      res.send(newQuiz._id)
+    } catch (err) {
+      console.log(err);
+    }
   },
   deleteQuestion: async (req, res) => {
 

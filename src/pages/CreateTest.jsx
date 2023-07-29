@@ -26,6 +26,7 @@ function CreateTest() {
     }
   }
   const [quiz, setQuiz] = useState({})
+  const [sharedQuizId, setSharedQuizId] = useState('')
   const [questions, setQuestions] = useState([defaultQuestion()])
   const [showPreview, setShowPreview] = useState(false)
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
@@ -143,6 +144,21 @@ function CreateTest() {
     text: showPreview ? "Back" : "Preview",
     onClick: previewToggle,
   };
+  async function shareQuiz() {
+
+    try {
+      const response = await axios.post(`/sharedQuiz`, {
+        title: quiz.quizTitle,
+        questions: quiz.questions
+      })
+      if (response.status === 200) {
+        setSharedQuizId(response.data)
+        console.log(response.data)
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <section className='page'>
@@ -293,7 +309,10 @@ function CreateTest() {
 
                 {questions.length !== 0 &&
                   <>
-                    <button>SHARE</button>
+            {sharedQuizId !== '' &&  
+            <h6 className='share-link'>Your link is: 
+            <Link to={`/shared/${sharedQuizId}`} target="_blank">here</Link></h6>}      
+                    <button onClick={shareQuiz}>SHARE</button>
                     <button className="pdf-button">
                       <PDFDownloadLink document={<PDFContent data={quiz} />} fileName={quiz.quizTitle + '.pdf'}>
                         {({ blob, url, loading, error }) =>
