@@ -3,7 +3,7 @@ import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
-import { Quiz } from '../components/Quiz';
+import { Quizzy } from '../components/Quizzy';
 import Loading from '../components/Loading';
 import EditableList from '../components/Admin/EditableList'
 import { UserContext } from '../context/User'
@@ -73,7 +73,7 @@ const {isAdmin} = useContext(UserContext)
 
             isAdmin ?
               <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
-              : <Quiz questions={questions} />
+              : <Quizzy questions={questions} />
 
 
           }
