@@ -17,7 +17,7 @@ function filterAnswers(selectedAnswer, allAnswers) {
   }
 }
 
-function Quizzy({ questions }) {
+function Quizzy({ questions, isAdmin }) {
   const [quizState, setQuizState] = useState({
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
@@ -129,6 +129,7 @@ function handleProgressCellClick(index) {
             questions={progressTracking}
             currentQuestionIndex={currentQuestionIndex} 
             func={handleProgressCellClick}
+            isAdmin={isAdmin}
             />
 
           <section className={currentQuestion().image ? "quiz" : "quiz column center"} data-testid="quiz">

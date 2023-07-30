@@ -172,7 +172,7 @@ label {
   gap: 1rem;
 }
 
-.progress-bar {
+.progress-bar, .progress-bar-admin {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -184,7 +184,7 @@ label {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+
   }
   
   .cell.active {
@@ -192,7 +192,11 @@ label {
     color: white;
   }
 }
-
+.progress-bar-admin {
+  .cell {
+    cursor: pointer;
+  }
+}
 .correctCell {
   background-color: green;
 }

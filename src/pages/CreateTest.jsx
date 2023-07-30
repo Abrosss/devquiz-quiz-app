@@ -172,7 +172,7 @@ function CreateTest() {
             linkToText=""
             linkTo=""
           />
-          <Quizzy questions={questions} />
+          <Quizzy questions={questions} isAdmin={true}/>
         </div>
 
 

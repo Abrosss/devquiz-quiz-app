@@ -121,7 +121,9 @@ function Quiz({ questions }) {
         <>
           <ProgressBar
             questions={progressTracking}
-            currentQuestionIndex={currentQuestionIndex} />
+            currentQuestionIndex={currentQuestionIndex} 
+            isAdmin={false}
+            />
 
           <section className={currentQuestion().image ? "quiz" : "quiz column center"} data-testid="quiz">
             <section className='question-section'>

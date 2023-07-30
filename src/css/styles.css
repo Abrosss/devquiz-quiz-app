@@ -167,23 +167,26 @@ label {
   gap: 1rem;
 }
 
-.progress-bar {
+.progress-bar, .progress-bar-admin {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
-.progress-bar .cell {
+.progress-bar .cell, .progress-bar-admin .cell {
   border: 1px #489FB5 solid;
   width: 25px;
   height: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
-.progress-bar .cell.active {
+.progress-bar .cell.active, .progress-bar-admin .cell.active {
   background-color: #489FB5;
   color: white;
+}
+
+.progress-bar-admin .cell {
+  cursor: pointer;
 }
 
 .correctCell {

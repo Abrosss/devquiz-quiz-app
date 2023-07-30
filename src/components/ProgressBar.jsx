@@ -10,9 +10,10 @@ function colorCell(isCorrect, index, currentQuestionIndex) {
     return "cell";
   }
 }
-function ProgressBar({ questions, currentQuestionIndex, func }) {
+function ProgressBar({ questions, currentQuestionIndex, func, isAdmin }) {
+  console.log(isAdmin)
   return (
-    <section className='progress-bar' >
+    <section className={isAdmin ? 'progress-bar-admin' : 'progress-bar'} >
       {questions.map((cell, index) => (
         <div onClick={() => func(index)} key={index} data-testid='progress-bar-cell'
           className={colorCell(cell?.isCorrect, index, currentQuestionIndex)}>{index + 1}</div>
