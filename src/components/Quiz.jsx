@@ -17,7 +17,7 @@ function filterAnswers(selectedAnswer, allAnswers) {
   }
 }
 
-function Quiz({ questions }) {
+function Quiz({ questions, timeout }) {
   const [quizState, setQuizState] = useState({
     currentQuestionIndex: 0,
     correctAnswerCount: 0,
@@ -111,7 +111,7 @@ function Quiz({ questions }) {
   return (
 
     <>
-      {quizIsFinished ?
+      {quizIsFinished || timeout ?
         <Result
           correctAnswerCount={correctAnswerCount}
           amountOfQuestions={questions.length}

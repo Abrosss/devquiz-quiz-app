@@ -214,7 +214,10 @@ label {
   display: flex;
   justify-content: center;
 }
+.space-between {
+  justify-content: space-between;
 
+}
 .centered {
   display: flex;
   flex-direction: column;

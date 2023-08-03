@@ -9,7 +9,7 @@ import { Quiz } from '../components/Quiz';
 import Loading from '../components/Loading';
 import EditableList from '../components/Admin/EditableList'
 import { UserContext } from '../context/User'
-
+import Timer from '../components/Timer';
 
 
 import { randomizeArray } from '../helpFunctions';
@@ -19,12 +19,14 @@ const {isAdmin} = useContext(UserContext)
 
   //GRAB QUESTIONS
   const [isLoading, setIsLoading] = useState(true)
-
+  const [timeIsUp, setTimeIsUp] = useState(false)
   const [questions, setQuestions] = useState([])
   const [quiz, setQuiz] = useState({})
   const { quizID } = useParams();
 
- 
+  function timeout () {
+    setTimeIsUp(true)
+}
 
   useEffect(() => {
     async function init() {
@@ -64,18 +66,23 @@ const {isAdmin} = useContext(UserContext)
         :
 
         <section className='container'>
+          <section className='flex space-between'>
           <Navigation
             currentPage={quiz.title}
             linkToText="All Tests"
             linkTo={isAdmin ? "/admin/tests" : "/"}
           />
+           <div>
+                <span><Timer initialTime={.5} onTimeout={timeout}></Timer></span>
+            </div>
+            </section>
           {questions.length === 0 ?
 
             <div>No questions added yet!</div> :
 
             isAdmin ?
               <div><EditableList quizData={quiz} questions={questions} setQuestions={setQuestions} /></div>
-              : <Quiz questions={questions} />
+              : <Quiz questions={questions} timeout = {timeIsUp}/>
 
 
           }
