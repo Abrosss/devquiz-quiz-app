@@ -73,7 +73,7 @@ const {isAdmin} = useContext(UserContext)
             linkTo={isAdmin ? "/admin/tests" : "/"}
           />
            <div>
-                <span><Timer initialTime={.5} onTimeout={timeout}></Timer></span>
+                <span><Timer initialTime={40} onTimeout={timeout}></Timer></span>
             </div>
             </section>
           {questions.length === 0 ?
