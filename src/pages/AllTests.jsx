@@ -7,7 +7,7 @@ import axios from '../api/axios';
 import ButtonRedirect from '../components/ButtonRedirect';
 import Loading from '../components/Loading';
 import { UserContext } from '../context/User'
-
+import QuizList from '../components/QuizList';
 let categoriesData = [
   {
     id: "001001",
@@ -27,7 +27,7 @@ function AllTests() {
   const [menuOpened, setMenuOpened] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
-
+console.log(quizzes)
 
   useEffect(() => {
     async function getQuizzes() {
@@ -61,21 +61,8 @@ function AllTests() {
           </section>
 
           :
-
-          <ul className='categories'>
-            {quizzes.map((quiz, index) => (
-
-              <li key={quiz._id} className='category'>
-                <Link
-                  to={isAdmin ? `/admin/tests/${quiz._id}` : `/tests/${quiz._id}`}
-                >
-                  {quiz.title}
-                </Link>
-
-
-              </li>
-            ))}
-          </ul>
+          <QuizList quizzes={quizzes} isAdmin={false}/>
+         
         }
 
       </section>
