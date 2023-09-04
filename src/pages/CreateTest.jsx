@@ -172,7 +172,7 @@ function CreateTest() {
             linkToText=""
             linkTo=""
           />
-          <Quizzy questions={questions} isAdmin={true} shared={true}/>
+          <Quizzy questions={questions.filter(question => question.title !== '')} isAdmin={true} shared={true}/>
         </div>
 
 
