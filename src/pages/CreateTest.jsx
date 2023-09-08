@@ -47,6 +47,7 @@ function CreateTest() {
     }
 
   }, []);
+  console.log(quiz, questions)
   useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
     const updatedTitle = {
@@ -149,7 +150,7 @@ function CreateTest() {
     try {
       const response = await axios.post(`/sharedQuiz`, {
         title: quiz.quizTitle,
-        questions: quiz.questions
+        questions: questions
       })
       if (response.status === 200) {
         setSharedQuizId(response.data)
@@ -314,7 +315,7 @@ function CreateTest() {
             <Link to={`/shared/${sharedQuizId}`} target="_blank">here</Link></h6>}      
                     <button onClick={shareQuiz}>SHARE</button>
                     <button className="pdf-button">
-                      <PDFDownloadLink document={<PDFContent data={quiz} />} fileName={quiz.quizTitle + '.pdf'}>
+                      <PDFDownloadLink document={<PDFContent quizTitle={quizTitle} questions={questions.filter(question => question.title !== "")} />} fileName={quiz.quizTitle + '.pdf'}>
                         {({ blob, url, loading, error }) =>
                           loading ? 'Loading document...' : 'Save as PDF'
                         }

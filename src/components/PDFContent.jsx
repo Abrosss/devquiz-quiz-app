@@ -60,15 +60,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const PDFContent = ({ data }) => {
+const PDFContent = ({ quizTitle, questions }) => {
  
   return (
     <Document>
       <Page style={styles.page}>
         <View style={styles.section}>
-          <Text style={styles.heading}>{data.quizTitle}</Text>
+          <Text style={styles.heading}>{quizTitle}</Text>
           <View style={styles.container}>
-            {data && data.questions && data.questions.map((question, index) => (
+            {questions && questions.map((question, index) => (
               <>
               <View style={styles.innerContainer}>
               <View style={styles.questionContainer}>
