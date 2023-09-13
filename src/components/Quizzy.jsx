@@ -25,9 +25,9 @@ function Quizzy({ questions, isAdmin, shared}) {
   });
   const { currentQuestionIndex, correctAnswerCount, quizIsFinished } = quizState
   const [progressTracking, setProgressTracking] = useState(Array.from({ length: questions.length }, () => Object.assign({}, { isCorrect: null })))
-  const [visibleAnswers, setVisibleAnswers] = useState(currentQuestion().options)
+  const [visibleAnswers, setVisibleAnswers] = useState(currentQuestion()?.options)
   const [userResults, setUserResults] = useState(Array.from({ length: questions.length }, () => Object.assign({}, { question: null, selectedAnswer: null })))
-
+console.log(questions)
   useEffect(() => {
     setVisibleAnswers(currentQuestion().options)
 

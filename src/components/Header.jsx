@@ -16,6 +16,7 @@ const navigate = useNavigate()
   }
 
   function isCreateTestPage (page) {
+    console.log(page)
     if(!page) {
       return false
     }
@@ -28,10 +29,14 @@ const navigate = useNavigate()
   return (
     <header className={isCreateTestPage(page) ? "header-new" : "header"}>
         <Link to={link ? link : "/"}>prepped<span className='highlighted'>.dev</span></Link>
-        {isCreateTestPage(page) &&
+        {isCreateTestPage(page) && headerButton !== "" &&
+        
         <button onClick={headerButton.onClick} className='button-2'>{headerButton.text}</button>
         }
-        
+        {!isCreateTestPage(page) &&
+          <Link to={"/create-test"} className='button'>Create test</Link>
+      }
+         
         {loggedIn &&
             <button onClick={handleLogOut}>Log out</button>
         }
