@@ -14,7 +14,6 @@ body {
 }
 .page {
   background-color: rgba(72, 159, 181, .2);
-  padding: 0 1rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -499,12 +498,8 @@ form {
  flex: 1;
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
   padding: 1rem 5rem;
   padding-bottom: 8rem;
-
-  margin-top: 1rem;
-
   background-color: white;
   h1 {
     font-size: 2rem;
