@@ -907,7 +907,7 @@ form button {
   padding: 1rem 2rem;
 }
 .categories .category a:hover {
-  background-color: rgba(72, 159, 181, 0.5);
+  background-color: rgba(72, 159, 181, 0.1);
   border-radius: 10px;
 }
 
