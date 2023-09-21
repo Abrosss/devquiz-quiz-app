@@ -92,20 +92,22 @@ button a {
   white-space: nowrap;
   background-color: #489FB5;
   outline: none;
-  border: none;
+  border: 1px transparent solid;
   color: white;
   padding: 0.6em 2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.2s ease-in-out;
 }
 button:hover,
 .button:hover,
 .btn:hover,
 button a:hover {
-  border-color: #646cff;
+  background-color: transparent;
+  border: 1px #489FB5 solid;
+  color: #489FB5;
 }
 
 .btn {
