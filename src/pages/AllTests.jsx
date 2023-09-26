@@ -66,7 +66,7 @@ console.log(quizzes)
         }
 
       </section>
-      <Footer position={"fixed"} />
+      
     </>
   )
 }

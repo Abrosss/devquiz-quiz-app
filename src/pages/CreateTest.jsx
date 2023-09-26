@@ -344,7 +344,6 @@ function CreateTest() {
 
 
 
-      <Footer position="" />
     </section>
   )
 
