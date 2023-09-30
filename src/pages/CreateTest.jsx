@@ -32,6 +32,13 @@ function CreateTest() {
   const [questionsExpanded, setQuestionsExpanded] = useState([0])
   const [quizTitle, setQuizTitle] = useState('')
   useEffect(() => {
+    setTimeout(() => {
+      if(sharedQuizId !== "") {
+        setSharedQuizId('')
+      }
+    }, 10000)
+  }, [sharedQuizId])
+  useEffect(() => {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
     if (quiz) {
       setQuiz(quiz)
@@ -154,7 +161,7 @@ function CreateTest() {
       })
       if (response.status === 200) {
         setSharedQuizId(response.data)
-        console.log(response.data)
+        
       }
     } catch (err) {
       console.error(err);
@@ -308,7 +315,7 @@ function CreateTest() {
                 }
 
 
-                {questions.length !== 0 &&
+                {questions.filter(question => question.title !== '').length !== 0 &&
                   <>
             {sharedQuizId !== '' &&  
             <h6 className='share-link'>Your link is: 
